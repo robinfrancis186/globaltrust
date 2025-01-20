@@ -47,6 +47,7 @@ export default function Home() {
             backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
             backgroundPosition: 'center',
             backgroundSize: 'cover',
+            backgroundAttachment: 'fixed',
             height: '100%',
             width: '100%'
           }}
