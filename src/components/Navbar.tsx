@@ -79,6 +79,7 @@ export default function Navbar() {
                     <div className="py-1" role="menu" aria-orientation="vertical">
                       {item.submenu.map((subItem) => (
                         <Link
+                          onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
                           key={subItem.name}
                           to={subItem.href}
                           className={`${
