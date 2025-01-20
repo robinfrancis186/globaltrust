@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PartnersScroll from '../components/PartnersScroll';
 import CallToAction from '../components/CallToAction';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import Sponsors from '../components/Sponsors';
 
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -60,7 +61,7 @@ export default function Home() {
       {/* What is GTC Section */}
       <section className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}>What is the Global Trust Challenge?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>What is the Global Trust Challenge?</h2>
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <p className="text-lg text-gray-600 mb-6">
@@ -94,18 +95,21 @@ export default function Home() {
       <CallToAction />
 
       {/* Partners Section */}
-      <section className="py-20 bg-gray-50 relative z-10">
+      <section className="py-20 bg-gray-50 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
+        {/*
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Who's Involved</h2>
           <p className="text-xl max-w-3xl mx-auto" style={{marginBottom: '25px'}}>The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.</p>
-          <PartnersScroll />
+         
         </div>
+        */}
+         <Sponsors />
       </section>
 
       {/* FAQ Section */}
       <section className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Frequently Asked Questions</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
@@ -137,7 +141,7 @@ export default function Home() {
       {/* Pre-registration Form */}
       <section id="pre-registration" className="py-20 bg-gray-50 relative z-10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Pre-registration Form</h2>
+          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Pre-registration Form</h2>
           <form className="bg-white p-8 rounded-lg shadow-lg">
             <div className="space-y-6">
               <div>

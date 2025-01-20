@@ -75,7 +75,7 @@ export default function Guidelines() {
 
           {/* Eligibility & Requirements */}
           <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
-            <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}>Eligibility & Requirements</h3>
+            <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}} >Eligibility & Requirements</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h4 className="text-xl font-semibold mb-4">Team Requirements</h4>

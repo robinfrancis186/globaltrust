@@ -1,5 +1,6 @@
 import React from 'react';
 import PartnersScroll from '../components/PartnersScroll';
+import Sponsors from '../components/Sponsors';
 
 const sponsors = [
   {
@@ -49,36 +50,15 @@ export default function Partners() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}> Partners</h2>
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
-            The Global Trust Challenge brings together leading experts and organizations 
-            committed to building trust in emerging technologies.
+            The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
           </p>
           <PartnersScroll />
         </div>
       </section>
 
       {/* Sponsors Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}> Sponsors</h2>
-          <p className="text-xl text-center max-w-3xl mx-auto mb-12">
-            We are grateful for the support of our sponsors who make this challenge possible.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {sponsors.map((sponsor, index) => (
-              <div 
-                key={index}
-                className="flex items-center justify-center p-8 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-300"
-              >
-                <img
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  className="max-h-24 object-contain"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Sponsors />
+      
     </div>
   );
 }
