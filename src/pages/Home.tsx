@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import PartnersScroll from '../components/PartnersScroll';
 import CallToAction from '../components/CallToAction';
 import { ArrowRight, CheckCircle } from 'lucide-react';
@@ -6,6 +7,7 @@ import Sponsors from '../components/Sponsors';
 
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,10 +17,19 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
+    // Handle scroll to pre-registration when coming from other pages
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.get('scroll') === 'pre-registration') {
+      const element = document.getElementById('pre-registration');
+      element?.scrollIntoView({ behavior: 'smooth' });
+      // Clean up the URL
+      window.history.replaceState({}, document.title, location.pathname);
+    }
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [location]);
 
   const handlePreRegisterClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -29,15 +40,15 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section with Parallax */}
-      <section className="relative h-[600px] overflow-hidden -mt-16">
+      <section className="relative h-[600px] overflow-hidden -mt-16" style={{paddingBottom: '2rem'}}>
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
-            backgroundAttachment: 'fixed',
             backgroundPosition: 'center',
             backgroundSize: 'cover',
-            minHeight: '100vh',
+            height: '100%',
+            width: '100%'
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
@@ -57,7 +68,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Rest of the component remains unchanged */}
       {/* What is GTC Section */}
       <section className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,13 +106,6 @@ export default function Home() {
 
       {/* Partners Section */}
       <section className="py-20 bg-gray-50 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
-        {/*
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Who's Involved</h2>
-          <p className="text-xl max-w-3xl mx-auto" style={{marginBottom: '25px'}}>The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.</p>
-         
-        </div>
-        */}
          <Sponsors />
       </section>
 
