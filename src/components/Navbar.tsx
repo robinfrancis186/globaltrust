@@ -24,10 +24,10 @@ export default function Navbar() {
       name: 'About the Challenge',
       href: '#',
       submenu: [
-        { name: 'Challenge Details', href: '/details' },
+        { name: 'Challenge Details', href: '/guidelines' },
         { name: 'Partners & Sponsors', href: '/partners' },
         { name: 'Competing Teams', href: '/teams' },
-        { name: 'Guidelines', href: '/guidelines' },
+
       ],
     },
     { name: 'Resources', href: '/downloads' },
