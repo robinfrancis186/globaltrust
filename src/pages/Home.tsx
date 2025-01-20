@@ -42,7 +42,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16">
-            <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase'}}>Global Trust Challenge</h1>
+            <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global Trust Challenge</h1>
             <p className="text-xl mb-8">Join the worldwide initiative to build trust in emerging technologies through innovation and collaboration.</p>
             <a 
               href="#pre-registration"
