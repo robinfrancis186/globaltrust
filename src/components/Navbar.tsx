@@ -27,7 +27,7 @@ export default function Navbar() {
         { name: 'Challenge Details', href: '/guidelines' },
         { name: 'Partners & Sponsors', href: '/partners' },
         { name: 'Competing Teams', href: '/teams' },
-
+  
       ],
     },
     { name: 'Resources', href: '/downloads' },

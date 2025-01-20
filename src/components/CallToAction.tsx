@@ -15,7 +15,7 @@ export default function CallToAction() {
       />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4">Ready to Make an Impact?</h2>
+          <h2 className="text-4xl font-bold text-white mb-4" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Ready to Make an Impact?</h2>
           <p className="text-xl text-indigo-100 max-w-3xl mx-auto">
             Join innovators worldwide in shaping the future of digital trust. Pre-Register now to access exclusive resources and connect with industry leaders.
           </p>
