@@ -40,16 +40,13 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section with Parallax */}
-      <section className="relative h-[600px] overflow-hidden -mt-16" style={{paddingBottom: '2rem'}}>
+      <section className="relative h-[600px] overflow-hidden -mt-16">
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
             backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundAttachment: 'fixed',
-            height: '100%',
-            width: '100%'
+           
+            
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
