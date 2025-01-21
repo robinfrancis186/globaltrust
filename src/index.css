@@ -10,3 +10,24 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.heroStyle {
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+ @media (max-width: 768px): {
+   .heroStyle {
+              min-height: auto;
+              background-attachment: inherit;
+              background-size: 200% auto;
+              background-position: top center;
+              height: 100%;
+              width: 100%;
+            }
+     }
