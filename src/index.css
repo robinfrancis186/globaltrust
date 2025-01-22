@@ -21,7 +21,7 @@
   -o-background-size: cover;
 }
 
-@media only screen and (min-height: 956px) and (orientation: portrait) {
+@media only screen and (min-height: 800px) and (orientation: portrait) {
   .heroStyle {
     min-height: 60vh !important;
     background-attachment: scroll;
