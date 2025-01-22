@@ -1,11 +1,12 @@
 import React from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = React.useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const submenuRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -18,16 +19,26 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleApplyClick = () => {
+    if (location.pathname !== '/') {
+      navigate('/?scroll=pre-registration');
+    } else {
+      const element = document.getElementById('pre-registration');
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsOpen(false);
+  };
+
   const navigation = [
     { name: 'Home', href: '/' },
     {
       name: 'About the Challenge',
       href: '#',
       submenu: [
+        { name: 'Challenge Overview', href: '/details' },
         { name: 'Challenge Details', href: '/guidelines' },
         { name: 'Partners & Sponsors', href: '/partners' },
         { name: 'Competing Teams', href: '/teams' },
-  
       ],
     },
     { name: 'Resources', href: '/downloads' },
@@ -97,9 +108,21 @@ export default function Navbar() {
                 )}
               </div>
             ))}
+            <button
+              onClick={handleApplyClick}
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
+            >
+              Apply Now
+            </button>
           </div>
 
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-4">
+            <button
+              onClick={handleApplyClick}
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 text-sm"
+            >
+              Apply
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-500 hover:text-gray-600"
