@@ -40,19 +40,21 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section with Parallax */}
-      <section className="relative h-[600px] overflow-hidden -mt-16">
+      <section className="relative h-[600px] overflow-hidden -mt-16 hero-section">
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
             backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
-           
-            
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            minHeight: '100vh',
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-          <div className="text-white max-w-3xl pt-16">
-            <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global Trust Challenge</h1>
+          <div className="text-white max-w-3xl pt-16 hero-content">
+            <h1 className="text-5xl font-bold mb-6 hero-title" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global Trust Challenge</h1>
             <p className="text-xl mb-8">Join the worldwide initiative to build trust in emerging technologies through innovation and collaboration.</p>
             <a 
               href="#pre-registration"
