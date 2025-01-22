@@ -7,13 +7,10 @@ export default function Guidelines() {
        {/* Hero Section with Parallax */}
       <section className="relative h-[600px] overflow-hidden -mt-16">
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80")',
-            backgroundAttachment: 'fixed',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            minHeight: '100vh',
+            
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />

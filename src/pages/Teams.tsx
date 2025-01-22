@@ -24,13 +24,10 @@ export default function Teams() {
        {/* Hero Section with Parallax */}
       <section className="relative h-[600px] overflow-hidden -mt-16">
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80")',
-            backgroundAttachment: 'fixed',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            minHeight: '100vh',
+            
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
