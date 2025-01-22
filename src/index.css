@@ -21,13 +21,23 @@
   -o-background-size: cover;
 }
 
- @media screen and (max-width: 768px): {
-   .heroStyle {
-              min-height: auto;
-              background-attachment: inherit;
-              background-size: 200% auto;
-              background-position: top center;
-              height: 100%;
-              width: 100%;
-            }
-     }
+@media screen and (max-width: 768px) {
+  .heroStyle {
+    min-height: 60vh !important;
+    background-attachment: scroll;
+    background-size: cover;
+    background-position: center;
+  }
+
+  section.hero-section {
+    height: 60vh !important;
+  }
+
+  .hero-content {
+    padding-top: 4rem !important;
+  }
+
+  .hero-title {
+    font-size: 3rem !important;
+  }
+}
