@@ -44,11 +44,8 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
-            backgroundAttachment: 'fixed',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            minHeight: '100vh',
+            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")'
+            
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
