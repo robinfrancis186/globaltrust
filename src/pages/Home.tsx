@@ -5,9 +5,27 @@ import CallToAction from '../components/CallToAction';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import Sponsors from '../components/Sponsors';
 
+interface FormData {
+  fullName: string;
+  email: string;
+  organization: string;
+  areaOfInterest: string;
+}
+
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const location = useLocation();
+  const [formData, setFormData] = useState<FormData>({
+    fullName: '',
+    email: '',
+    organization: '',
+    areaOfInterest: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,12 +35,10 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Handle scroll to pre-registration when coming from other pages
     const searchParams = new URLSearchParams(location.search);
     if (searchParams.get('scroll') === 'pre-registration') {
       const element = document.getElementById('pre-registration');
       element?.scrollIntoView({ behavior: 'smooth' });
-      // Clean up the URL
       window.history.replaceState({}, document.title, location.pathname);
     }
 
@@ -37,6 +53,57 @@ export default function Home() {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyZfGY-cxhnhyzrAm8TMEYpWT0xHUl0uXhsDM88uB5h6XbNMp6m2k-7xMhze0ePece8AQ/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Thank you for pre-registering! We will be in touch soon.',
+        });
+        setFormData({
+          fullName: '',
+          email: '',
+          organization: '',
+          areaOfInterest: '',
+        });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: data.message || 'An error occurred. Please try again.',
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'An error occurred. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section with Parallax */}
@@ -44,8 +111,8 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")'
-            
+            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
+           
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
@@ -142,42 +209,69 @@ export default function Home() {
       <section id="pre-registration" className="py-20 bg-gray-50 relative z-10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Pre-registration Form</h2>
-          <form className="bg-white p-8 rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
+            {submitStatus.type && (
+              <div
+                className={`mb-6 p-4 rounded-md ${
+                  submitStatus.type === 'success'
+                    ? 'bg-green-50 text-green-800'
+                    : 'bg-red-50 text-red-800'
+                }`}
+              >
+                {submitStatus.message}
+              </div>
+            )}
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                   Full Name
                 </label>
                 <input
+                  id="fullName"
+                  name="fullName"
                   type="text"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   Email Address
                 </label>
                 <input
+                  id="email"
+                  name="email"
                   type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="organization" className="block text-sm font-medium text-gray-700 mb-1">
                   Organization
                 </label>
                 <input
+                  id="organization"
+                  name="organization"
                   type="text"
+                  value={formData.organization}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="areaOfInterest" className="block text-sm font-medium text-gray-700 mb-1">
                   Area of Interest
                 </label>
                 <select
+                  id="areaOfInterest"
+                  name="areaOfInterest"
+                  value={formData.areaOfInterest}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 >
@@ -190,9 +284,12 @@ export default function Home() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition-colors duration-200"
+                disabled={isSubmitting}
+                className={`w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-200 ${
+                  isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-indigo-700'
+                }`}
               >
-                Pre-register Now
+                {isSubmitting ? 'Submitting...' : 'Pre-register Now'}
               </button>
             </div>
           </form>
