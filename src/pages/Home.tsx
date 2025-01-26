@@ -206,10 +206,10 @@ export default function Home() {
       </section>
 
       {/* Pre-registration Form */}
-      <section id="pre-registration" className="py-20 bg-gray-50 relative z-10">
+      <section id="pre-registration" className="py-20 bg-gray-50 relative z-10 bg-indigo-700">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Pre-registration Form</h2>
-          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', color:'#ffffff'}}>Pre-registration Form</h2>
+          <form onSubmit={handleSubmit} className="p-8 rounded-lg ">
             {submitStatus.type && (
               <div
                 className={`mb-6 p-4 rounded-md ${
@@ -223,7 +223,7 @@ export default function Home() {
             )}
             <div className="space-y-6">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="fullName" className="block text-sm font-medium text-indigo-100 mb-1">
                   Full Name
                 </label>
                 <input
@@ -237,7 +237,7 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-indigo-100 mb-1">
                   Email Address
                 </label>
                 <input
@@ -251,7 +251,7 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label htmlFor="organization" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="organization" className="block text-sm font-medium text-indigo-100 mb-1">
                   Organization
                 </label>
                 <input
@@ -264,7 +264,7 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label htmlFor="areaOfInterest" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="areaOfInterest" className="block text-sm font-medium text-indigo-100 mb-1">
                   Area of Interest
                 </label>
                 <select
@@ -285,7 +285,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-200 ${
+                className={`w-full bg-indigo-600 border-2 border-white text-white px-6 py-3 rounded-md font-semibold transition-colors duration-200 ${
                   isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-indigo-700'
                 }`}
               >
