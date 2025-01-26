@@ -6,6 +6,7 @@ import Partners from './pages/Partners';
 import Teams from './pages/Teams';
 import Guidelines from './pages/Guidelines';
 import Details from './pages/Details';
+import People from './pages/People';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/teams" element={<Teams />} />
           <Route path="/guidelines" element={<Guidelines />} />
           <Route path="/details" element={<Details />} />
+          <Route path="/people" element={<People />} />
           {/* Add other routes as needed */}
         </Routes>
       </Layout>
