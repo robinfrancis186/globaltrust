@@ -37,10 +37,12 @@ export default function Navbar() {
       submenu: [
         { name: 'Challenge Overview', href: '/details' },
         { name: 'Challenge Details', href: '/guidelines' },
+        { name: 'People', href: '/people' },
         { name: 'Partners & Sponsors', href: '/partners' },
-        { name: 'Competing Teams', href: '/teams' },
+        
       ],
     },
+    { name: 'Events & News', href: '/events' },
     { name: 'Resources', href: '/downloads' },
   ];
 
