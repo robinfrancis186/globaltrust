@@ -10,7 +10,7 @@ export default function Details() {
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80")',
+            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/photo-1451187580459-43490279c0fa.webp")',
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-40" />
@@ -87,7 +87,7 @@ export default function Details() {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
+                src="https://maximages.s3.us-west-1.amazonaws.com/photo-1522071820081-009f0129c71c.webp"
                 alt="Team collaboration"
                 className="rounded-lg shadow-xl"
               />

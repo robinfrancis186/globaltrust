@@ -13,7 +13,7 @@ const teams = [
     members: ["Maria Garcia", "Alex Chen"],
     country: "Singapore",
     project: "Blockchain-based Trust Protocol",
-    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80"
+    image: "https://maximages.s3.us-west-1.amazonaws.com/photo-1600880292203-757bb62b4baf.webp"
   },
   // Add more teams as needed
 ];

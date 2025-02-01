@@ -9,7 +9,7 @@ export default function Guidelines() {
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80")',
+            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/photo-1454165804606-c3d57bc86b40.webp")',
             
           }}
         />
