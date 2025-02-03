@@ -131,17 +131,40 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* What is GTC Section */}
+      {/*Overview */}
       <section className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>What is the Global Trust Challenge?</h2>
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Overview</h2>
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <p className="text-lg text-gray-600 mb-6">
+                Generative AI is transforming how information is created, shared, and consumed. While these systems enhance the speed and diversity of information flow, they also pose risks of misuse, such as disinformation, deepfakes, and cyberattacks. The Global Challenge to Build Trust in the Age of Generative AI aims to tackle these issues by developing policies and technologies to ensure the public can trust the information they consume online. This initiative seeks to build a trustworthy, transparent, and resilient information ecosystem that supports democratic values and societal well-being.</p>
+<p className="text-lg text-gray-600 mb-6">
+The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, AI Commons, UNESCO, VDE, PARIS21, the World Bank, and IDB. Its focus is on promoting global collaboration to combat the threats posed by generative AI with regards to information integrity online and ensuring that content online is verifiable, accurate, and trustworthy.
+              </p>
+            </div>
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80"
+                alt="Technology collaboration"
+                className="rounded-lg shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      {/* What is GTC Section */}
+      <section className="py-20 bg-gray-100 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Challenge Mission</h2>
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <p className="text-lg text-gray-600 mb-6">
                 The Global Trust Challenge seeks interdisciplinary solutions that integrate both technology and policy to address the challenges posed by generative AI. Participants are invited to propose novel, forward-thinking approaches that not only develop technology but also propose complementary policies. These solutions should ensure the verification and trustworthiness of AI-generated content, support trustworthy AI deployment, and enhance the resilience of information ecosystems. 
-              </p><p style={{marginBottom:'10px'}}>Key Goals include:</p>
-              <ul className="space-y-4">
+              </p><p className="text-lg text-gray-600 mb-6" style={{marginBottom:'10px'}}>Key Goals include:</p>
+              <ul className="space-y-4 text-lg text-gray-600">
                 {[
                   "Enhancing Trust: Ensuring that AI-generated content is reliable and verifiable. ",
                   "Protecting Users: Promoting media literacy and providing tools to identify AI-generated content.",
@@ -169,12 +192,12 @@ export default function Home() {
       <CallToAction />
 
       {/* Partners Section */}
-      <section className="py-20 bg-gray-50 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
+      <section className="py-20 bg-grey-100 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
          <Sponsors />
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white relative z-10">
+      <section className="py-20 bg-grey-100 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Frequently Asked Questions</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -206,9 +229,10 @@ export default function Home() {
       </section>
 
       {/* Pre-registration Form */}
-      <section id="pre-registration" className="py-20 bg-gray-50 relative z-10 bg-indigo-700">
+      <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', color:'#ffffff'}}>Pre-registration Form</h2>
+          <p className="text-xl text-indigo-100 max-w-3xl mx-auto">Please complete this form to register your interest in competing as part of the Global Challenge to Build Trust in the Age of Generative AI. We will be in touch when the official launch is approaching.</p>
           <form onSubmit={handleSubmit} className="p-8 rounded-lg ">
             {submitStatus.type && (
               <div

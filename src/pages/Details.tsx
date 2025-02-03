@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Target, Users, Trophy, Lightbulb, CheckCircle } from 'lucide-react';
+import { ArrowRight, Target, Trophy, Lightbulb, CheckCircle, Handshake, Users, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Details() {
@@ -26,31 +26,55 @@ export default function Details() {
         </div>
       </section>
 
-      {/* Overview Section */}
-      <section className="py-20 bg-white">
+      {/* Mission Section */}
+      <section className="py-12 bg-white relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+            Our Mission
+          </h2>
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <p className="text-xl mb-6">
+                The Global Trust Challenge seeks interdisciplinary solutions that integrate both technology and policy to address the challenges posed by generative AI. Participants are invited to propose novel, forward-thinking approaches that not only develop technology but also propose complementary policies. These solutions should ensure the verification and trustworthiness of AI-generated content, support trustworthy AI deployment, and enhance the resilience of information ecosystems.
+              </p>
+              
+            </div>
+            <div className="relative">
+              <img
+                src="https://maximages.s3.us-west-1.amazonaws.com/photo-1522071820081-009f0129c71c.webp"
+                alt="Team collaboration"
+                className="rounded-lg shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Key Goals */}
+      <section className="py-12 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-            Challenge Overview
+            Challenge Key Goals
           </h2>
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
               {
-                icon: Target,
-                title: "Focus Areas",
-                description: "AI Trust & Safety, Content Verification, Digital Identity"
+                icon: Handshake,
+                title: "Enhancing Trust",
+                description: "Ensuring that AI-generated content is reliable and verifiable"
               },
               {
-                icon: Trophy,
-                title: "Prize Pool",
-                description: "$250,000 in prizes, mentorship, and investment opportunities"
+                icon: Shield,
+                title: "Protecting Users",
+                description: "Promoting media literacy and providing tools to identify AI-generated content"
               },
               {
                 icon: Users,
-                title: "Who Can Participate",
-                description: "Open to teams worldwide with innovative trust solutions"
+                title: "Supporting Governance",
+                description: "Encouraging policy mechanisms for transparency and content flagging"
               }
             ].map((item, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-lg text-center">
+              <div key={index} className="bg-white p-8 rounded-lg shadow-lg text-center">
                 <item.icon className="w-12 h-12 text-indigo-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                 <p className="text-gray-600">{item.description}</p>
@@ -60,37 +84,17 @@ export default function Details() {
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-20 bg-indigo-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-            Our Mission
-          </h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      
+      {/*Unique Feature */}
+      <section className="py-20 relative z-10 bg-white">
+         
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+          <h2 className="text-3xl font-bold mb-12 " style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Unique Features of the Challenge</h2>
+          <div className="grid md:grid-cols-1 gap-12 items-start">
             <div>
-              <p className="text-xl mb-8">
-                The Global Trust Challenge aims to catalyze innovative solutions that address the growing challenges of digital trust in an AI-powered world. We bring together technologists, policymakers, and thought leaders to develop practical solutions that enhance trust, safety, and transparency in digital systems.
+              <p className="text-lg text-gray-600 mb-6">
+                Unlike traditional competitions, this challenge integrates both technology solutions with policy approaches. It fosters collaboration across sectors and promotes a holistic approach, recognizing that technology alone cannot address the full spectrum of issues. The initiative encourages teams to develop solutions with a focus on long-term viability, adaptability to diverse contexts, and a “do-no-harm” approach. It aims to build trust not just in technology, but also in the systems and processes surrounding it. The challenge emphasizes cross-sector collaboration, with teams from different fields working together to create scalable solutions that manage and mitigate the risks of AI misuse.
               </p>
-              <ul className="space-y-4">
-                {[
-                  "Foster innovation in trust and safety technologies",
-                  "Promote responsible AI development and deployment",
-                  "Build global collaboration networks",
-                  "Drive policy and technical standards development"
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <CheckCircle className="text-white mr-2 mt-1 flex-shrink-0" size={20} />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="relative">
-              <img
-                src="https://maximages.s3.us-west-1.amazonaws.com/photo-1522071820081-009f0129c71c.webp"
-                alt="Team collaboration"
-                className="rounded-lg shadow-xl"
-              />
             </div>
           </div>
         </div>
@@ -106,23 +110,23 @@ export default function Details() {
             {[
               {
                 icon: Users,
-                title: "Form Your Team",
-                description: "Build a team of 2-5 members with diverse skills"
+                title: "Register Your Team",
+                description: "Submit your team registration"
               },
               {
                 icon: Lightbulb,
                 title: "Submit Proposal",
-                description: "Present your innovative solution and implementation plan"
+                description: "Submit your innovative solution and implementation plan"
               },
               {
                 icon: Target,
-                title: "Development",
-                description: "Work with mentors to develop your solution"
+                title: "Prototype Development",
+                description: "Design and test your prototype"
               },
               {
                 icon: Trophy,
-                title: "Final Presentation",
-                description: "Showcase your solution to industry leaders"
+                title: "Pilot and Scale",
+                description: "Teams develop strategies for scaling their solutions to maximize impact."
               }
             ].map((step, index) => (
               <div key={index} className="relative">
@@ -163,7 +167,7 @@ export default function Details() {
               to="/guidelines"
               className="px-8 py-4 border-2 border-indigo-600 text-indigo-600 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition-colors duration-200"
             >
-              View Guidelines
+              View More Details
             </Link>
           </div>
         </div>
