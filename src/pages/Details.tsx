@@ -17,7 +17,7 @@ export default function Details() {
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16">
             <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '5.5rem'}}>
-              Challenge Details
+              Challenge Overview
             </h1>
             <p className="text-xl mb-8">
               Building a more trustworthy digital future through innovation and collaboration
