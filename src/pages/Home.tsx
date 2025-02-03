@@ -155,11 +155,11 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
       </section>
 
       
-      {/* What is GTC Section */}
+      {/* Challenge Mission */}
       <section className="py-20 bg-gray-100 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Challenge Mission</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="grid md:grid-cols-1 gap-12 items-start">
             <div>
               <p className="text-lg text-gray-600 mb-6">
                 The Global Trust Challenge seeks interdisciplinary solutions that integrate both technology and policy to address the challenges posed by generative AI. Participants are invited to propose novel, forward-thinking approaches that not only develop technology but also propose complementary policies. These solutions should ensure the verification and trustworthiness of AI-generated content, support trustworthy AI deployment, and enhance the resilience of information ecosystems. 
@@ -177,13 +177,7 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
                 ))}
               </ul>
             </div>
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80"
-                alt="Technology collaboration"
-                className="rounded-lg shadow-xl"
-              />
-            </div>
+           
           </div>
         </div>
       </section>

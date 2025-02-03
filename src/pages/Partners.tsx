@@ -42,16 +42,7 @@ export default function Partners() {
           </div>
         </div>
       </section>
-      {/* Partners Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}> Partners</h2>
-          <p className="text-xl text-center max-w-3xl mx-auto mb-12">
-            The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
-          </p>
-          <PartnersScroll />
-        </div>
-      </section>
+      
 
       {/* Sponsors Section */}
       <Sponsors />

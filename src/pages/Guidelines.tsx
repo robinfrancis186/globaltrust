@@ -16,7 +16,7 @@ export default function Guidelines() {
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16">
-            <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>About The Challenge</h1>
+            <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Challenge Details</h1>
             <p className="text-xl mb-8">Everything you need to know about participating in the Global Trust Challenge</p>
           </div>
         </div>
