@@ -21,6 +21,18 @@ const sponsors = [
     name: "World Bank",
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/The_World_Bank_logo.svg/320px-The_World_Bank_logo.svg.png",
   },
+  {
+    name: "AI Commons",
+    logo: "https://superfluid.io/ai-commons/images/new/Asset12-AI-Icon.svg",
+  },
+  {
+    name: "IDB",
+    logo: "https://www.greenclimate.fund/sites/default/files/styles/small/public/organisation/logo-idb.png",
+  },
+  {
+    name: "AWS",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
+  },
   // Add more sponsors as needed
 ];
 export default function Sponsors() {
@@ -28,7 +40,7 @@ export default function Sponsors() {
     <div className="w-full">
        <section className="py-20"  style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}> Sponsors</h2>
+          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}> Founding Partners</h2>
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
             We are grateful for the support of our sponsors who make this challenge possible.
           </p>

@@ -15,33 +15,29 @@ export default function CallToAction() {
       />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Ready to Make an Impact?</h2>
+          <h2 className="text-4xl font-bold text-white mb-4" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Be Part of the Solution</h2>
           <p className="text-xl text-indigo-100 max-w-3xl mx-auto">
-            Join innovators worldwide in shaping the future of digital trust. Pre-Register now to access exclusive resources and connect with industry leaders.
+           Submit Your Innovative Policy and Technology Proposals Today!
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {[
             {
               icon: Calendar,
-              title: "6 Month Program",
+              title: "24 Month Program",
               description: "Structured program with expert guidance and milestones"
             },
             {
               icon: Users,
-              title: "Global Network",
-              description: "Connect with participants and mentors worldwide"
+              title: "Global Influence",
+              description: "influence emerging standards, shape global regulations"
             },
-            {
-              icon: Trophy,
-              title: "Prize Pool",
-              description: "Compete for substantial rewards and recognition"
-            },
+            
             {
               icon: Target,
               title: "Real Impact",
-              description: "Develop solutions for real-world trust challenges"
+              description: "Gain visibility as leader in ethical AI innovation"
             }
           ].map((item, index) => (
             <div key={index} className="text-center p-6 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm">
