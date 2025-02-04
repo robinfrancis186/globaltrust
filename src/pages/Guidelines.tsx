@@ -28,7 +28,7 @@ export default function Guidelines() {
           <div className="grid md:grid-cols-1 gap-12 items-start">
             <div>
               <p className="text-lg text-gray-600 mb-6">
-                Unlike traditional competitions, this challenge integrates both technology solutions with policy approaches. It fosters collaboration across sectors and promotes a holistic approach, recognizing that technology alone cannot address the full spectrum of issues. The initiative encourages teams to develop solutions with a focus on long-term viability, adaptability to diverse contexts, and a “do-no-harm” approach. It aims to build trust not just in technology, but also in the systems and processes surrounding it. The challenge emphasizes cross-sector collaboration, with teams from different fields working together to create scalable solutions that manage and mitigate the risks of AI misuse. 
+                We seek innovative, integrated solutions that combine policy frameworks and technological advancements to address the risks of AI-generated content. Whether you’re proposing new tools for content verification, policies to promote transparency, or strategies to enhance media literacy, your ideas can shape the future of trustworthy information ecosystems. 
               </p>
               <p className="text-lg text-gray-600 mb-6" style={{marginBottom:'20px'}}>Submissions should incorporate:</p>
               <ul className="space-y-4 text-lg text-gray-600">

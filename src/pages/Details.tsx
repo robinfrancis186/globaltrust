@@ -150,10 +150,10 @@ export default function Details() {
       <section className="py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-            Ready to Make an Impact?
+           Be Part of the Solution
           </h2>
           <p className="text-xl text-gray-600 mb-12">
-            Join innovators worldwide in shaping the future of digital trust. Pre-register now to access exclusive resources and connect with industry leaders.
+            Submit Your Innovative Policy and Technology Proposals Today!
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link
