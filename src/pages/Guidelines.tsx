@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle, Calendar, Award, Users } from 'lucide-react';
+import PreRegisterCTA from '../components/PreRegisterCTA';
 
 export default function Guidelines() {
   return (
@@ -9,10 +10,10 @@ export default function Guidelines() {
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/photo-1454165804606-c3d57bc86b40.webp")',
-            
+            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/photo-1451187580459-43490279c0fa.webp")',  
           }}
-        />
+         
+        />  {/*https://maximages.s3.us-west-1.amazonaws.com/photo-1454165804606-c3d57bc86b40.webp */}
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16">
@@ -49,13 +50,31 @@ export default function Guidelines() {
           </div>
         </div>
       </section>
+
+<PreRegisterCTA />
       
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          
+           {/* Eligibility*/}
+           <div className="bg-white rounded-lg p-4 mb-4">
+            <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}>Who Can Participate?
+</h3>
+            <div className="grid md:grid-cols-1 gap-12 items-start">
+            <div>
+              <p className="text-lg text-gray-600 mb-6">
+                We welcome multidisciplinary teams from around the world—whether you’re a technologist, policymaker, researcher, or advocate. If you have a bold idea to address the challenges of generative AI, we want to hear from you. Don’t have a full team? Start the process and pre-register, and you will have to gather the right team. We’ll support you with experts to bring your vision to life.
+
+              </p>              
+            </div>   
+          </div>
+        </div>  
+        </div>
+
+          </section>
+        
+        <section className="py-20 bg-gray-50">
           {/* Timeline Section */}
-          <div className="mb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
             <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}>Key Phases of the Challenge</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
@@ -93,7 +112,7 @@ export default function Guidelines() {
           </div>
 
           {/* Submission Requirements */}
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
+          <div className="bg-white rounded-lg  p-8 mb-16">
             <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}} >Submission Requirements</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
@@ -134,7 +153,7 @@ export default function Guidelines() {
           </div>
 
           {/* Evaluation Criteria */}
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
+          <div className="bg-white rounded-lg p-8 mb-16">
             <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}>Evaluation Criteria</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
@@ -184,19 +203,9 @@ export default function Guidelines() {
             </div>
           </div>
 
-            {/* Eligibility*/}
-           <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
-            <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}>Eligibility</h3>
-            <div className="grid md:grid-cols-1 gap-12 items-start">
-            <div>
-              <p className="text-lg text-gray-600 mb-6">
-                Open to anyone with a policy or technological solution to address the challenges posed by generative AI. Ideally, teams will bring together experts from diverse fields, including digital technology and public policy. 
-              </p>              
-            </div>   
-          </div>
-        </div>  
+           
 
-          {/* Terms*/}
+          {/* Terms
            <div className="bg-white rounded-lg shadow-lg p-8 mb-16">
             <h3 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.2rem'}}>Terms</h3>
             <div className="grid md:grid-cols-1 gap-12 items-start">
@@ -206,10 +215,10 @@ export default function Guidelines() {
               </p>              
             </div>   
           </div>
-        </div>  
+        </div>  */}
 
           
-        </div>
+        
 
 
         

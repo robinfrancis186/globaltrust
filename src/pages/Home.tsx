@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PartnersScroll from '../components/PartnersScroll';
 import CallToAction from '../components/CallToAction';
-import { ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb } from 'lucide-react';
 import Sponsors from '../components/Sponsors';
+
+import PreRegisterCTA from '../components/PreRegisterCTA';
 
 interface FormData {
   fullName: string;
@@ -118,10 +120,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16 hero-content">
-            <h1 className="text-5xl font-bold mb-6 hero-title" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global  Trust Challenge</h1>
-            <p className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '600',textTransform: 'uppercase',fontSize: '2.5rem'}}>Building Trust in the Age of AI: A Global Challenge</p>
-            <p className="text-xl mb-8">Join the Movement to Strengthen Information Ecosystems, Foster Transparency, and Safeguard Democratic Values
-</p>
+            <h1 className="text-5xl font-bold mb-6 hero-title" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global Trust Challenge</h1>
+            <p className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '600',textTransform: 'uppercase',fontSize: '2.5rem'}}>Building Trust in the Age of AI</p>
+            {/*<p className="text-xl mb-8">Join the Movement to Strengthen Information Ecosystems, Foster Transparency, and Safeguard Democratic Values
+</p>*/}
             <a 
               href="#pre-registration"
               onClick={handlePreRegisterClick}
@@ -133,6 +135,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/*Overview */}
       <section className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,7 +159,93 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
         </div>
       </section>
 
-      
+      {/* What We're Looking For Section */}
+      <section className="py-20 bg-gray-50 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>What We're Looking For</h2>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-lg text-gray-600 mb-8">
+                We seek innovative, integrated solutions that combine policy frameworks and technological advancements to address the risks of AI-generated content. Whether you're proposing new tools for content verification, policies to promote transparency, or strategies to enhance media literacy, your ideas can shape the future of trustworthy information ecosystems.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  {
+                    icon: Shield,
+                    title: "Content Verification",
+                    description: "Tools and frameworks for validating AI-generated content"
+                  },
+                  {
+                    icon: Lightbulb,
+                    title: "Policy Innovation",
+                    description: "Novel approaches to regulatory frameworks"
+                  },
+                  {
+                    icon: Target,
+                    title: "Media Literacy",
+                    description: "Solutions for enhanced digital awareness"
+                  },
+                  {
+                    icon: Users,
+                    title: "Collaborative Approach",
+                    description: "Cross-sector partnership solutions"
+                  }
+                ].map((item, index) => (
+                  <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+                    <item.icon className="w-12 h-12 text-indigo-600 mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                    <p className="text-gray-600">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80"
+                alt="Innovation collaboration"
+                className="rounded-lg shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <PreRegisterCTA />
+
+      {/* What Makes This Challenge Unique Section */}
+      <section className="py-20 bg-white relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>What Makes This Challenge Unique</h2>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
+                alt="Team collaboration"
+                className="rounded-lg shadow-xl"
+              />
+            </div>
+            <div>
+              <p className="text-lg text-gray-600 mb-8">
+                This is not just a hackathon or a policy competition—it's a global collaboration that bridges the gap between technology and policy. By fostering cross-sector partnerships, we aim to create solutions that are both practical and scalable, ensuring they can be implemented in diverse contexts around the world.
+              </p>
+              <div className="space-y-6">
+                {[
+                  "Integration of technology and policy solutions",
+                  "Global collaboration across sectors",
+                  "Focus on practical, scalable implementations",
+                  "Support from leading international organizations"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start">
+                    <CheckCircle className="text-indigo-600 mr-3 mt-1" size={24} />
+                    <p className="text-gray-700">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Challenge Mission */}
       <section className="py-20 bg-gray-100 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -179,7 +268,6 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
                 ))}
               </ul>
             </div>
-           
           </div>
         </div>
       </section>
@@ -192,37 +280,7 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
          <Sponsors />
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-grey-100 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Frequently Asked Questions</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                q: "Who can participate?",
-                a: "The challenge is open to individuals, teams, and organizations worldwide who are working on innovative solutions in digital trust and security."
-              },
-              {
-                q: "What is the prize?",
-                a: "The total prize pool includes monetary awards, mentorship opportunities, and potential investment connections."
-              },
-              {
-                q: "How long is the challenge?",
-                a: "The challenge runs for 6 months, with multiple phases including ideation, development, and final presentations."
-              },
-              {
-                q: "How do I apply?",
-                a: "Start by pre-registering through our online form. Once registered, you'll receive detailed information about the application process."
-              }
-            ].map((faq, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold mb-3">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* Pre-registration Form */}
       <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700">
