@@ -9,12 +9,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">Global Trust Challenge</h3>
-            <p className="text-gray-400">Building trust in technology through innovation</p>
+            <p className="text-gray-400" style={{fontStyle: 'italic'}}>Together, We Can Build Trust in the Age of AI</p>
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-gray-400 hover:text-white">About Us</Link></li>
               <li><Link to="/guidelines" className="text-gray-400 hover:text-white">Guidelines</Link></li>
               <li><Link to="/faq" className="text-gray-400 hover:text-white">FAQ</Link></li>
             </ul>

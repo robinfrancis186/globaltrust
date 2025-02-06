@@ -244,7 +244,7 @@ export default function PartnersScroll() {
     <div className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {partners.map((partner, index) => (
-          <a href={partner.url} target="new"><div
+          <a href={partner.url} key={"A" + index} target="new"><div
             key={index}
             className="bg-white rounded-lg shadow-lg p-4 transition-transform hover:scale-105"
           >
