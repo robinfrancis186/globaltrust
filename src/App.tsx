@@ -7,6 +7,7 @@ import Teams from './pages/Teams';
 import Guidelines from './pages/Guidelines';
 import Details from './pages/Details';
 import People from './pages/People';
+import FAQ from './pages/FAQ';
 import ScrollToTop from "./components/ScrollToTop"; 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
           <Route path="/guidelines" element={<Guidelines />} />
           <Route path="/details" element={<Details />} />
           <Route path="/people" element={<People />} />
-          {/* Add other routes as needed */}
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
       </Layout>
     </Router>
