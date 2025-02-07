@@ -41,8 +41,9 @@ export default function Navbar() {
         { name: 'FAQ', href: '/faq' }
       ],
     },
-    { name: 'Events & News', href: '/events' },
+    { name: 'Events', href: '/events' },
     { name: 'Resources', href: '/downloads' },
+    { name: 'Contact', href: '/contact' }
   ];
 
   return (
