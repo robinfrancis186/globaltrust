@@ -275,10 +275,10 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
       {/* Call to Action Section */}
       <CallToAction />
 
-      {/* Partners Section 
+      {/* Partners Section */}
       <section className="py-20 bg-grey-100 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
          <Sponsors />
-      </section> */}
+      </section> 
 
      
 
