@@ -8,6 +8,7 @@ import Guidelines from './pages/Guidelines';
 import Details from './pages/Details';
 import People from './pages/People';
 import FAQ from './pages/FAQ';
+import Contact from './pages/Contact';
 import ScrollToTop from "./components/ScrollToTop"; 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/details" element={<Details />} />
           <Route path="/people" element={<People />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Layout>
     </Router>
