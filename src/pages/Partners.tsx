@@ -1,6 +1,8 @@
 import React from 'react';
 import PartnersScroll from '../components/PartnersScroll';
 import Sponsors from '../components/Sponsors';
+import SponsorsCTA from '../components/SponsorsCTA';
+
 
 const sponsors = [
   {
@@ -47,7 +49,10 @@ export default function Partners() {
 
       {/* Sponsors Section */}
       <Sponsors />
-      
+
+      {/*/CTA */}
+      <SponsorsCTA />
+
     </div>
   );
 }

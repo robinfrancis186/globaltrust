@@ -6,6 +6,7 @@ import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb } from 'lucid
 import Sponsors from '../components/Sponsors';
 
 import PreRegisterCTA from '../components/PreRegisterCTA';
+import SponsorsCTA from '../components/SponsorsCTA';
 
 interface FormData {
   fullName: string;
@@ -163,7 +164,7 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
       <section className="py-20 bg-gray-50 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>What We're Looking For</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 ">
             <div>
               <p className="text-lg text-gray-600 mb-8">
                 We seek innovative, integrated solutions that combine policy frameworks and technological advancements to address the risks of AI-generated content. Whether you're proposing new tools for content verification, policies to promote transparency, or strategies to enhance media literacy, your ideas can shape the future of trustworthy information ecosystems.
@@ -205,7 +206,10 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
                 alt="Innovation collaboration"
                 className="rounded-lg shadow-xl"
               />
+              {/*<div className="py-8 gap-8"><PreRegisterCTA /></div>*/}
             </div>
+           
+            
           </div>
         </div>
       </section>
@@ -272,8 +276,11 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <CallToAction />
+      {/* Call to Action Section 
+      <CallToAction />*/}
+      
+       {/*/CTA */}
+      <SponsorsCTA />
 
       {/* Partners Section */}
       <section className="py-20 bg-grey-100 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
