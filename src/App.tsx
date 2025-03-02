@@ -9,6 +9,8 @@ import Details from './pages/Details';
 import People from './pages/People';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
+import Events from './pages/Events';
+import EventDetail from './pages/EventDetail';
 import ScrollToTop from "./components/ScrollToTop"; 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route path="/people" element={<People />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<EventDetail />} />
         </Routes>
       </Layout>
     </Router>
