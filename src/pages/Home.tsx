@@ -4,7 +4,7 @@ import PartnersScroll from '../components/PartnersScroll';
 import CallToAction from '../components/CallToAction';
 import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb } from 'lucide-react';
 import Sponsors from '../components/Sponsors';
-
+import NewsHighlights from '../components/NewsHighlights';
 import PreRegisterCTA from '../components/PreRegisterCTA';
 import SponsorsCTA from '../components/SponsorsCTA';
 
@@ -136,6 +136,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* News Highlights Section */}
+      <NewsHighlights />
 
       {/*Overview */}
       <section className="py-20 bg-white relative z-10">
@@ -283,9 +286,9 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
       <SponsorsCTA />
 
       {/* Partners Section */}
-      <section className="py-20 bg-grey-100 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
+      {/*<section className="py-20 bg-grey-100 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
          <Sponsors />
-      </section> 
+      </section> */}
 
      
 
