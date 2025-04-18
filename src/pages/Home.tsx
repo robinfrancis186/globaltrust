@@ -15,6 +15,21 @@ interface FormData {
   areaOfInterest: string;
 }
 
+const topSponsors = [
+  {
+    name: "UNESCO",
+    logo: "https://upload.wikimedia.org/wikipedia/wikimania/thumb/5/56/UNESCO_logo.png/320px-UNESCO_logo.png",
+  },
+  {
+    name: "OECD",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OECD_logo.svg/320px-OECD_logo.svg.png",
+  },
+  {
+    name: "IEEE",
+    logo: "https://brand-experience.ieee.org/wp-content/uploads/2016/12/LogoTest-e1481836752230.png",
+  },
+];
+
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const location = useLocation();
@@ -115,24 +130,61 @@ export default function Home() {
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
             backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
-           
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-          <div className="text-white max-w-3xl pt-16 hero-content">
-            <h1 className="text-5xl font-bold mb-6 hero-title" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global Trust Challenge</h1>
-            <p className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '600',textTransform: 'uppercase',fontSize: '2.5rem'}}>Building Trust in the Age of AI</p>
-            {/*<p className="text-xl mb-8">Join the Movement to Strengthen Information Ecosystems, Foster Transparency, and Safeguard Democratic Values
-</p>*/}
-            <a 
-              href="#pre-registration"
-              onClick={handlePreRegisterClick}
-              className="inline-flex items-center bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
-            >
-              Pre-register Now
-              <ArrowRight className="ml-2" size={20} />
-            </a>
+        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:justify-between h-full">
+            <div className="text-white max-w-3xl pt-16 hero-content" style={{paddingTop: '6rem'}}>
+              <h1 className="text-5xl font-bold mb-6 hero-title" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global Trust Challenge</h1>
+              <p className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '600',textTransform: 'uppercase',fontSize: '2.5rem'}}>Building Trust in the Age of Generative AI</p>
+              <a 
+                href="#pre-registration"
+                onClick={handlePreRegisterClick}
+                className="inline-flex items-center bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 mb-8"
+              >
+                Pre-register Now
+                <ArrowRight className="ml-2" size={20} />
+              </a>
+
+              {/* Mobile Sponsors */}
+              <div className="md:hidden">
+                <div className="text-white text-sm font-medium mb-4">Brought to you by</div>
+                <div className="flex flex-row space-x-4 overflow-x-auto pb-4">
+                  {topSponsors.map((sponsor, index) => (
+                    <div 
+                      key={index} 
+                      className="flex-shrink-0 bg-white bg-opacity-90 rounded-lg p-2 w-24 h-12 flex items-center justify-center hover:bg-opacity-100 transition-all duration-200"
+                    >
+                      <img
+                        src={sponsor.logo}
+                        alt={sponsor.name}
+                        className="max-h-8 w-auto object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Desktop Sponsors */}
+            <div className="hidden md:flex flex-col items-end space-y-4 pt-16" style={{paddingTop: '6rem'}}>
+              <div className="text-white text-sm font-medium">Brought to you by</div>
+              <div className="flex flex-col space-y-4">
+                {topSponsors.map((sponsor, index) => (
+                  <div 
+                    key={index} 
+                    className="bg-white bg-opacity-90 rounded-lg p-2 w-32 h-16 flex items-center justify-center hover:bg-opacity-100 transition-all duration-200"
+                  >
+                    <img
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      className="max-h-12 w-auto object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -209,10 +261,7 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
                 alt="Innovation collaboration"
                 className="rounded-lg shadow-xl"
               />
-              {/*<div className="py-8 gap-8"><PreRegisterCTA /></div>*/}
             </div>
-           
-            
           </div>
         </div>
       </section>
@@ -279,18 +328,7 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
         </div>
       </section>
 
-      {/* Call to Action Section 
-      <CallToAction />*/}
-      
-       {/*/CTA */}
       <SponsorsCTA />
-
-      {/* Partners Section */}
-      {/*<section className="py-20 bg-grey-100 relative z-10" style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
-         <Sponsors />
-      </section> */}
-
-     
 
       {/* Pre-registration Form */}
       <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700">
@@ -361,8 +399,7 @@ The challenge is organized by a global coalition, including IEEE SA, OECD-GPAI, 
                   value={formData.areaOfInterest}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                  required
-                >
+                  required>
                   <option value="">Select an area</option>
                   <option value="cybersecurity">Cybersecurity</option>
                   <option value="privacy">Privacy</option>

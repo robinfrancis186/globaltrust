@@ -21,6 +21,8 @@
   -o-background-size: cover;
 }
 
+
+
 @media only screen and (max-height: 800px) and (orientation: portrait) {
   .heroStyle {
     min-height: 60vh !important;
@@ -40,4 +42,33 @@
   .hero-title {
     font-size: 3rem !important;
   }
+  
 }
+
+/* 1179×2556 pixels at 460ppi / For iPhone 14 Pro, iPhone 15 and iPhone 15 Pro 
+@media only screen 
+    and (width: 393px) 
+    and (height: 852px) 
+    and (-webkit-device-pixel-ratio: 3) {
+      .heroStyle {
+        min-height: 60vh !important;
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center;
+      }
+    
+      section.hero-section {
+        height: 60vh !important;
+      }
+    
+      .hero-content {
+        padding-top: 4rem !important;
+      }
+    
+      .hero-title {
+        font-size: 3rem !important;
+      }
+      .h-[600px]{
+        height: 660px;
+      }
+     } */
