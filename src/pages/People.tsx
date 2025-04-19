@@ -7,9 +7,9 @@ import AmbassadorsScroll from '../components/AmbassadorsScroll';
 import JudgesScroll from '../components/JudgesScroll';
 
 const sections = [
-  { id: 'experts', name: 'Contributing Experts', icon: Users },
-  { id: 'ambassadors', name: 'Ambassadors', icon: Award },
   { id: 'judges', name: 'Judges', icon: Gavel },
+  { id: 'ambassadors', name: 'Ambassadors', icon: Award },
+  { id: 'experts', name: 'Contributing Experts', icon: Users },
   { id: 'volunteers', name: 'Volunteers', icon: Heart }
 ];
 
@@ -67,16 +67,18 @@ export default function People() {
         </div>
       </section>
 
-      {/* Expert Section */}
-      <section id="experts" className="py-20 bg-gray-50">
+     
+
+     {/* Judges Section */}
+     <section id="judges" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.2rem'}}>
-            Contributing Experts
+            Judges
           </h2>
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
             The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
           </p>
-          <PartnersScroll />
+          <JudgesScroll />
         </div>
       </section>
 
@@ -93,18 +95,19 @@ export default function People() {
         </div>
       </section>
 
-      {/* Judges Section */}
-      <section id="judges" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.2rem'}}>
-            Judges
-          </h2>
-          <p className="text-xl text-center max-w-3xl mx-auto mb-12">
-            The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
-          </p>
-          <JudgesScroll />
-        </div>
-      </section>
+      {/* Expert Section */}
+      <section id="experts" className="py-20 bg-gray-50">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.2rem'}}>
+                  Contributing Experts
+                </h2>
+                <p className="text-xl text-center max-w-3xl mx-auto mb-12">
+                  The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
+                </p>
+                <PartnersScroll />
+              </div>
+        </section>
+ 
 
       {/* Volunteers Section */}
       <section id="volunteers" className="py-20 bg-white">
