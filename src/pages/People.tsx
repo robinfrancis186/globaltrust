@@ -1,7 +1,10 @@
 import React from 'react';
 import PartnersScroll from '../components/PartnersScroll';
+import AmbassaordsScroll from '../components/AmbassadorsScroll';
 import Sponsors from '../components/Sponsors';
 import { Users, Award, Gavel, Heart } from 'lucide-react';
+import AmbassadorsScroll from '../components/AmbassadorsScroll';
+import JudgesScroll from '../components/JudgesScroll';
 
 const sections = [
   { id: 'experts', name: 'Contributing Experts', icon: Users },
@@ -86,7 +89,7 @@ export default function People() {
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
             The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
           </p>
-          {/* Place content here */}
+          <AmbassadorsScroll/>
         </div>
       </section>
 
@@ -99,7 +102,7 @@ export default function People() {
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
             The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
           </p>
-          {/* Place content here */}
+          <JudgesScroll />
         </div>
       </section>
 

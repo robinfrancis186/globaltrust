@@ -45,12 +45,6 @@ const partners: Partner[] = [
     url: "https://live.worldbank.org/en/experts/d/david-satola"
   },
   {
-    name: "Tanya Perelmuter",
-    role: "Fondation Abeona",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/tanya.jpg",
-    url: "https://www.fondation-abeona.org/collective/tanya-perelmuter/"
-  },
-  {
     name: "Elham Tabassi",
     role: "NIST",
     image: "https://globalchallenge.ai/wp-content/uploads/2024/12/Elham-Tabassi.jpg",
