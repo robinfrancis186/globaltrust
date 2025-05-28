@@ -11,193 +11,193 @@ const partners: Partner[] = [
   {
     name: "Amir Banifatemi",
     role: "AI Commons | Cognizant",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/banifatemi.png",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/banifatemi.png",
     url: "https://www.linkedin.com/in/abanifatemi/"
   },
   {
     name: "Karine Perset",
     role: "OECD",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/karineperset3.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/karineperset3.jpg",
     url: "https://oecd.ai/en/community/karine"
   },
   {
     name: "Konstantinos Karachalios",
     role: "IEEE SA",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/Konstantinos-Picture.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Konstantinos-Picture.jpg",
     url: "https://www.itu.int/en/ITU-T/AI/Pages/karachalios.aspx"
   },
   {
     name: "Sebastian Hallensleben",
     role: "CEN-CENELEC JTC 21",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/sebastian.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/sebastian.jpg",
     url: "https://oecd.ai/en/community/sebastian-hallensleben"
   },
   {
     name: "Mariagrazia Squicciarini",
     role: "UNESCO",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/mariagrazia.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/mariagrazia.jpg",
     url: "https://www.linkedin.com/in/mariagrazia-squicciarini-9a607bba/"
   },
   {
     name: "David Satola",
     role: "World Bank",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/davidsatola.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/davidsatola.jpg",
     url: "https://live.worldbank.org/en/experts/d/david-satola"
   },
   {
     name: "Elham Tabassi",
     role: "NIST",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/Elham-Tabassi.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Elham-Tabassi.jpg",
     url: "https://en.wikipedia.org/wiki/Elham_Tabassi"
   },
   {
     name: "Benoît Bergeret",
     role: "Metalab, Essec Business School",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/benoit-bergeret-1.jpeg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/benoit-bergeret-1.jpeg",
     url: "https://www.linkedin.com/in/benbergeret/"
   },
   {
     name: "Nikita Lukianets",
     role: "OpenEthics",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/nikita2.png",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/nikita2.png",
     url: "https://lukianets.com/about/bio/"
   },
   {
     name: "Alice Pavaloiu",
     role: "OpenEthics",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/Alice-Pavaloiu.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Alice-Pavaloiu.jpg",
     url: "https://www.linkedin.com/in/alice-pavaloiu/"
   },
    {
     name: "Chris Beall",
     role: "Project CONNIE",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/beall.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/beall.jpg",
     url: "https://www.linkedin.com/in/chris-beall-7b2389114/"
   },
   {
     name: "Amanda Leal",
     role: "The Future Society",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/amandaleal.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/amandaleal.jpg",
     url: "https://thefuturesociety.org/team-member/amanda-leal/"
   },
 {
     name: "Lihui Xu",
     role: "UNESCO",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/lxu.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/lxu.jpg",
     url: "https://www.linkedin.com/in/lihuixu/"
   },
 {
     name: "Manpreet Dash",
     role: "AIShield – Powered by Bosch",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/Manpreet-Dash.jpeg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Manpreet-Dash.jpeg",
     url: "https://oecd.ai/en/community/manpreet-dash"
   },
 {
     name: "Ori Freiman",
     role: "McMaster University’s Digital Society Lab",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/orifreiman.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/orifreiman.jpg",
     url: "https://experts.mcmaster.ca/display/freimano"
   },
 {
     name: "Yoav Evenstein",
     role: "AXITRACK",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/yoav.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/yoav.jpg",
     url: "https://www.linkedin.com/in/yoaveve/"
   },
 {
     name: "Towela Nyirenda-Jere",
     role: "Africa-EU Energy Partnership (AEEP)",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/jere.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/jere.jpg",
     url: "https://www.linkedin.com/in/towelajere/"
   },
 {
     name: "David Marti",
     role: "Pour Demain",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/marti.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/marti.jpg",
     url: "https://www.linkedin.com/in/david-b-marti/"
   },
 {
     name: "Edward Teather",
     role: "Amazon Web Services (AWS)",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/teather.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/teather.jpg",
     url: "https://x.com/ed_teather"
   },
 {
     name: "Alexandra Ebert",
     role: "MOSTLY AI",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/ebert.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/ebert.jpg",
     url: "https://mostly.ai/team/alexandra-ebert"
   },
 {
     name: "Ansgar Koene",
     role: "Ernst & Young (EY)",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/koene.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/koene.jpg",
     url: "https://oecd.ai/en/community/ansgar-koene"
   },
 {
     name: "Keita Azuma",
     role: "UNUCRIS",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/Keita-Azuma.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Keita-Azuma.jpg",
     url: "https://cris.unu.edu/keita-azuma"
   },
 {
     name: "Kathleen Walch",
     role: "Cognilytica at Project Management Institute (PMI)",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/walch.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/walch.jpg",
     url: "https://www.linkedin.com/in/kathleen-walch-50185112/"
   },
 {
     name: "Mark Rowlands",
     role: "Amazon Web Services (AWS)",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/rowlands.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/rowlands.jpg",
     url: "https://www.linkedin.com/in/mark-rowlands-649254a/"
   },
 {
     name: "Paul-Joël Kamtchang",
     role: "ADISI-Cameroon",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/Kamtchang.png",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Kamtchang.png",
     url: "https://www.linkedin.com/in/paul-joel-kamtchang-6a8940187/"
   },
 {
     name: "Chris Howard",
     role: "Gartner",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/chris-howard.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/chris-howard.jpg",
     url: "https://www.gartner.com/en/experts/chris-howard"
   },
 {
     name: "Katell Thielemann",
     role: "Gartner",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/katell-thielemann.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/katell-thielemann.jpg",
     url: "https://www.gartner.com/en/experts/katell-thielemann"
   },
 {
     name: "Noah Giansiracusa",
     role: "Bentley University",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/noahgian.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/noahgian.jpg",
     url: "https://www.noahgian.com/"
   },
 {
     name: "Alberto Fernandez Gibaja",
     role: "International IDEA",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/alberto-fernandez-gibaja-staff-2.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/alberto-fernandez-gibaja-staff-2.jpg",
     url: "https://www.idea.int/about-us/people/alberto-fernandez-gibaja"
   },
 {
     name: "Oana Goga",
     role: "Inria",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/oana1.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/oana1.jpg",
     url: "https://www.lix.polytechnique.fr/Labo/Oana.GOGA/"
   },
 {
     name: "Fenwick McKelvey",
     role: "Applied AI Institute, Concordia University",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/fenwick.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/fenwick.jpg",
     url: "https://www.concordia.ca/faculty/fenwick-mckelvey.html"
   },
 {
     name: "Dominic Wilhelm",
     role: "The Global Trust Project",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/dominicwilhelm.png",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/dominicwilhelm.png",
     url: "https://www.theglobaltrustproject.com/"
   },
 {
@@ -209,25 +209,25 @@ const partners: Partner[] = [
 {
     name: "Sarah Bérubé",
     role: "OECD",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/sarahberube.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/sarahberube.jpg",
     url: "https://www.linkedin.com/in/sarah-b%C3%A9rub%C3%A9-034190116/"
   },
 {
     name: "Jamie Berryhill",
     role: "OECD",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/berryhill2.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/berryhill2.jpg",
     url: "https://jamieberryhill.com/"
   },
 {
     name: "Denia Psarrou",
     role: "IEEE SA",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/denia-1.png",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/denia-1.png",
     url: "https://www.linkedin.com/in/denia-p-b5bb31170/"
   },
 {
     name: "Moira Patterson",
     role: "IEEE SA",
-    image: "https://globalchallenge.ai/wp-content/uploads/2024/12/moirapatterson.jpg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/moirapatterson.jpg",
     url: "https://www.linkedin.com/in/moira-s-patterson-896a1a2/"
   },
   // Add more partners as needed
