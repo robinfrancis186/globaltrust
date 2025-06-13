@@ -29,7 +29,8 @@ export default function Guidelines() {
           <div className="grid md:grid-cols-1 gap-12 items-start">
             <div>
               <p className="text-lg text-gray-600 mb-6">
-                We seek innovative, integrated solutions that combine policy frameworks and technological advancements to address the risks of AI-generated content. Whether you’re proposing new tools for content verification, policies to promote transparency, or strategies to enhance media literacy, your ideas can shape the future of trustworthy information ecosystems. 
+                The Global Trust Challenge seeks groundbreaking solutions that combine technological innovation with policy frameworks to address the challenges of AI-generated content.
+
               </p>
               <p className="text-lg text-gray-600 mb-6" style={{marginBottom:'20px'}}>Submissions should incorporate:</p>
               <ul className="space-y-4 text-lg text-gray-600">

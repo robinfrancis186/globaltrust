@@ -100,33 +100,33 @@ export default function Details() {
         </div>
       </section>
 
-      {/* How to Participate */}
+      {/* How It Works */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-            How to Participate
+            How It Works
           </h2>
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {[
               {
                 icon: Users,
-                title: "Register Your Team",
-                description: "Submit your team registration"
+                title: "Phase 1 Proposal",
+                description: "Submit your idea. Teams propose novel policy+tech solutions to build trust. Timeline: Launch Q1 2025; proposals due by end of Q2 2025. For participants: Expert feedback on ideas; ~10 teams advance to Phase 2 and gain recognition on our site and mentorship."
               },
               {
                 icon: Lightbulb,
-                title: "Submit Proposal",
-                description: "Submit your innovative solution and implementation plan"
+                title: "Phase 2 Prototype",
+                description: "Build your solution. Each Phase 1 winner receives $50,000 to develop a prototype. Timeline: Mid 2025 – Early 2026. Teams get a sandbox testing environment and mentorship as they refine their idea. Outcome: Working prototypes submitted; jury selects finalists for Phase 3."
               },
               {
                 icon: Target,
-                title: "Prototype Development",
-                description: "Design and test your prototype"
+                title: "Phase 3 Pilot",
+                description: "Test in the real world. Finalist teams each get $250,000 to pilot their solution with partner organizations. Timeline: Mid – Late 2026. This phase validates solutions in real settings and measures impact. Outcome: Final evaluation to choose winners."
               },
               {
                 icon: Trophy,
-                title: "Pilot and Scale",
-                description: "Teams develop strategies for scaling their solutions to maximize impact."
+                title: "Final Awards",
+                description: "Scale your impact. Up to 5 winning teams share $5 Million in prizes (Early 2027). Winners receive global recognition, present at high-profile events, and feature in international reports – opening doors to scale their solutions globally."
               }
             ].map((step, index) => (
               <div key={index} className="relative">

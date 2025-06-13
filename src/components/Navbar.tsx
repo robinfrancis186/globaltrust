@@ -35,7 +35,7 @@ export default function Navbar() {
       name: 'About the Challenge',
       href: '#',
       submenu: [
-        { name: 'Challenge Details', href: '/guidelines' },
+        // { name: 'Challenge Details', href: '/guidelines' },
         { name: 'People', href: '/people' },
         { name: 'Partners & Sponsors', href: '/partners' },
         { name: 'FAQ', href: '/faq' }

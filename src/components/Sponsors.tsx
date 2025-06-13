@@ -6,25 +6,25 @@ interface Sponsor {
 }
 
 const sponsors = [
+    {
+    name: "IEEE",
+    logo: "https://brand-experience.ieee.org/wp-content/uploads/2016/12/LogoTest-e1481836752230.png",
+  },
+   {
+    name: "OECD",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OECD_logo.svg/320px-OECD_logo.svg.png",
+  },
+  {
+    name: "AI Commons",
+    logo: "https://ai-commons.org/wp-content/themes/aicommons/assets/img/logo.svg",
+  },
   {
     name: "UNESCO",
     logo: "https://upload.wikimedia.org/wikipedia/wikimania/thumb/5/56/UNESCO_logo.png/320px-UNESCO_logo.png",
   },
   {
-    name: "OECD",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OECD_logo.svg/320px-OECD_logo.svg.png",
-  },
-  {
-    name: "IEEE",
-    logo: "https://brand-experience.ieee.org/wp-content/uploads/2016/12/LogoTest-e1481836752230.png",
-  },
-  {
     name: "World Bank",
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/The_World_Bank_logo.svg/320px-The_World_Bank_logo.svg.png",
-  },
-  {
-    name: "AI Commons",
-    logo: "https://superfluid.io/ai-commons/images/new/Asset12-AI-Icon.svg",
   },
   {
     name: "IDB",
@@ -85,6 +85,7 @@ export default function Sponsors() {
                     {sponsor.name}
                   </div>
                 </div>
+                <div className=" flex items-center justify-center" style={{color: 'grey', fontSize: '0.8rem'}}>{sponsor.name}</div>
               </div>
             ))}
           </div>
@@ -114,6 +115,7 @@ export default function Sponsors() {
                     {sponsor.name}
                   </div>
                 </div>
+                <div className=" flex items-center justify-center" style={{color: 'grey', fontSize: '0.8rem'}}>{sponsor.name}</div>
               </div>
             ))}
           </div>

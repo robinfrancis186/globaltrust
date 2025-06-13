@@ -43,25 +43,22 @@ export default function SponsorsCTA() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            Seeking Sponsors and Partners
+            Interested in partnering with us? 
           </h2>
 
           {/* Description with improved readability */}
           <p className="text-xl text-gray-200 mb-12 leading-relaxed max-w-2xl mx-auto">
-            The coalition is seeking new financial and in-kind sponsors but also communications 
-            and amplification partners to raise awareness about the Challenge and help recruit 
-            teams to compete.
+            Contact us at <span style={{color: 'white', fontWeight:'500'}}>global-trust-challenge-team@ieee.org</span> to start the conversation or click below to fill out a sponsorship inquiry.
+            
           </p>
 
           {/* Button with unique hover effect */}
           <a
-            href="https://oecd.ai/en/wonk/global-challenge-partners"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/contact"
             className="group relative inline-flex items-center bg-indigo-600  text-white px-8 py-4 rounded-lg overflow-hidden transition-all duration-300 "
           >
             <span className="relative z-10 font-semibold flex items-center">
-              Read the Call for Partners
+              Become a Sponsor
               <ArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
             </span>
             <div className="absolute inset-0 " />

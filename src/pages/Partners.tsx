@@ -2,24 +2,21 @@ import React from 'react';
 import PartnersScroll from '../components/PartnersScroll';
 import Sponsors from '../components/Sponsors';
 import SponsorsCTA from '../components/SponsorsCTA';
+import { CheckCircle, Globe, Award, Eye, Heart } from 'lucide-react';
 
 
 const sponsors = [
-  {
-    name: "UNESCO",
-    logo: "https://upload.wikimedia.org/wikipedia/wikimania/thumb/5/56/UNESCO_logo.png/320px-UNESCO_logo.png",
+   {
+    name: "IEEE",
+    logo: "https://brand-experience.ieee.org/wp-content/uploads/2016/12/LogoTest-e1481836752230.png",
   },
   {
     name: "OECD",
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OECD_logo.svg/320px-OECD_logo.svg.png",
   },
   {
-    name: "IEEE",
-    logo: "https://brand-experience.ieee.org/wp-content/uploads/2016/12/LogoTest-e1481836752230.png",
-  },
-  {
-    name: "World Bank",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/The_World_Bank_logo.svg/320px-The_World_Bank_logo.svg.png",
+    name: "AI Commons",
+    logo: "https://ai-commons.org/wp-content/themes/aicommons/assets/img/logo.svg",
   },
   // Add more sponsors as needed
 ];
@@ -40,7 +37,8 @@ export default function Partners() {
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16">
             <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Partners & Sponsors</h1>
-            <p className="text-xl mb-8">The challenge is brought to you by a coalition of organizations caring about how AI is impacting our future and how we can evolve with AI.
+            <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>Coalition of Trust-Builders</h2>
+            <p className="text-xl mb-8">The Global Trust Challenge is enabled by leading organizations worldwide committed to shaping a trustworthy AI future.
 </p>
           </div>
         </div>
@@ -49,6 +47,61 @@ export default function Partners() {
 
       {/* Sponsors Section */}
       <Sponsors />
+
+      {/* Partnership Benefits Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+              Why Partner With Us?
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Partners can contribute in various ways from funding the prize pool, providing in-kind resources like cloud services or data, to mentoring participants or hosting pilot tests. We welcome a range of collaboration opportunities to suit your organization's strengths.
+              
+            </p>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto" style={{paddingTop: '1.2rem'}}>By partnering with the Global Trust Challenge, your organization will...</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                icon: Globe,
+                title: "Global Impact",
+                description: "Support a worldwide initiative tackling a pressing issue. Your sponsorship helps mobilize multi-disciplinary teams across the globe to restore trust in information."
+              },
+              {
+                icon: Award,
+                title: "Innovation & Leadership",
+                description: "Align your brand with cutting-edge innovation and policy leadership. You'll be at the forefront of shaping how society combats AI-driven misinformation."
+              },
+              {
+                icon: Eye,
+                title: "Visibility & Recognition",
+                description: "Gain prominent recognition among international experts, governments, and tech leaders. Partners are featured on our website, in media coverage, and at high-profile events associated with the Challenge."
+              },
+              {
+                icon: Heart,
+                title: "Ethical Commitment",
+                description: "Demonstrate your commitment to ethical AI, transparency, and societal well-being. Supporting this challenge visibly shows you are part of the solution to one of AI's biggest challenges."
+              }
+            ].map((benefit, index) => (
+              <div key={index} className="flex items-start bg-gray-50 p-8 rounded-lg shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
+                <div className="flex-shrink-0">
+                  <div className="p-3 bg-indigo-100 rounded-lg">
+                    <benefit.icon className="w-8 h-8 text-indigo-600" />
+                  </div>
+                </div>
+                <div className="ml-6">
+                  <h3 className="text-xl font-bold mb-3" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+                    {benefit.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/*/CTA */}
       <SponsorsCTA />
