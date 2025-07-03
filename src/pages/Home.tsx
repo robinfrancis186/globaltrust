@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // import PartnersScroll from '../components/PartnersScroll';
 import CallToAction from '../components/CallToAction';
-import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb, Calendar,Trophy } from 'lucide-react';
+import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb, Calendar,Trophy, Globe, Scale, Cog, Stamp, Rocket, BookCheck, Scaling, PersonStanding  } from 'lucide-react';
 import Sponsors from '../components/Sponsors';
 import NewsHighlights from '../components/NewsHighlights';
 import PreRegisterCTA from '../components/PreRegisterCTA';
 import SponsorsCTA from '../components/SponsorsCTA';
+import parse from 'html-react-parser';
 
 interface FormData {
   fullName: string;
@@ -210,16 +211,21 @@ export default function Home() {
       </section>
 
       {/*Overview */}
-      <section className="py-20 bg-white relative z-10">
+      <section className="py-10 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Overview</h2>
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Can You Still Tell What’s Real?</h2>
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <p className="text-lg text-gray-600 mb-6">
-              Generative AI is transforming how information is created and shared. While this opens exciting possibilities, it also introduces new risks from deepfakes to disinformation that <span style={{fontWeight:'600'}}> undermine public trust</span> in what we see online.
+                Misinformation is amplifying—and AI is supercharging it. 
+                Deepfakes, fake news, synthetic voices… the line between real and fake is blurring fast.
                 </p>
                 <p className="text-lg text-gray-600 mb-6">
-                <span style={{fontWeight:'600'}}>The Global Trust Challenge</span> was launched to confront this issue head-on. We’re <span style={{fontWeight:'600'}}>rallying innovators worldwide</span> to develop bold solutions combining <span style={{fontWeight:'600'}}>technological tools and policy innovations</span> that can strengthen our defenses against AI-driven misinformation. <span style={{fontWeight:'600'}}>Backed by a global coalition </span> (IEEE, OECD, AI Commons, and more) and born from a G7 call to action, this challenge embodies international collaboration to ensure AI advances with <span style={{fontWeight:'600'}}>integrity, transparency, and accountability</span>.
+                That's what the <span style={{fontWeight:'600'}}>Global Trust Challenge (GTC) </span> wants to remedy. Born out of a G7 call to action, as a rallying cry to rebuild trust in the digital age, the GTC is being launched by a <span style={{fontWeight:'600'}}>global coalition of changemakers</span>
+                (IEEE, OECD, AI Commons).<br/>
+                We're calling on technologists, policymakers, and truth defenders everywhere to create bold, practical solutions—technical tools and policies that work together to <span style={{fontWeight:'600'}}>fight back against AI-driven misinformation</span>.
+                More than just a challenge, this is a movement to ensure  that the future of AI is built on transparency, accountability, and truth.
+
                 </p>
             </div>
             <div>
@@ -234,58 +240,110 @@ export default function Home() {
       </section>
 
        {/* What Makes This Challenge Unique Section */}
-       <section className="py-20 bg-white relative z-10">
+       <section className="py-10 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', marginBottom:'1rem'}}>What Makes This Challenge Unique</h2>
           <p className="text-3xl font-bold mb-12" style={{fontWeight: '600', fontSize:'1.4rem', marginBottom:'1rem'}}>A Global Call — For Everyone</p>
-          <p className="text-lg text-gray-600 mb-6"> 
-            
-This isn't just for governments or tech experts. If you have an idea, a voice, or a vision—you belong here.<br/>
-We've built a global platform to support bold ideas from anyone, anywhere. 
-Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea—we want to hear from you.
-
+          <p className="text-lg text-gray-600 mb-6">        
+            This isn't just for governments or tech experts. If you have an idea, a voice, or a vision—you belong here.<br/>
+            We've built a global platform to support bold ideas from anyone, anywhere. 
+            Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea—we want to hear from you.
           </p>
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
-                alt="Team collaboration"
-                className="rounded-lg shadow-xl"
-              />
-            </div>
-            <div>
-              {/* <p className="text-lg text-gray-600 mb-8">
-                This is not just a hackathon or a policy competition—it's a global collaboration that bridges the gap between technology and policy. By fostering cross-sector partnerships, we aim to create solutions that are both practical and scalable, ensuring they can be implemented in diverse contexts around the world.
-              </p> */}
-              <div className="space-y-6">
-                  {/*#1 */}
-                  <div className="flex items-start">
-                    <CheckCircle className="text-indigo-600 mr-3 mt-1" size={24} />
-                    <p className="text-gray-700"><span style={{fontWeight:700}}>A Global Coalition:</span> This challenge is <span style={{fontWeight:500}}>organized by leading international organizations</span> and stems from a G7 mandate. It leverages an unprecedented alliance (OECD, UNESCO, IEEE, AI Commons, etc.), giving it <span style={{fontWeight:500}}>global legitimacy and reach</span> that typical competitions lack.</p>
-                  </div>
-                   {/*#2 */}
-                   <div className="flex items-start">
-                    <CheckCircle className="text-indigo-600 mr-3 mt-1" size={24} />
-                    <p className="text-gray-700"><span style={{fontWeight:700}}>Tech + Policy Integration:</span> We aren’t seeking just tech fixes. <span style={{fontWeight:500}}>Every solution must combine policy and technology</span>. By requiring this interdisciplinary approach, outcomes are more holistic and implementable than a typical tech hackathon’s results. </p>
-                  </div>
-                  {/*#3 */}
-                  <div className="flex items-start">
-                    <CheckCircle className="text-indigo-600 mr-3 mt-1" size={24} />
-                    <p className="text-gray-700"><span style={{fontWeight:700}}>Worldwide Reach:</span> : Whether you’re in Nairobi, New York, or New Delhi you can compete. <span style={{fontWeight:500}}>Teams from anywhere</span> are invited, ensuring global perspectives shape solutions that work <span style={{fontWeight:500}}>everywhere</span>.</p>
-                  </div>
-                  {/*#4 */}
-                  <div className="flex items-start">
-                    <CheckCircle className="text-indigo-600 mr-3 mt-1" size={24} />
-                    <p className="text-gray-700"><span style={{fontWeight:700}}>•	Real-World Impact:</span> This isn’t an ideas contest that ends on paper. <span style={{fontWeight:500}}>Top teams will partner with institutions to pilot their solutions</span> in real environments. The best ideas here can directly influence policies and tools adopted worldwide, far beyond the competition itself.</p>
-                  </div>
-              </div>
-            </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+                        {
+                          icon: Users,
+                          phase: "Phase 1",
+                          title: "Inclusive Contribution",
+                          duration: "",
+                          description: "Enables diversity, collaboration, and global scalability. \n\n We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI."
+                        },
+                        {
+                          icon: Globe,
+                          phase: "Phase 2",
+                          title: "Global Validation",
+                          duration: "",
+                          description: "Designed to create practical prototypes, test them in real-world environments, and measure impact.\n\n A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots."
+                        },
+                        {
+                          icon: Scale,
+                          phase: "Phase 3",
+                          title: "Building Global Intelligence",
+                          duration: "",
+                          description: "Combining policy and technology solutions — integrated, actionable models.\n\nThe Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age."
+                        }
+                      ].map((item, index) => (
+                        <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md">
+                          <item.icon className="w-12 h-12 text-indigo-600 mb-4" />
+                          {/* <h4 className="text-lg font-semibold text-indigo-600 mb-2">{item.phase}</h4> */}
+                          <h5 className="text-xl font-bold mb-2">{item.title}</h5>
+                          {/* <p className="text-gray-600 mb-2">{item.duration}</p> */}
+                          <p className="text-gray-500">{item.description}</p>
+                        </div>
+                      ))}
+
+            
           </div>
+       
+        </div>
+      </section>
+
+      {/* What We Provide Section */ }
+      <section className="py-10 bg-white relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', marginBottom:'1rem'}}>What We Provide</h2>
+          
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+                        {
+                          icon: Lightbulb,
+                          phase: "Phase 1",
+                          title: "Context",
+                          duration: "",
+                          description: "Key insights from leading AI and misinformation researchers — grounding ideas in the latest thinking and real-world relevance."
+                        },
+                        {
+                          icon: Cog,
+                          phase: "Phase 2",
+                          title: "Infrastructure",
+                          duration: "",
+                          description: "A platform to prototype, test, and showcase solutions — with tools and pathways to support development."
+                        },
+                        {
+                          icon: Stamp,
+                          phase: "Phase 3",
+                          title: "Legitimacy",
+                          duration: "",
+                          description: "Backed by global institutions like IEEE, OECD, and more — reinforcing credibility and trust."
+                        },
+                        {
+                          icon: Rocket,
+                          phase: "Phase 3",
+                          title: "Opportunity",
+                          duration: "",
+                          description: "Routes to real impact, policy dialogue, and funding — helping your solution grow beyond the challenge."
+                        }
+                      ].map((item, index) => (
+                        <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md">
+                          <item.icon className="w-12 h-12 text-indigo-600 mb-4" />
+                          {/* <h4 className="text-lg font-semibold text-indigo-600 mb-2">{item.phase}</h4> */}
+                          <h5 className="text-xl font-bold mb-2">{item.title}</h5>
+                          {/* <p className="text-gray-600 mb-2">{item.duration}</p> */}
+                          <p className="text-gray-500">{item.description}</p>
+                        </div>
+                      ))}
+
+            
+          </div>
+       
         </div>
       </section>
 
 
-      {/* What we are looking for */}
+
+      {/* Is This for You Section */}
        <section className="py-20 bg-gray-50 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -374,7 +432,7 @@ Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea�
       </section>
 
  <section className="py-10 bg-gray-50">
-          {/* Key Phases of the challenge */}
+          {/* The challenge */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
             <div className="text-center mb-12">
              <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>The Challenge</h2>
@@ -383,28 +441,28 @@ Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea�
             </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8 py-5">
               {[
                 {
                   icon: Calendar,
                   phase: "Phase 1",
                   title: "Proposal",
                   duration: "",
-                  description: "Teams propose integrated models combining new policies and technologies, outlining implementation plans, stakeholders, resources, and expected outcomes."
+                  description: "Submit your idea — policy + tech solutions to build trust.<br\><br\><ul style='list-style: inside;'><li>Expert feedback </li> <li>~10 teams advance </li><li> Recognition & mentorship </li></ul>"
                 },
                 {
                   icon: Users,
                   phase: "Phase 2",
                   title: "Prototype",
                   duration: "",
-                  description: "Teams design and test prototypes based on their policy and technological solutions. Prototypes are evaluated in real-world settings."
+                  description: "Build it with support.<br\><br\><ul style='list-style: inside;'><li>$50K funding per team</li><li>Mentorship + sandbox</li><li>Submit working prototype</li></ul>"
                 },
                 {
                   icon: CheckCircle,
                   phase: "Phase 3",
                   title: "Pilot",
                   duration: "",
-                  description: "Successful prototypes are piloted in collaboration with institutional partners. Teams develop strategies for scaling their solutions to maximize impact."
+                  description: "Test in real-world settings.<br\><br\><ul style='list-style: inside;'><li>$250K per finalist team></li><li>Partner-led pilots</li><li>Impact measured</li></ul>"
                 }
               ].map((item, index) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-md">
@@ -412,42 +470,71 @@ Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea�
                   <h4 className="text-lg font-semibold text-indigo-600 mb-2">{item.phase}</h4>
                   <h5 className="text-xl font-bold mb-2">{item.title}</h5>
                   {/* <p className="text-gray-600 mb-2">{item.duration}</p> */}
-                  <p className="text-gray-500">{item.description}</p>
+                  <p className="text-gray-500">{parse(item.description)}</p>
                 </div>
               ))}
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8" > 
+              <div></div>
+              <div className="bg-white p-6 rounded-lg shadow-md  h-full" style={{padding: '50px 40px'}} >
+                <Trophy className="w-12 h-12 text-indigo-600 mb-4" />
+                
+                <h4 className="text-lg font-semibold text-indigo-600 mb-2">Final Awards</h4>
+                <p className="text-gray-500 ">
+                  <ul style={{listStyle:"inside"}}>
+                    <li className='li-award'>Cash prize for winning teams</li>
+                    <li className='li-award'>Present at major events</li>
+                    <li className='li-award'>Spotlight in global reports</li>
+                  </ul>
+                </p>
+              </div>   
+              <div></div>
+            </div>
+            
           </div>
+
+          
  
       </section>
 
-        {/* How It Works */}
+        {/* How Ideas Are Selected Section */}
       <section className="py-10 bg-gray-50" style={{paddingTop:'5px'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-            How It Works
+          <h2 className="text-3xl font-bold text-center mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+            How Ideas Are Selected
           </h2>
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto py-5">
+            Submissions will be reviewed by an independent panel of global experts — spanning AI, law, digital policy, civil society, and ethics. Ideas will be assessed based on:
+          
+          </p>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
               {
-                icon: Users,
-                title: "Phase 1 Proposal",
-                description: "Submit your idea. Teams propose novel policy+tech solutions to build trust. Timeline: Launch Q1 2025; proposals due by end of Q2 2025. For participants: Expert feedback on ideas; ~10 teams advance to Phase 2 and gain recognition on our site and mentorship."
+                icon: Target,
+                title: "Relevance",
+                description: "Does it meaningfully tackle AI-driven mistrust?"
               },
               {
                 icon: Lightbulb,
-                title: "Phase 2 Prototype",
-                description: "Build your solution. Each Phase 1 winner receives $50,000 to develop a prototype. Timeline: Mid 2025 – Early 2026. Teams get a sandbox testing environment and mentorship as they refine their idea. Outcome: Working prototypes submitted; jury selects finalists for Phase 3."
+                title: "Originality",
+                description: "Is the idea novel or visionary?"
               },
               {
-                icon: Target,
-                title: "Phase 3 Pilot",
-                description: "Test in the real world. Finalist teams each get $250,000 to pilot their solution with partner organizations. Timeline: Mid – Late 2026. This phase validates solutions in real settings and measures impact. Outcome: Final evaluation to choose winners."
+                icon: BookCheck,
+                title: "Feasibility",
+                description: "Could it be implemented or piloted?"
               },
               {
-                icon: Trophy,
-                title: "Final Awards",
-                description: "Scale your impact. Up to 5 winning teams share $5 Million in prizes (Early 2027). Winners receive global recognition, present at high-profile events, and feature in international reports – opening doors to scale their solutions globally."
+                icon: Scaling,
+                title: "Scalability",
+                description: "Can it grow or inform larger systems?"
+              },
+              {
+                icon: PersonStanding,
+                title: "Values",
+                description: "Does it promote transparency, equity, and accountability?"
               }
+              
             ].map((step, index) => (
               <div key={index} className="relative">
                 <div className="bg-white p-6 rounded-lg shadow-lg text-center h-full">
@@ -455,15 +542,16 @@ Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea�
                   <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
                   <p className="text-gray-600">{step.description}</p>
                 </div>
-                {index < 3 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <ArrowRight className="w-8 h-8 text-indigo-600" />
-                  </div>
-                )}
+                
               </div>
             ))}
+
           </div>
+
+          
         </div>
+
+        
       </section>
       {/* Call to Action Section */}
       <PreRegisterCTA />

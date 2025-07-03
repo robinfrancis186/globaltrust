@@ -138,7 +138,7 @@ export default function Events() {
       </section>
 
       {/* Filter and Search Section */}
-      <section className="py-8 bg-white shadow-md">
+{/*       <section className="py-8 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex space-x-2">
@@ -195,7 +195,7 @@ export default function Events() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Content Section */}
       <section className="py-16 bg-gray-50">
