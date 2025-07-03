@@ -43,7 +43,7 @@ export default function SponsorsCTA() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            Interested in partnering with us? 
+            WHY NOT PARTNER WITH US? 
           </h2>
 
           {/* Description with improved readability */}

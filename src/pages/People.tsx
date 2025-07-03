@@ -31,7 +31,7 @@ export default function People() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[600px] overflow-hidden -mt-16">
+      <section className="relative h-[500px] overflow-hidden -mt-16">
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
@@ -44,7 +44,7 @@ export default function People() {
             <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '5.5rem'}}>
               People
             </h1>
-            <p className="text-xl mb-8">Collaborating to build trust in emerging technologies</p>
+            <p className="text-xl mb-8">People contributing to trust in technology</p>
           </div>
         </div>
       </section>
@@ -76,7 +76,9 @@ export default function People() {
             Judges
           </h2>
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
-            The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
+            The Global Trust Challenge has been shaped with the insight and support of world-leading experts across AI, policy, law, and media.
+Each of our judges brings deep experience in advancing responsible innovation and a commitment to restoring trust in the digital age.
+
           </p>
           <JudgesScroll />
         </div>
@@ -89,7 +91,7 @@ export default function People() {
             Ambassadors
           </h2>
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
-            The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
+            Challenge Ambassadors help bring the Global Trust Challenge to life by championing its mission in their regions, mobilizing local networks, and spotlighting solutions that uphold trust and integrity in the age of AI.
           </p>
           <AmbassadorsScroll/>
         </div>
@@ -113,10 +115,12 @@ export default function People() {
       <section id="volunteers" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.2rem'}}>
-            Volunteers
+            Want to help shape a more trustworthy digital future?
           </h2>
           <p className="text-xl text-center max-w-3xl mx-auto mb-12">
-            The Global Trust Challenge has been developed with the support and collaboration of a multi-disciplinary group of experts from around the world.
+            We’re looking for passionate volunteers to support the Global Trust Challenge across outreach, mentorship, coordination, and more. Whatever your background, there’s a role for you.
+            Volunteers will support outreach, mentorship, coordination, and event facilitation to help participants and partners throughout the Challenge.
+
           </p>
           {/* Place content here */}
         </div>

@@ -11,8 +11,8 @@ import SponsorsCTA from '../components/SponsorsCTA';
 interface FormData {
   fullName: string;
   email: string;
-  organization: string;
   areaOfInterest: string;
+  yourIdea: string;
 }
 
 const topSponsors = [
@@ -37,8 +37,8 @@ export default function Home() {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     email: '',
-    organization: '',
     areaOfInterest: '',
+    yourIdea: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -73,6 +73,13 @@ export default function Home() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+   const handleInputChangetextArea = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -229,7 +236,15 @@ export default function Home() {
        {/* What Makes This Challenge Unique Section */}
        <section className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>What Makes This Challenge Unique</h2>
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', marginBottom:'1rem'}}>What Makes This Challenge Unique</h2>
+          <p className="text-3xl font-bold mb-12" style={{fontWeight: '600', fontSize:'1.4rem', marginBottom:'1rem'}}>A Global Call — For Everyone</p>
+          <p className="text-lg text-gray-600 mb-6"> 
+            
+This isn't just for governments or tech experts. If you have an idea, a voice, or a vision—you belong here.<br/>
+We've built a global platform to support bold ideas from anyone, anywhere. 
+Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea—we want to hear from you.
+
+          </p>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <img
@@ -275,10 +290,16 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              What We're Looking For
+              Is This for You?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The Global Trust Challenge seeks groundbreaking solutions that combine technological innovation with policy frameworks to address the challenges of AI-generated content.
+              Anyone with a bold idea - students, startups, nonprofits, researchers, policymakers, designer - if you have something to say or build, we want to hear it.
+              </p>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto py-5">
+              Whether you're a solo thinker or part of a global team, you're invited.
+                </p>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online - through innovation, collaboration, and vision.
             </p>
           </div>
 
@@ -288,22 +309,22 @@ export default function Home() {
                 {
                     icon: Shield,
                     title: "Impact-Driven",
-                    description: "Solutions should strengthen verification and trustworthiness of AI-generated content, building a world where people can confidently rely on information"
+                    description: "Strengthen how we verify and trust AI-generated content - so people can rely on what they see and hear."
                   },
                   {
                     icon: Lightbulb,
                     title: "Ambitious & Visionary",
-                    description: "Present a forward-thinking idea that pushes beyond today's standard approaches a novel strategy to redefine how we uphold information integrity globally"
+                    description: "Go beyond today's standard approaches. We're seeking solutions that rethink how we uphold information integrity at global scale."
                   },
                   {
                     icon: Target,
                     title: "Tech + Policy Integration",
-                    description: "Blend technology and policy in your proposal. Truly effective solutions will blend cutting-edge tech tools and smart policy frameworks to be practical and holistic in the real world"
+                    description: "The best solutions combine technology and policy. Think tools plus rules - practical, holistic, and ready for the real world."
                   },
                   {
                     icon: Users,
                     title: "Feasible & Scalable",
-                    description: "Design with implementation in mind. Consider the stakeholders, resources, and incentives needed to turn your idea into a sustainable, widely adopted solution"
+                    description: "Your solution doesn't have to be perfect - but it should be realistic, sustainable, and able to grow."
                   }
               ].map((item, index) => (
                 <div key={index} className="flex items-start bg-white p-6 rounded-lg shadow-md transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
@@ -352,11 +373,11 @@ export default function Home() {
         </div>
       </section>
 
- <section className="py-20 bg-gray-50">
+ <section className="py-10 bg-gray-50">
           {/* Key Phases of the challenge */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
             <div className="text-center mb-12">
-             <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>Key Phases of the Challenge</h2>
+             <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>The Challenge</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               The Challenge is divided into three phases, with a rigorous evaluation by a neutral, expert jury at the end of each phase to identify the most promising solutions that will move forward and receive recognition.
             </p>
@@ -367,21 +388,21 @@ export default function Home() {
                 {
                   icon: Calendar,
                   phase: "Phase 1",
-                  title: "Proposal Submission",
+                  title: "Proposal",
                   duration: "",
                   description: "Teams propose integrated models combining new policies and technologies, outlining implementation plans, stakeholders, resources, and expected outcomes."
                 },
                 {
                   icon: Users,
                   phase: "Phase 2",
-                  title: "Prototype Development",
+                  title: "Prototype",
                   duration: "",
                   description: "Teams design and test prototypes based on their policy and technological solutions. Prototypes are evaluated in real-world settings."
                 },
                 {
                   icon: CheckCircle,
                   phase: "Phase 3",
-                  title: "Pilot and Scale",
+                  title: "Pilot",
                   duration: "",
                   description: "Successful prototypes are piloted in collaboration with institutional partners. Teams develop strategies for scaling their solutions to maximize impact."
                 }
@@ -400,7 +421,7 @@ export default function Home() {
       </section>
 
         {/* How It Works */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-10 bg-gray-50" style={{paddingTop:'5px'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
             How It Works
@@ -483,7 +504,7 @@ export default function Home() {
       {/* Pre-registration Form */}
       <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', color:'#ffffff'}}>Pre-registration Form</h2>
+          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', color:'#ffffff'}}>Bring your idea to life. Join the Challenge.</h2>
           <p className="text-xl text-indigo-100 max-w-3xl mx-auto">Please complete this form to register your interest in competing as part of the Global Challenge to Build Trust in the Age of Generative AI. We will be in touch when the official launch is approaching.</p>
           <form onSubmit={handleSubmit} className="p-8 rounded-lg ">
             {submitStatus.type && (
@@ -526,36 +547,34 @@ export default function Home() {
                   required
                 />
               </div>
-              <div>
-                <label htmlFor="organization" className="block text-sm font-medium text-indigo-100 mb-1">
-                  Organization
-                </label>
-                <input
-                  id="organization"
-                  name="organization"
-                  type="text"
-                  value={formData.organization}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                />
-              </div>
+              
               <div>
                 <label htmlFor="areaOfInterest" className="block text-sm font-medium text-indigo-100 mb-1">
-                  Area of Interest
+                  What are you interested in?
                 </label>
-                <select
+                <input
                   id="areaOfInterest"
                   name="areaOfInterest"
-                  value={formData.areaOfInterest}
+                  type="text"
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                   required>
-                  <option value="">Select an area</option>
-                  <option value="cybersecurity">Cybersecurity</option>
-                  <option value="privacy">Privacy</option>
-                  <option value="blockchain">Blockchain</option>
-                  <option value="ai">Artificial Intelligence</option>
-                </select>
+                  
+                </input>
+              </div>
+              <div>
+                <label htmlFor="organization" className="block text-sm font-medium text-indigo-100 mb-1">
+                  Tell us a bit about your idea
+                </label>
+                <textarea
+                  id="organization"
+                  name="organization"
+                  rows={4}
+                  placeholder="Share a short description or question about your idea"
+                  value={formData.yourIdea}
+                  onChange={handleInputChangetextArea}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
               </div>
               <button
                 type="submit"
@@ -564,7 +583,7 @@ export default function Home() {
                   isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-indigo-700'
                 }`}
               >
-                {isSubmitting ? 'Submitting...' : 'Pre-register Now'}
+                {isSubmitting ? 'Submitting...' : 'Pre-register'}
               </button>
             </div>
           </form>

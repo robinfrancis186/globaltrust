@@ -56,10 +56,13 @@ export default function Partners() {
               Why Partner With Us?
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-              Partners can contribute in various ways from funding the prize pool, providing in-kind resources like cloud services or data, to mentoring participants or hosting pilot tests. We welcome a range of collaboration opportunities to suit your organization's strengths.
-              
+              Our partners don’t just endorse the Challenge — they help make it possible.
+From hosting pilot programs and mentoring teams to providing infrastructure, outreach, or visibility, each partner contributes in ways that align with their mission and strengths.
+</p><p className="text-xl text-gray-600 max-w-4xl mx-auto">Whether you’re a city government, tech platform, multilateral body, or grassroots organization — you can play a vital role in shaping how the world responds to AI-driven misinformation.
+Together, we’re building an ecosystem of trust.
+ 
             </p>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto" style={{paddingTop: '1.2rem'}}>By partnering with the Global Trust Challenge, your organization will...</p>
+            
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
