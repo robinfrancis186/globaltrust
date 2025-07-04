@@ -1,11 +1,12 @@
 import React from 'react';
-import { Calendar, ArrowRight } from 'lucide-react';
+import { Calendar, ArrowRight, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface NewsItem {
   id: string;
   title: string;
   date: string;
+  location: string;
   excerpt: string;
   image: string;
   category: string;
@@ -13,26 +14,29 @@ interface NewsItem {
 
 const recentNews: NewsItem[] = [
   {
-    id: 'news-1',
-    title: 'Global Trust Challenge Announces Key Dates',
-    date: 'May 15, 2025',
-    excerpt: 'The organizing committee has announced the official timeline for the challenge, with registration opening next month.',
+    id: 'ENS-AI-Action-Summit-Event',
+    title: 'ENS - AI Action Summit Official Side Event',
+    date: 'February 11, 2025',
+    location: 'École normale supérieure, Paris',
+    excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
     image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
-    category: 'Announcement'
+    category: 'Event'
   },
   {
-    id: 'news-2',
-    title: 'UNESCO Joins as Strategic Partner',
-    date: 'May 10, 2025',
-    excerpt: 'UNESCO has officially joined the Global Trust Challenge as a strategic partner, bringing expertise in ethical AI governance.',
-    image: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80',
-    category: 'Partnership'
+    id: 'Global-Trust-Challenge-Side-Event',
+    title: 'Global Trust Challenge Side Event',
+    date: '10 February 2025',
+    location: 'Japan Cultural Centre, Paris',
+    excerpt: "This event, co-hosted by the OECD, IEEE, Japan's Ministry of Internal Affairs and Communications (MIC), AI Commons, and Fondation Abeona, addressed the urgent issue of trust in online information in the age of generative AI.",
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/GTCEvent1.png',
+    category: 'Event'
   },
   {
-    id: 'news-3',
-    title: 'Virtual Information Session Scheduled',
-    date: 'May 5, 2025',
-    excerpt: 'Join us for a virtual information session to learn more about the challenge and how to participate effectively.',
+    id: 'Digital-Trust-Convention',
+    title: 'The Digital Trust Convention',
+    date: '15 November 2024',
+    location: 'OECD Headquarters, Paris, France',
+    excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
     image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80',
     category: 'Event'
   }
@@ -78,6 +82,12 @@ export default function NewsHighlights() {
                 <h3 className="text-xl font-bold mb-2 hover:text-indigo-600 transition-colors duration-200">
                   <Link to={`/events/${item.id}`}>{item.title}</Link>
                 </h3>
+                {item.category === 'Event' && item.location && (
+                <div className="flex items-center text-gray-600 text-sm mb-2">
+                    <MapPin className="h-4 w-4 mr-1 text-gray-400" />
+                    {item.location}
+                </div>
+                )}
                 <p className="text-gray-600 mb-4">{item.excerpt}</p>
                 <Link 
                   to={`/events/${item.id}`}

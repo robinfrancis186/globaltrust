@@ -13,18 +13,18 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Legal</h4>
+             {/* <h4 className="text-lg font-semibold mb-4">Legal</h4> */}
             <ul className="space-y-2">
-              <li><Link to="/terms" className="text-gray-400 hover:text-white">Terms & Conditions</Link></li>
+              {/* <li><Link to="/terms" className="text-gray-400 hover:text-white">Terms & Conditions</Link></li>
               <li><Link to="/privacy" className="text-gray-400 hover:text-white">Privacy Policy</Link></li>
-              <li><Link to="/cookies" className="text-gray-400 hover:text-white">Cookie Policy</Link></li>
+              <li><Link to="/cookies" className="text-gray-400 hover:text-white">Cookie Policy</Link></li> */}
               <li><Link to="/contact" className="text-gray-400 hover:text-white">Contact</Link></li>
-            </ul>
+            </ul> 
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+            {/* <h4 className="text-lg font-semibold mb-4">Follow Us</h4> */}
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white">
+              {/* <a href="#" className="text-gray-400 hover:text-white">
                 <Twitter size={24} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white">
@@ -35,7 +35,7 @@ export default function Footer() {
               </a>
               <a href="#" className="text-gray-400 hover:text-white">
                 <Github size={24} />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PartnersScroll from '../components/PartnersScroll';
 import Sponsors from '../components/Sponsors';
 import SponsorsCTA from '../components/SponsorsCTA';
-import { CheckCircle, Globe, Award, Eye, Heart } from 'lucide-react';
+import { CheckCircle, Globe, Award, Eye, Heart, ArrowRight } from 'lucide-react';
 
 
 const sponsors = [
@@ -21,7 +21,133 @@ const sponsors = [
   // Add more sponsors as needed
 ];
 
+
+interface SponsorshipFormData {
+  organizationName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  organizationType?: string;
+  sponsorshipLevel?: string;
+  interests?: string[];
+  message: string;
+  website?: string;
+}
+
+
+  
+
 export default function Partners() {
+//**Form Code */
+const [formData, setFormData] = useState<SponsorshipFormData>({
+    organizationName: '',
+    contactName: '',
+    email: '',
+    phone: '',
+    organizationType: '',
+    sponsorshipLevel: '',
+    interests: [],
+    message: '',
+    website: ''
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  /* const handleInterestChange = (interest: string) => {
+    setFormData(prev => ({
+      ...prev,
+      interests: prev.interests.includes(interest)
+        ? prev.interests.filter(i => i !== interest)
+        : [...prev.interests, interest]
+    }));
+  }; */
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      // Here you would typically send the form data to your backend
+      const response = await fetch('https://script.google.com/macros/s/AKfycbyyceYQoKcce6dnmgWtk0QMWg0IYq4DRWuOBAI5dwTjW2I7077Nhw5d7f-Y9D8wnnA_vQ/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify({
+          ...formData,
+          formType: 'sponsorship'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Thank you for your sponsorship inquiry! Our partnerships team will contact you soon.',
+        });
+        setFormData({
+          organizationName: '',
+          contactName: '',
+          email: '',
+          phone: '',
+          organizationType: '',
+          sponsorshipLevel: '',
+          interests: [],
+          message: '',
+          website: ''
+        });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: data.message || 'An error occurred. Please try again.',
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'An error occurred. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const sponsorshipLevels = [
+    { value: 'title', label: 'Title Sponsor ($100,000+)', description: 'Maximum visibility and co-branding opportunities' },
+    { value: 'presenting', label: 'Presenting Sponsor ($50,000+)', description: 'High-level branding and speaking opportunities' },
+    { value: 'supporting', label: 'Supporting Sponsor ($25,000+)', description: 'Significant brand presence and networking access' },
+    { value: 'community', label: 'Community Partner ($10,000+)', description: 'Brand recognition and participant engagement' },
+    { value: 'inkind', label: 'In-Kind Sponsor', description: 'Services, technology, or resources contribution' },
+    { value: 'custom', label: 'Custom Partnership', description: 'Tailored sponsorship package' }
+  ];
+
+  const interestAreas = [
+    'Brand Visibility',
+    'Thought Leadership',
+    'Talent Recruitment',
+    'Technology Showcase',
+    'Policy Influence',
+    'Research Collaboration',
+    'Global Networking',
+    'CSR/ESG Goals'
+  ];
+
+//** End Form Code */
+
   return (
     <div className="flex flex-col min-h-screen">
            {/* Hero Section with Parallax */}
@@ -53,7 +179,7 @@ export default function Partners() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              Why Partner With Us?
+              Why Not Partner With Us?
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto">
               Our partners don’t just endorse the Challenge — they help make it possible.
@@ -108,6 +234,230 @@ Together, we’re building an ecosystem of trust.
 
       {/*/CTA */}
       <SponsorsCTA />
+
+       {/* Sponsorship Form */}
+      <section id="sponsor-registration" className="py-20 bg-indigo-700">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+              Submit Your Sponsorship Inquiry
+            </h2>
+            <p className="text-xl text-indigo-100">
+              Let's discuss how your organization can make a meaningful impact
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-xl">
+            {submitStatus.type && (
+              <div
+                className={`mb-6 p-4 rounded-md ${
+                  submitStatus.type === 'success'
+                    ? 'bg-green-50 text-green-800'
+                    : 'bg-red-50 text-red-800'
+                }`}
+              >
+                {submitStatus.message}
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Organization Information */}
+              <div className="md:col-span-2">
+                <h3 className="text-xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+                  Organization Information
+                </h3>
+              </div>
+
+              <div>
+                <label htmlFor="organizationName" className="block text-sm font-medium text-gray-700 mb-1">
+                  Organization Name *
+                </label>
+                <input
+                  id="organizationName"
+                  name="organizationName"
+                  type="text"
+                  value={formData.organizationName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
+                  Website
+                </label>
+                <input
+                  id="website"
+                  name="website"
+                  type="url"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="https://www.example.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="organizationType" className="block text-sm font-medium text-gray-700 mb-1">
+                  Organization Type *
+                </label>
+                <select
+                  id="organizationType"
+                  name="organizationType"
+                  value={formData.organizationType}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                >
+                  <option value="">Select organization type</option>
+                  <option value="corporation">Corporation</option>
+                  <option value="nonprofit">Non-profit</option>
+                  <option value="government">Government Agency</option>
+                  <option value="academic">Academic Institution</option>
+                  <option value="foundation">Foundation</option>
+                  <option value="association">Professional Association</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              {/* <div>
+                <label htmlFor="sponsorshipLevel" className="block text-sm font-medium text-gray-700 mb-1">
+                  Sponsorship Interest *
+                </label>
+                <select
+                  id="sponsorshipLevel"
+                  name="sponsorshipLevel"
+                  value={formData.sponsorshipLevel}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                >
+                  <option value="">Select sponsorship level</option>
+                  {sponsorshipLevels.map((level) => (
+                    <option key={level.value} value={level.value}>
+                      {level.label}
+                    </option>
+                  ))}
+                </select>
+              </div> */}
+
+              {/* Contact Information */}
+              <div className="md:col-span-2 mt-6">
+                <h3 className="text-xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+                  Contact Information
+                </h3>
+              </div>
+
+              <div>
+                <label htmlFor="contactName" className="block text-sm font-medium text-gray-700 mb-1">
+                  Contact Name *
+                </label>
+                <input
+                  id="contactName"
+                  name="contactName"
+                  type="text"
+                  value={formData.contactName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address *
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+
+              {/* Areas of Interest */}
+              <div className="md:col-span-2 mt-6">
+                <h3 className="text-xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+                  Areas of Interest
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
+                  <input
+                  id="interests"
+                  name="interests"
+                  type="text"
+                  value={formData.interests}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  required
+                />
+                  {/* {interestAreas.map((interest) => (
+                    <label key={interest} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={formData.interests.includes(interest)}
+                        onChange={() => handleInterestChange(interest)}
+                        className="mr-2 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <span className="text-sm text-gray-700">{interest}</span>
+                    </label>
+                  ))} */}
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className="md:col-span-2 mt-6">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  Tell us about your goals and how you'd like to partner with us
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="Describe your organization's objectives, target audience, and how you envision partnering with the Global Trust Challenge..."
+                />
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full flex items-center justify-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
+                  isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-indigo-700'
+                }`}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Sponsorship Inquiry'}
+                <ArrowRight className="ml-2" size={20} />
+              </button>
+            </div>
+
+            <p className="mt-4 text-sm text-gray-600 text-center">
+              Our partnerships team will review your inquiry and contact you within 2 business days.
+            </p>
+          </form>
+        </div>
+      </section>
 
     </div>
   );

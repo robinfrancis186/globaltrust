@@ -7,7 +7,8 @@ import Sponsors from '../components/Sponsors';
 import NewsHighlights from '../components/NewsHighlights';
 import PreRegisterCTA from '../components/PreRegisterCTA';
 import SponsorsCTA from '../components/SponsorsCTA';
-import parse from 'html-react-parser';
+//import parse from 'html-react-parser';
+import WhyNow from '../components/WhyNow';
 
 interface FormData {
   fullName: string;
@@ -19,7 +20,7 @@ interface FormData {
 const topSponsors = [
   {
     name: "IEEE",
-    logo: "https://brand-experience.ieee.org/wp-content/uploads/2016/12/LogoTest-e1481836752230.png",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/IEEE_SA-logo-avatar.png",
   },
   {
     name: "OECD",
@@ -94,7 +95,7 @@ export default function Home() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbyZfGY-cxhnhyzrAm8TMEYpWT0xHUl0uXhsDM88uB5h6XbNMp6m2k-7xMhze0ePece8AQ/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzMLVe2aL5FiHCfWLnEy8wUM6HOPG74cJ5NVoODk-0D-7MEQ-ywErgAN6culJNFKHir6g/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain',
@@ -112,7 +113,7 @@ export default function Home() {
         setFormData({
           fullName: '',
           email: '',
-          organization: '',
+          yourIdea: '',
           areaOfInterest: '',
         });
       } else {
@@ -159,8 +160,8 @@ export default function Home() {
                 <ArrowRight className="ml-2" size={20} />
               </a>
               <a 
-                href="#pre-registration"
-                onClick={handlePreRegisterClick}
+                href="/partners"
+                // onClick={handlePreRegisterClick}
                 className="inline-flex items-center bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 mb-8"
                 
                 >
@@ -170,7 +171,7 @@ export default function Home() {
 
               {/* Mobile Sponsors */}
               <div className="md:hidden">
-                <div className="text-white text-sm font-medium mb-4">Brought to you by</div>
+                <div className="text-white text-sm font-medium mb-4">Led by a coalition of global institutions</div>
                 <div className="flex flex-row space-x-4 overflow-x-auto pb-4">
                   {topSponsors.map((sponsor, index) => (
                     <div 
@@ -190,7 +191,7 @@ export default function Home() {
             
             {/* Desktop Sponsors */}
             <div className="hidden md:flex flex-col items-end space-y-4 pt-16" style={{paddingTop: '6rem'}}>
-              <div className="text-white text-sm font-medium">Brought to you by</div>
+              <div className="text-white text-sm font-medium">Led by a coalition of global institutions</div>
               <div className="flex flex-col space-y-4">
                 {topSponsors.map((sponsor, index) => (
                   <div 
@@ -238,6 +239,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/*Why Now Map Section */}
+      <WhyNow />
 
        {/* What Makes This Challenge Unique Section */}
        <section className="py-10 bg-white relative z-10">
@@ -344,7 +348,7 @@ export default function Home() {
 
 
       {/* Is This for You Section */}
-       <section className="py-20 bg-gray-50 relative z-10">
+       {/* <section className="py-20 bg-gray-50 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
@@ -429,72 +433,193 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
- <section className="py-10 bg-gray-50">
-          {/* The challenge */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-            <div className="text-center mb-12">
-             <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>The Challenge</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The Challenge is divided into three phases, with a rigorous evaluation by a neutral, expert jury at the end of each phase to identify the most promising solutions that will move forward and receive recognition.
-            </p>
+       {/* Is This for You Section - Redesigned */}
+      <section className="py-20 bg-gray-50 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            {/* Left Content */}
+            <div className="lg:col-span-2">
+              <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+                Is This for You?
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Anyone with a bold idea - students, startups, nonprofits, researchers, policymakers, designers - if you have something to say or build, we want to hear it.
+              </p>
+              <p className="text-xl text-gray-600 mb-8">
+                Whether you're a solo thinker or part of a global team, you're invited.
+              </p>
+              <p className="text-xl text-gray-600 mb-12">
+                Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online - through innovation, collaboration, and vision.
+              </p>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8 py-5">
+
+            {/* Right Image */}
+            <div className="lg:col-span-1">
+              <img
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80"
+                alt="Innovation collaboration"
+                className="rounded-lg shadow-xl w-full h-64 lg:h-80 object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Criteria Cards - Full Width Below */}
+          <div className="mt-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
-                  icon: Calendar,
-                  phase: "Phase 1",
-                  title: "Proposal",
-                  duration: "",
-                  description: "Submit your idea — policy + tech solutions to build trust.<br\><br\><ul style='list-style: inside;'><li>Expert feedback </li> <li>~10 teams advance </li><li> Recognition & mentorship </li></ul>"
+                  icon: Shield,
+                  title: "Impact-Driven",
+                  description: "Strengthen how we verify and trust AI-generated content - so people can rely on what they see and hear."
+                },
+                {
+                  icon: Lightbulb,
+                  title: "Ambitious & Visionary",
+                  description: "Go beyond today's standard approaches. We're seeking solutions that rethink how we uphold information integrity at global scale."
+                },
+                {
+                  icon: Target,
+                  title: "Tech + Policy Integration",
+                  description: "The best solutions combine technology and policy. Think tools plus rules - practical, holistic, and ready for the real world."
                 },
                 {
                   icon: Users,
-                  phase: "Phase 2",
-                  title: "Prototype",
-                  duration: "",
-                  description: "Build it with support.<br\><br\><ul style='list-style: inside;'><li>$50K funding per team</li><li>Mentorship + sandbox</li><li>Submit working prototype</li></ul>"
-                },
-                {
-                  icon: CheckCircle,
-                  phase: "Phase 3",
-                  title: "Pilot",
-                  duration: "",
-                  description: "Test in real-world settings.<br\><br\><ul style='list-style: inside;'><li>$250K per finalist team></li><li>Partner-led pilots</li><li>Impact measured</li></ul>"
+                  title: "Feasible & Scalable",
+                  description: "Your solution doesn't have to be perfect - but it should be realistic, sustainable, and able to grow."
                 }
               ].map((item, index) => (
-                <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                  <item.icon className="w-12 h-12 text-indigo-600 mb-4" />
-                  <h4 className="text-lg font-semibold text-indigo-600 mb-2">{item.phase}</h4>
-                  <h5 className="text-xl font-bold mb-2">{item.title}</h5>
-                  {/* <p className="text-gray-600 mb-2">{item.duration}</p> */}
-                  <p className="text-gray-500">{parse(item.description)}</p>
+                <div key={index} className="flex items-start bg-white p-6 rounded-lg shadow-md transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                  <div className="flex-shrink-0">
+                    <div className="p-3 bg-indigo-100 rounded-lg">
+                      <item.icon className="w-6 h-6 text-indigo-600" />
+                    </div>
+                  </div>
+                  <div className="ml-6">
+                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                    <p className="text-gray-600">{item.description}</p>
+                  </div>
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8" > 
-              <div></div>
-              <div className="bg-white p-6 rounded-lg shadow-md  h-full" style={{padding: '50px 40px'}} >
-                <Trophy className="w-12 h-12 text-indigo-600 mb-4" />
-                
-                <h4 className="text-lg font-semibold text-indigo-600 mb-2">Final Awards</h4>
-                <p className="text-gray-500 ">
-                  <ul style={{listStyle:"inside"}}>
-                    <li className='li-award'>Cash prize for winning teams</li>
-                    <li className='li-award'>Present at major events</li>
-                    <li className='li-award'>Spotlight in global reports</li>
-                  </ul>
-                </p>
-              </div>   
-              <div></div>
-            </div>
-            
           </div>
 
+          {/* Call to Action */}
+          <div className="mt-12 bg-white p-8 rounded-lg shadow-md text-center">
+            <h3 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+              Who Can Participate?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Anyone with a bold idea - from students and startups to researchers, nonprofits, or companies. Teams from around the globe are encouraged to join. Great ideas can come from anyone, anywhere
+            </p>
+            <a
+              href="#pre-registration"
+              onClick={handlePreRegisterClick}
+              className="inline-flex items-center justify-center bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
+            >
+              Register Your Team
+              <ArrowRight className="ml-2" size={20} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+{/* The Challenge Section - Redesigned */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+              The Challenge
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              The Challenge is divided into three phases, with a rigorous evaluation by a neutral, expert jury at the end of each phase to identify the most promising solutions that will move forward and receive recognition.
+            </p>
+          </div>
           
- 
+          {/* Phase Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                icon: Calendar,
+                phase: "Phase 1",
+                title: "Proposal",
+                description: "Submit your idea — policy + tech solutions to build trust.",
+                benefits: [
+                  "Expert feedback",
+                  "~10 teams advance",
+                  "Recognition & mentorship"
+                ]
+              },
+              {
+                icon: Users,
+                phase: "Phase 2", 
+                title: "Prototype",
+                description: "Build it with support.",
+                benefits: [
+                  "$50K funding per team",
+                  "Mentorship + sandbox",
+                  "Submit working prototype"
+                ]
+              },
+              {
+                icon: CheckCircle,
+                phase: "Phase 3",
+                title: "Pilot",
+                description: "Test in real-world settings.",
+                benefits: [
+                  "$250K per finalist team",
+                  "Partner-led pilots",
+                  "Impact measured"
+                ]
+              }
+            ].map((item, index) => (
+              <div key={index} className="bg-gray-50 p-8 rounded-lg shadow-md text-center relative">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    {item.phase}
+                  </div>
+                </div>
+                <item.icon className="w-16 h-16 text-indigo-600 mx-auto mb-6 mt-4" />
+                <h3 className="text-2xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 mb-6">{item.description}</p>
+                <ul className="space-y-2">
+                  {item.benefits.map((benefit, idx) => (
+                    <li key={idx} className="flex items-center justify-center text-sm text-gray-700">
+                      <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Final Awards Section */}
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-8 text-center text-white">
+            <Trophy className="w-16 h-16 mx-auto mb-6" />
+            <h3 className="text-2xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+              Final Awards
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
+                <span>Cash prize for winning teams</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
+                <span>Present at major events</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
+                <span>Spotlight in global reports</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
         {/* How Ideas Are Selected Section */}
@@ -651,12 +776,12 @@ export default function Home() {
                 </input>
               </div>
               <div>
-                <label htmlFor="organization" className="block text-sm font-medium text-indigo-100 mb-1">
+                <label htmlFor="yourIdea" className="block text-sm font-medium text-indigo-100 mb-1">
                   Tell us a bit about your idea
                 </label>
                 <textarea
-                  id="organization"
-                  name="organization"
+                  id="yourIdea"
+                  name="yourIdea"
                   rows={4}
                   placeholder="Share a short description or question about your idea"
                   value={formData.yourIdea}

@@ -42,7 +42,7 @@ export default function Navbar() {
       ],
     },
     { name: 'Events', href: '/events' },
-    { name: 'Resources', href: '/downloads' },
+    //{ name: 'Resources', href: '/downloads' },
     { name: 'Contact', href: '/contact' }
   ];
 
@@ -114,7 +114,7 @@ export default function Navbar() {
               onClick={handleApplyClick}
               className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
             >
-              Apply Now
+              Register Now
             </button>
           </div>
 

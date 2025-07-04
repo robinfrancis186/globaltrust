@@ -54,7 +54,7 @@ export default function SponsorsCTA() {
 
           {/* Button with unique hover effect */}
           <a
-            href="/contact"
+            href="/partners#sponsor-registration"
             className="group relative inline-flex items-center bg-indigo-600  text-white px-8 py-4 rounded-lg overflow-hidden transition-all duration-300 "
           >
             <span className="relative z-10 font-semibold flex items-center">

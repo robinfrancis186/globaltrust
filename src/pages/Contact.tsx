@@ -96,37 +96,10 @@ export default function Contact() {
                   <Mail className="w-6 h-6 text-indigo-600 mt-1 mr-4" />
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-gray-600">info@globaltrustchallenge.org</p>
+                    <p className="text-gray-600">global-trust-challenge-team@ieee.org</p>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <Phone className="w-6 h-6 text-indigo-600 mt-1 mr-4" />
-                  <div>
-                    <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <MapPin className="w-6 h-6 text-indigo-600 mt-1 mr-4" />
-                  <div>
-                    <h3 className="font-semibold mb-1">Office</h3>
-                    <p className="text-gray-600">
-                      123 Innovation Street<br />
-                      Tech Hub, Floor 4<br />
-                      San Francisco, CA 94105
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <Clock className="w-6 h-6 text-indigo-600 mt-1 mr-4" />
-                  <div>
-                    <h3 className="font-semibold mb-1">Hours</h3>
-                    <p className="text-gray-600">
-                      Monday - Friday: 9:00 AM - 6:00 PM PST<br />
-                      Saturday - Sunday: Closed
-                    </p>
-                  </div>
-                </div>
+                
               </div>
             </div>
 

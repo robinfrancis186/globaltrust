@@ -8,86 +8,53 @@ interface NewsItem {
   title: string;
   date: string;
   excerpt: string;
-  content: string;
+  content?: string;
   image: string;
   category: string;
   type: 'event' | 'news' | 'update';
   location?: string;
   time?: string;
-  tags: string[];
+  tags?: string[];
+  link?: string;
 }
+
 
 const allItems: NewsItem[] = [
   {
-    id: 'news-1',
-    title: 'Global Trust Challenge Announces Key Dates',
-    date: 'May 15, 2025',
-    excerpt: 'The organizing committee has announced the official timeline for the challenge, with registration opening next month.',
-    content: 'The Global Trust Challenge organizing committee is pleased to announce the official timeline for the upcoming challenge. Registration will open on June 15, 2025, and teams will have until July 31, 2025, to submit their initial proposals. The first phase of the challenge will begin in August, with selected teams advancing to the prototype development phase in October. Final presentations and awards are scheduled for December 2025. Stay tuned for more details and prepare your teams for this exciting opportunity to shape the future of digital trust.',
+    id: 'ENS-AI-Action-Summit-Event',
+    title: 'ENS - AI Action Summit Official Side Event',
+    date: 'February 11, 2025',
+    location: 'École normale supérieure, Paris',
+    excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
     image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
-    category: 'Announcement',
-    type: 'news',
-    tags: ['timeline', 'registration', 'important']
+    category: 'Event',
+    type: 'event',
+    tags: ['Event', 'Announcement', 'important']
   },
   {
-    id: 'news-2',
-    title: 'UNESCO Joins as Strategic Partner',
-    date: 'May 10, 2025',
-    excerpt: 'UNESCO has officially joined the Global Trust Challenge as a strategic partner, bringing expertise in ethical AI governance.',
-    content: 'We are thrilled to announce that UNESCO has officially joined the Global Trust Challenge as a strategic partner. This collaboration brings UNESCO\'s extensive expertise in ethical AI governance and international policy frameworks to the challenge. UNESCO will provide guidance on aligning technological solutions with ethical principles and human rights considerations. This partnership strengthens our commitment to developing solutions that are not only technically sound but also ethically responsible and globally applicable. UNESCO representatives will participate in mentoring sessions and evaluation panels throughout the challenge.',
-    image: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80',
-    category: 'Partnership',
-    type: 'news',
-    tags: ['partnership', 'UNESCO', 'ethics']
+    id: 'Global-Trust-Challenge-Side-Event',
+    title: 'Global Trust Challenge Side Event',
+    date: '10 February 2025',
+    location: 'Japan Cultural Centre, Paris',
+    excerpt: "This event, co-hosted by the OECD, IEEE, Japan's Ministry of Internal Affairs and Communications (MIC), AI Commons, and Fondation Abeona, addressed the urgent issue of trust in online information in the age of generative AI.",
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/GTCEvent1.png',
+    category: 'Event',
+    type: 'event',
+     tags: ['Event', 'Announcement', 'important']
   },
   {
-    id: 'event-1',
-    title: 'Virtual Information Session',
-    date: 'June 5, 2025',
-    excerpt: 'Join us for a virtual information session to learn more about the challenge and how to participate effectively.',
-    content: 'The Global Trust Challenge team invites all interested participants to join our virtual information session on June 5, 2025. This session will provide detailed information about the challenge structure, evaluation criteria, and tips for successful participation. Our panel of experts will discuss key focus areas and answer questions from potential participants. Whether you\'re already planning to participate or still considering your options, this session will provide valuable insights to help you prepare. Registration is required, and a recording will be available for those unable to attend live.',
+    id: 'Digital-Trust-Convention',
+    title: 'The Digital Trust Convention',
+    date: '15 November 2024',
+    location: 'OECD Headquarters, Paris, France',
+    excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
+    content: '',
     image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80',
     category: 'Event',
     type: 'event',
-    location: 'Online (Zoom)',
-    time: '10:00 AM - 12:00 PM EDT',
-    tags: ['virtual', 'information', 'registration']
-  },
-  {
-    id: 'update-1',
-    title: 'Challenge Framework Document Released',
-    date: 'May 1, 2025',
-    excerpt: 'The comprehensive framework document for the Global Trust Challenge is now available for download.',
-    content: 'We are pleased to announce that the comprehensive framework document for the Global Trust Challenge is now available for download from our website. This document provides detailed information about the challenge objectives, evaluation criteria, submission requirements, and timeline. It also includes background information on the key issues related to trust in AI-generated content and potential approaches to addressing these challenges. We encourage all potential participants to review this document carefully as they prepare their teams and proposals. The framework has been developed in consultation with our expert advisory panel to ensure that the challenge addresses the most critical aspects of building trust in the age of generative AI.',
-    image: 'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?auto=format&fit=crop&q=80',
-    category: 'Resources',
-    type: 'update',
-    tags: ['framework', 'guidelines', 'resources']
-  },
-  {
-    id: 'event-2',
-    title: 'AI Trust Workshop Series',
-    date: 'July 10-12, 2025',
-    excerpt: 'A three-day workshop series focusing on technical and policy approaches to verifying AI-generated content.',
-    content: 'The Global Trust Challenge is hosting a three-day workshop series on technical and policy approaches to verifying AI-generated content. This intensive program will feature presentations and hands-on sessions led by experts in content authentication, policy development, and AI ethics. Participants will explore current technologies for content verification, discuss policy frameworks for promoting transparency, and work on practical exercises to develop integrated solutions. The workshop is open to all interested individuals, with priority given to registered challenge participants. Sessions will be held both in-person at our headquarters and streamed online for remote participants.',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80',
-    category: 'Workshop',
-    type: 'event',
-    location: 'Global Trust Challenge HQ, San Francisco',
-    time: '9:00 AM - 5:00 PM PDT (each day)',
-    tags: ['workshop', 'technical', 'policy', 'verification']
-  },
-  {
-    id: 'news-3',
-    title: 'Expert Advisory Panel Announced',
-    date: 'April 20, 2025',
-    excerpt: 'Meet the distinguished experts who will guide the Global Trust Challenge and evaluate submissions.',
-    content: 'We are proud to announce the formation of our Expert Advisory Panel for the Global Trust Challenge. This distinguished group includes leaders from academia, industry, policy, and civil society organizations who bring diverse perspectives and deep expertise in AI, digital trust, policy development, and information integrity. The panel will play a crucial role in guiding the challenge, mentoring participants, and evaluating submissions. Panel members include representatives from major technology companies, international organizations, leading research institutions, and advocacy groups. Their combined expertise ensures that the challenge will address the complex technical, ethical, and policy dimensions of building trust in AI-generated content.',
-    image: 'https://images.unsplash.com/photo-1560439513-74b037a25d84?auto=format&fit=crop&q=80',
-    category: 'Announcement',
-    type: 'news',
-    tags: ['experts', 'advisory', 'panel']
+     tags: ['Event', 'Announcement', 'important']
   }
+
 ];
 
 export default function Events() {
