@@ -230,6 +230,12 @@ const partners: Partner[] = [
     image: "https://maximages.s3.us-west-1.amazonaws.com/moirapatterson.jpg",
     url: "https://www.linkedin.com/in/moira-s-patterson-896a1a2/"
   },
+  {
+    name: "Gilles Fayad",
+    role: "AI Commons",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/GillesFayad.jpeg",
+    url: "https://www.linkedin.com/in/gillesf/"
+  }
   // Add more partners as needed
 ];
 

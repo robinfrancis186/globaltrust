@@ -231,7 +231,7 @@ export default function Home() {
             </div>
             <div>
               <img
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80"
+                src="https://maximages.s3.us-west-1.amazonaws.com/Real.png"
                 alt="Technology collaboration"
                 className="rounded-lg shadow-xl"
               />

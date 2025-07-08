@@ -21,6 +21,12 @@ const partners: Partner[] = [
     url: "https://www.fondation-abeona.org/collective/tanya-perelmuter/"
   },
   {
+    name: "Alessandra Sala",
+    role: "Shutterstock ",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/AlessandraSalal.jpeg",
+    url: "https://www.linkedin.com/in/salaalessandra/"
+  },
+  {
     name: "Sasha Rubel",
     role: "Amazon / AWS",
     image: "https://maximages.s3.us-west-1.amazonaws.com/sasha-rubel.jpg",
