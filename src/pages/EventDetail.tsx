@@ -29,7 +29,7 @@ const allItems: NewsItem[] = [
     content: `<p>As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.</p><p> Hosted at ENS in Paris, the session focused on collective strategies to counter AI-driven mis- and disinformation, and introduced the Global Trust Challenge as a global mechanism for incentivizing cross-sector collaboration and innovation.
 Moderated by Amir Banifatemi (AI Commons), the panel featured thought leaders from key partner institutions: Craig Matasik (OECD), Konstantinos Karachalios (IEEE), Andy Parsons (Adobe), Frauke Goll (AppliedAI Institute for Europe), and Tanya Perelmuter (Fondation Abeona). Panelists shared perspectives from public policy, technical standards, media authenticity, and citizen literacy. The session highlighted the multistakeholder nature of the Global Trust Challenge and its growing coalition—OECD, IEEE, UNESCO, IDB, World Bank, and VDE—working to deliver trustworthy AI solutions that scale globally.
 </p>`,
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/ENS.jpg',
     category: 'Event',
     type: 'event',
     tags: []

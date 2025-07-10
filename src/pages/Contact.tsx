@@ -32,33 +32,49 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: '' });
-
-    try {
-      // Here you would typically send the form data to your backend
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated API call
-      setSubmitStatus({
-        type: 'success',
-        message: 'Thank you for your message. We will get back to you soon!'
-      });
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-    } catch (error) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'An error occurred. Please try again.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  
+   const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+      setSubmitStatus({ type: null, message: '' });
+  
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwyQHJ7zn4MTLLB69RJ1pOXh0Y5b6xAGOLY-ltF3-V8KvQiF-bnTCryG1FsnZQuZIj0/exec', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        const data = await response.json();
+  
+        if (data.success) {
+          setSubmitStatus({
+            type: 'success',
+            message: 'Thank you for your message. We will get back to you soon!',
+          });
+          setFormData({
+              name: '',
+              email: '',
+              subject: '',
+              message: ''
+          });
+        } else {
+          setSubmitStatus({
+            type: 'error',
+            message: data.message || 'An error occurred. Please try again.',
+          });
+        }
+      } catch (error) {
+        setSubmitStatus({
+          type: 'error',
+          message: 'An error occurred. Please try again.',
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
 
   return (
     <div className="flex flex-col min-h-screen">

@@ -58,7 +58,7 @@ export default function SponsorsCTA() {
             className="group relative inline-flex items-center bg-indigo-600  text-white px-8 py-4 rounded-lg overflow-hidden transition-all duration-300 "
           >
             <span className="relative z-10 font-semibold flex items-center">
-              Become a Sponsor
+              Become a Partner
               <ArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
             </span>
             <div className="absolute inset-0 " />

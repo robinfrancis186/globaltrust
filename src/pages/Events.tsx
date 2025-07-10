@@ -26,7 +26,7 @@ const allItems: NewsItem[] = [
     date: 'February 11, 2025',
     location: 'École normale supérieure, Paris',
     excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/ENS.jpg',
     category: 'Event',
     type: 'event',
     tags: ['Event', 'Announcement', 'important']

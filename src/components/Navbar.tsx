@@ -53,7 +53,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
               <img 
-                src="https://globalchallenge.ai/wp-content/uploads/2023/11/challengelogo.png"
+                src="https://maximages.s3.us-west-1.amazonaws.com/challengelogo.png"
                 alt="Global Trust Challenge"
                 className="h-8 w-auto"
                 style={{ 

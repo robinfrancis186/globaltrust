@@ -95,7 +95,7 @@ export default function Home() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbzMLVe2aL5FiHCfWLnEy8wUM6HOPG74cJ5NVoODk-0D-7MEQ-ywErgAN6culJNFKHir6g/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbxQVX2Bd-MlwtotsJ44jf843hj3du6CTRFzLV-pfK8l5koBDf5no-INKwxveGZyHfWnWg/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain',
@@ -458,7 +458,7 @@ export default function Home() {
             {/* Right Image */}
             <div className="lg:col-span-1">
               <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80"
+                src="https://maximages.s3.us-west-1.amazonaws.com/Isthisforyousection.jpg"
                 alt="Innovation collaboration"
                 className="rounded-lg shadow-xl w-full h-64 lg:h-80 object-cover"
               />
@@ -769,6 +769,7 @@ export default function Home() {
                   id="areaOfInterest"
                   name="areaOfInterest"
                   type="text"
+                  value={formData.areaOfInterest}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                   required>

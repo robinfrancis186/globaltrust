@@ -81,7 +81,7 @@ const [formData, setFormData] = useState<SponsorshipFormData>({
 
     try {
       // Here you would typically send the form data to your backend
-      const response = await fetch('https://script.google.com/macros/s/AKfycbyyceYQoKcce6dnmgWtk0QMWg0IYq4DRWuOBAI5dwTjW2I7077Nhw5d7f-Y9D8wnnA_vQ/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbxgiKtxJze-0wu5UpBoLpw6RfxZx8biZ-jZDJ-BnGzrUNNTUXV7EO2-HfECY5N0qTJHRw/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain',
@@ -240,7 +240,7 @@ Together, we’re building an ecosystem of trust.
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              Submit Your Sponsorship Inquiry
+              Join Us as a Partner
             </h2>
             <p className="text-xl text-indigo-100">
               Let's discuss how your organization can make a meaningful impact
@@ -447,7 +447,7 @@ Together, we’re building an ecosystem of trust.
                   isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-indigo-700'
                 }`}
               >
-                {isSubmitting ? 'Submitting...' : 'Submit Sponsorship Inquiry'}
+                {isSubmitting ? 'Submitting...' : 'Submit'}
                 <ArrowRight className="ml-2" size={20} />
               </button>
             </div>
