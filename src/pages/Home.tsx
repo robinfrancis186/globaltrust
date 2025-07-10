@@ -95,7 +95,7 @@ export default function Home() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbxQVX2Bd-MlwtotsJ44jf843hj3du6CTRFzLV-pfK8l5koBDf5no-INKwxveGZyHfWnWg/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbwxW-f0CXDsKnEOzWu9CKCyiDfJoaxYCWEA4fXCo_Yghftow2lW7NH4IoZYT56zlrPzGg/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain',

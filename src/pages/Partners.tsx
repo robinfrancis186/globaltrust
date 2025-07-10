@@ -81,7 +81,7 @@ const [formData, setFormData] = useState<SponsorshipFormData>({
 
     try {
       // Here you would typically send the form data to your backend
-      const response = await fetch('https://script.google.com/macros/s/AKfycbxgiKtxJze-0wu5UpBoLpw6RfxZx8biZ-jZDJ-BnGzrUNNTUXV7EO2-HfECY5N0qTJHRw/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbw-06QMrD8ssijtEB-JyxoYpAHFF_ZKNdSSmCVnAfArfHxSCUxFN_7dHVcDI8aFGuMooQ/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain',

@@ -39,7 +39,7 @@ export default function Contact() {
       setSubmitStatus({ type: null, message: '' });
   
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwyQHJ7zn4MTLLB69RJ1pOXh0Y5b6xAGOLY-ltF3-V8KvQiF-bnTCryG1FsnZQuZIj0/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbyq_E7D5TyT4k1urnrnLVgJiOKqtPd_0X9oTIU0VSx_2lyfuUONIpGA4TATUbw0H0Xg/exec', {
           method: 'POST',
           headers: {
             'Content-Type': 'text/plain',
