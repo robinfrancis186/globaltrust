@@ -40,11 +40,11 @@ export default function FAQ() {
       questions: [
         {
           q: "How long is the challenge?",
-          a: "The challenge runs for 6 months, divided into multiple phases including ideation, development, and final presentations."
+          a: "The challenge runs for 24 months, divided into multiple phases including ideation, development, and final presentations."
         },
         {
           q: "What are the different phases of the challenge?",
-          a: "The challenge consists of three main phases: 1) Proposal Submission, where teams submit their integrated solutions, 2) Prototype Development, where selected teams build and test their solutions, and 3) Pilot and Scale, where successful prototypes are implemented with institutional partners."
+          a: "The challenge consists of three main phases: 1) Proposal Submission, where teams submit their integrated solutions, 2) Prototype Development, where selected teams build and test their solutions, and 3) Pilot, where successful prototypes are implemented with institutional partners."
         }
       ]
     },
@@ -58,6 +58,23 @@ export default function FAQ() {
         {
           q: "What support is provided to participants?",
           a: "Participants receive guidance from industry experts, access to resources and tools, networking opportunities, and feedback throughout the challenge phases."
+        }
+      ]
+    },
+     {
+      category: "For Partners",
+      questions: [
+        {
+          q: " How do I become a partner?",
+          a: "If you are interested in supporting the Challenge as a partner, please get in touch with us via this contact us at global-trust-challenge-team@ieee.org. We are excited to discuss with you the sponsorship role you envision."
+        },
+        {
+          q: "What recognition do partners receive?",
+          a: "We are thankful for any partnership in the Global Trust Challenge. Your visibility as a partner will depend on the type and level of contribution. Recognition may thus vary from acknowledgement in press and marketing materials to recognition as title sponsor. In all cases, partners will be acknowledged on the Challenge website."
+        },
+         {
+          q: "What do partners/sponsors do in this Challenge?",
+          a: " Partner organizations support the Challenge in various ways – from funding the award pool to providing expertise, hosting pilot programs, or helping reach communities of solvers. In return, partners gain visibility, networking with global experts, and the chance to directly shape solutions. (Learn more on our Partners page.)"
         }
       ]
     }

@@ -43,7 +43,7 @@ export default function SponsorsCTA() {
               WebkitTextFillColor: 'transparent'
             }}
           >
-            WHY NOT PARTNER WITH US? 
+            BE PART OF THE MOVEMENT FOR TRUST 
           </h2>
 
           {/* Description with improved readability */}

@@ -9,6 +9,8 @@ import PreRegisterCTA from '../components/PreRegisterCTA';
 import SponsorsCTA from '../components/SponsorsCTA';
 //import parse from 'html-react-parser';
 import WhyNow from '../components/WhyNow';
+import Stats from '../components/Stats';
+
 
 interface FormData {
   fullName: string;
@@ -242,6 +244,10 @@ export default function Home() {
 
       {/*Why Now Map Section */}
       <WhyNow />
+
+      {/* Stats */}
+      <Stats />
+      
 
        {/* What Makes This Challenge Unique Section */}
        <section className="py-10 bg-white relative z-10">

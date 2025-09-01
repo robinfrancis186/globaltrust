@@ -19,27 +19,50 @@ const recentNews: NewsItem[] = [
     date: 'February 11, 2025',
     location: 'École normale supérieure, Paris',
     excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/ENS.jpg',
     category: 'Event'
   },
   {
     id: 'Global-Trust-Challenge-Side-Event',
-    title: 'Global Trust Challenge Side Event',
+    title: 'Trust in Focus: Global Trust Challenge at the Japan Cultural Centre',
     date: '10 February 2025',
     location: 'Japan Cultural Centre, Paris',
-    excerpt: "This event, co-hosted by the OECD, IEEE, Japan's Ministry of Internal Affairs and Communications (MIC), AI Commons, and Fondation Abeona, addressed the urgent issue of trust in online information in the age of generative AI.",
+    excerpt: "In a world where synthetic content can be produced at the click of a button, trust has never been more fragile — or more essential. That urgency set the tone at the Japan Cultural Centre in Paris, where global leaders gathered to confront the risks of generative AI and chart pathways toward a more reliable digital future.",
     image: 'https://maximages.s3.us-west-1.amazonaws.com/GTCEvent1.png',
     category: 'Event'
+    
   },
   {
     id: 'Digital-Trust-Convention',
     title: 'The Digital Trust Convention',
-    date: '15 November 2024',
+    date: '2025',
     location: 'OECD Headquarters, Paris, France',
     excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
-    image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg',
+    category: 'Event'
+  
+  },
+  {
+    id: 'AI-For-Good',
+    title: 'AI for Good Global Summit 2025',
+    date: 'July 9, 2025',
+    location: 'Geneva, Switzerland',
+    excerpt: 'It started with a simple, unsettling question at the AI for Good Global Summit: If we can no longer tell what’s real online, how do we keep societies from unravelling? On stage, at the International Telecommunication Union’s (ITU) AI for Good, the Global Trust Challenge offered an answer — not in theory, but in action. This global initiative, born from a G7 call to safeguard truth in the digital age, is rallying technologists, policymakers, and innovators to build solutions that blend policy with technology.',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/AI+for+Good+Event+Photo.jpeg',
+    category: 'Event'
+  },
+  {
+    id: 'Lyceum-Project-Event',
+    title: 'Empowering Tomorrow’s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI',
+    date: 'June 20th, 2025',
+    location: 'Athens, Greece',
+    excerpt: 'On June 20, 2025, an electric gathering took place in Athens. The Lyceum Project 2025 – “Children in the Age of AI” – was explicitly “a day of reflection and dialogue” on how to empower children to flourish in a world guided by algorithms. Leading thinkers, educators, policymakers, and citizens gathered at the historic Athens Conservatoire (next to Aristotle’s Lyceum) to ask: what does it really mean to be a child in the age of AI?',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/Screenshot+2025-08-29+210641.png',
     category: 'Event'
   }
+
+
+
 ];
 
 export default function NewsHighlights() {

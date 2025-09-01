@@ -37,8 +37,8 @@ export default function Navbar() {
       submenu: [
         // { name: 'Challenge Details', href: '/guidelines' },
         { name: 'People', href: '/people' },
-        { name: 'Partners & Sponsors', href: '/partners' }
-        //{ name: 'FAQ', href: '/faq' }
+        { name: 'Partners & Sponsors', href: '/partners' },
+        { name: 'FAQ', href: '/faq' }
       ],
     },
     { name: 'Events', href: '/events' },

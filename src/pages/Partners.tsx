@@ -179,7 +179,7 @@ const [formData, setFormData] = useState<SponsorshipFormData>({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              Why Not Partner With Us?
+              Our partners help make the Challenge possible
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto">
               Our partners don’t just endorse the Challenge — they help make it possible.

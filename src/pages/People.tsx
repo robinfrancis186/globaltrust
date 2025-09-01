@@ -35,7 +35,7 @@ export default function People() {
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/photo-1542744173-8e7e53415bb0.webp")',
+            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/People+Page+Photo.webp")',
           }}
         />
         <div className="absolute inset-0 bg-black bg-opacity-20" />
@@ -67,6 +67,19 @@ export default function People() {
         </div>
       </section>
 
+{/* People Intro Section */}
+     <section id="intro" className="py-5 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.2rem'}}>
+            Our People
+          </h2>
+          <p className="text-xl text-center max-w-3xl mx-auto mb-12">
+            The Global Trust Challenge is powered by a diverse group of dedicated individuals — from policy specialists and technologists to educators, designers, and community leaders. Together, they bring wide-ranging perspectives and skills to a shared mission: fostering collaboration and developing solutions that can strengthen trust in the digital age.
+
+          </p>
+         
+        </div>
+      </section>
      
 
      {/* Judges Section */}
