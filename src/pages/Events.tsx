@@ -45,7 +45,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Digital-Trust-Convention',
     title: 'The Digital Trust Convention',
-    date: '2025',
+    date: 'November 2024',
     location: 'OECD Headquarters, Paris, France',
     excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
     content: '',
