@@ -38,6 +38,17 @@ const topSponsors = [
 // Events data (same as in Events.tsx)
 const allEvents = [
   {
+    id: 'Digital-Trust-Convention-Montreal',
+    title: 'Digital Trust Convention – Montreal',
+    date: 'November 6, 2025',
+    location: 'Montreal, Canada',
+    excerpt: 'Join the Global Trust Challenge at the Digital Trust Convention in Montreal for a forward-looking session on how we can build resilient information ecosystems in the age of AI. The GTC will spotlight how trustworthy digital environments can unlock new opportunities for future generations, drive innovation across industries, and strengthen public trust in sectors such as healthcare and education.',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg',
+    category: 'Event',
+    type: 'event',
+    tags: ['Event', 'Upcoming', 'important']
+  },
+  {
     id: 'ENS-AI-Action-Summit-Event',
     title: 'ENS - AI Action Summit Official Side Event',
     date: 'February 11, 2025',
@@ -303,7 +314,7 @@ export default function Home() {
       {/*Overview */}
       <section className="py-10 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Can You Still Tell What’s Real?</h2>
+          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Can You Still Tell What's Real?</h2>
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <p className="text-lg text-gray-600 mb-6">
@@ -337,7 +348,7 @@ export default function Home() {
       
 
        {/* What Makes This Challenge Unique Section */}
-       <section className="py-10 bg-white relative z-10">
+       <section className="py-10 bg-white relative z-10 fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', marginBottom:'1rem'}}>What Makes This Challenge Unique</h2>
           <p className="text-3xl font-bold mb-12" style={{fontWeight: '600', fontSize:'1.4rem', marginBottom:'1rem'}}>A Global Call — For Everyone</p>
@@ -387,7 +398,7 @@ export default function Home() {
       </section>
 
       {/* What We Provide Section */ }
-      <section className="py-10 bg-white relative z-10">
+      <section className="py-10 bg-white relative z-10 fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', marginBottom:'1rem'}}>What We Provide</h2>
           
@@ -529,7 +540,7 @@ export default function Home() {
       </section> */}
 
        {/* Is This for You Section - Redesigned */}
-      <section className="py-20 bg-gray-50 relative z-10">
+      <section className="py-20 bg-gray-50 relative z-10 fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             {/* Left Content */}
@@ -620,7 +631,7 @@ export default function Home() {
 
 
 {/* The Challenge Section - Redesigned */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
@@ -716,7 +727,7 @@ export default function Home() {
       </section>
 
         {/* How Ideas Are Selected Section */}
-      <section className="py-10 bg-gray-50" style={{paddingTop:'5px'}}>
+      <section className="py-10 bg-gray-50 fade-in" style={{paddingTop:'5px'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
             How Ideas Are Selected
@@ -777,7 +788,7 @@ export default function Home() {
      
 
       {/* Upcoming Events Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white fade-in">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-10">
             <h2 className="text-3xl font-bold" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
@@ -887,7 +898,7 @@ export default function Home() {
       <SponsorsCTA />
 
       {/* Pre-registration Form */}
-      <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700">
+      <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700 fade-in">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', color:'#ffffff'}}>Bring your idea to life. Join the Challenge.</h2>
           <p className="text-xl text-indigo-100 max-w-3xl mx-auto">Please complete this form to register your interest in competing as part of the Global Challenge to Build Trust in the Age of Generative AI. We will be in touch when the official launch is approaching.</p>
