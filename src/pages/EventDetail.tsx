@@ -24,7 +24,7 @@ const allItems: NewsItem[] = [
     {
     id: 'ENS-AI-Action-Summit-Event',
     title: 'Trust on the Line: Global Trust Challenge Side Event at the AI Action Summit',
-    date: 'February, 2025',
+    date: 'February 11, 2025',
     location: 'École normale supérieure, Paris',
     excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
     content: `<h1>Trust on the Line: Global Trust Challenge Side Event at the AI Action Summit</h1>
@@ -61,7 +61,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Global-Trust-Challenge-Side-Event',
     title: 'Trust in Focus: Global Trust Challenge at the Japan Cultural Centre',
-    date: '10 February 2025',
+    date: 'February 10, 2025',
     location: 'Japan Cultural Centre, Paris',
     excerpt: "In a world where synthetic content can be produced at the click of a button, trust has never been more fragile — or more essential. That urgency set the tone at the Japan Cultural Centre in Paris, where global leaders gathered to confront the risks of generative AI and chart pathways toward a more reliable digital future.",
     content: `<h2 style='font-size: 1.5rem;font-weight: bold;'>A Global Coalition on Stage</h2>
@@ -99,10 +99,10 @@ const allItems: NewsItem[] = [
   {
     id: 'Digital-Trust-Convention',
     title: 'The Digital Trust Convention',
-    date: 'November 2024',
+    date: 'November 15, 2024',
     location: 'OECD Headquarters, Paris, France',
     excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
-    content: `<h1>Building the Foundations of Digital Trust at the Digital Trust Convention</h1><p><b>Paris, November 2024</b></p><p>Trust is the invisible infrastructure of democracy and markets. Without it, discourse fractures, economies falter, and communities lose cohesion. At the Digital Trust Convention, leaders from across sectors gathered to ask how this fragile asset can be safeguarded in an era when generative AI is testing the limits of what we can believe.</p><h2>A Global Gathering</h2><p>The event was co-hosted by a formidable alliance: the Atlantic Council, Bertelsmann Stiftung, KI Park, the Mila Quebec AI Institute, the OECD, the Partnership on AI (PAI), the Association of Electrical, Electronic and Information Technologies (VDE), and the World Privacy Forum. Their shared presence underscored the urgent, global nature of the challenge.</p><h2>Foundations for a Vision of Digital Trust</h2><p>In the session titled <i>"Foundations for a Vision of Digital Trust,"</i> Amir Banifatemi (Co-Founder and Director of AI Commons, and Founder/Curator of the AI for Good Global Summit) introduced the Global Trust Challenge to the Convention audience.</p><p>He emphasized that disinformation powered by scalable synthetic content cannot be tackled by any one actor in isolation. Instead, the Challenge promotes collective resilience by equipping governments, organizations, and individuals with practical tools to discern truth from manipulation. The GTC's unique design — combining technical innovation with governance and policy frameworks — resonated strongly with the Convention's theme of resilience and integrity.</p><h2>Why This Session Mattered</h2><p>This event reaffirmed that digital trust is not optional; it is the backbone of both democratic legitimacy and economic vitality. Presenting the Global Trust Challenge within this context highlighted the initiative's potential to serve as a global mechanism for action, where multilateral organizations, private sector innovators, and civil society converge.</p><h2>Key Highlights:</h2><ul><li>Digital trust framed as a pillar of democracy and markets in the AI age.</li><li>Introduction of the Global Trust Challenge as a mechanism to build resilience against disinformation.</li><li>Strong endorsement of cross-sector collaboration as the only path forward.</li></ul>
+    content: `<h1>Building the Foundations of Digital Trust at the Digital Trust Convention</h1><p><b>Paris, November 15, 2024</b></p><p>Trust is the invisible infrastructure of democracy and markets. Without it, discourse fractures, economies falter, and communities lose cohesion. At the Digital Trust Convention, leaders from across sectors gathered to ask how this fragile asset can be safeguarded in an era when generative AI is testing the limits of what we can believe.</p><h2>A Global Gathering</h2><p>The event was co-hosted by a formidable alliance: the Atlantic Council, Bertelsmann Stiftung, KI Park, the Mila Quebec AI Institute, the OECD, the Partnership on AI (PAI), the Association of Electrical, Electronic and Information Technologies (VDE), and the World Privacy Forum. Their shared presence underscored the urgent, global nature of the challenge.</p><h2>Foundations for a Vision of Digital Trust</h2><p>In the session titled <i>"Foundations for a Vision of Digital Trust,"</i> Amir Banifatemi (Co-Founder and Director of AI Commons, and Founder/Curator of the AI for Good Global Summit) introduced the Global Trust Challenge to the Convention audience.</p><p>He emphasized that disinformation powered by scalable synthetic content cannot be tackled by any one actor in isolation. Instead, the Challenge promotes collective resilience by equipping governments, organizations, and individuals with practical tools to discern truth from manipulation. The GTC's unique design — combining technical innovation with governance and policy frameworks — resonated strongly with the Convention's theme of resilience and integrity.</p><h2>Why This Session Mattered</h2><p>This event reaffirmed that digital trust is not optional; it is the backbone of both democratic legitimacy and economic vitality. Presenting the Global Trust Challenge within this context highlighted the initiative's potential to serve as a global mechanism for action, where multilateral organizations, private sector innovators, and civil society converge.</p><h2>Key Highlights:</h2><ul><li>Digital trust framed as a pillar of democracy and markets in the AI age.</li><li>Introduction of the Global Trust Challenge as a mechanism to build resilience against disinformation.</li><li>Strong endorsement of cross-sector collaboration as the only path forward.</li></ul>
 `,
     image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg',
     category: 'Event',
@@ -138,7 +138,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Lyceum-Project-Event',
     title: 'Empowering Tomorrow’s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI',
-    date: 'June 20th, 2025',
+    date: 'June 20, 2025',
     location: 'Athens, Greece',
     excerpt: 'On June 20, 2025, an electric gathering took place in Athens. The Lyceum Project 2025 - “Children in the Age of AI” - was explicitly “a day of reflection and dialogue” on how to empower children to flourish in a world guided by algorithms.',
     content: `<h1>Empowering Tomorrow’s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI</h1>
