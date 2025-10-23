@@ -34,7 +34,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Global-Trust-Challenge-Side-Event',
     title: 'Trust in Focus: Global Trust Challenge at the Japan Cultural Centre',
-    date: '10 February 2025',
+    date: 'February 10, 2025',
     location: 'Japan Cultural Centre, Paris',
     excerpt: "In a world where synthetic content can be produced at the click of a button, trust has never been more fragile — or more essential. That urgency set the tone at the Japan Cultural Centre in Paris, where global leaders gathered to confront the risks of generative AI and chart pathways toward a more reliable digital future.",
     image: 'https://maximages.s3.us-west-1.amazonaws.com/GTCEvent1.png',
@@ -45,7 +45,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Digital-Trust-Convention',
     title: 'The Digital Trust Convention',
-    date: 'November 2024',
+    date: 'November 15, 2024',
     location: 'OECD Headquarters, Paris, France',
     excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
     content: '',
@@ -69,7 +69,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Lyceum-Project-Event',
     title: 'Empowering Tomorrow’s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI',
-    date: 'June 20th, 2025',
+    date: 'June 20, 2025',
     location: 'Athens, Greece',
     excerpt: 'On June 20, 2025, an electric gathering took place in Athens. The Lyceum Project 2025 – “Children in the Age of AI” – was explicitly “a day of reflection and dialogue” on how to empower children to flourish in a world guided by algorithms. Leading thinkers, educators, policymakers, and citizens gathered at the historic Athens Conservatoire (next to Aristotle’s Lyceum) to ask: what does it really mean to be a child in the age of AI?',
     content: '',
@@ -81,29 +81,67 @@ const allItems: NewsItem[] = [
 
 ];
 
+// Helper function to parse different date formats
+const parseEventDate = (dateString: string): Date => {
+  // Remove ordinal suffixes (st, nd, rd, th)
+  const cleanDate = dateString.replace(/(\d+)(st|nd|rd|th)/, '$1');
+  
+  // Try to parse the date
+  const parsed = new Date(cleanDate);
+  
+  // If parsing fails or we only have month/year, handle specially
+  if (isNaN(parsed.getTime())) {
+    // Handle "Month YYYY" format by setting to first of month
+    const parts = cleanDate.split(' ');
+    if (parts.length === 2) {
+      return new Date(`${parts[0]} 1, ${parts[1]}`);
+    }
+  }
+  
+  return parsed;
+};
+
+// Helper function to determine if an event is past
+const isPastEvent = (dateString: string): boolean => {
+  const eventDate = parseEventDate(dateString);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Reset time to start of day
+  return eventDate < today;
+};
+
 export default function Events() {
   const [activeFilter, setActiveFilter] = useState<'all' | 'event' | 'news' | 'update'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredItems = allItems.filter(item => {
-    // Filter by type
-    if (activeFilter !== 'all' && item.type !== activeFilter) {
-      return false;
-    }
-    
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      return (
-        item.title.toLowerCase().includes(query) ||
-        item.excerpt.toLowerCase().includes(query) ||
-        item.category.toLowerCase().includes(query) ||
-        item.tags.some(tag => tag.toLowerCase().includes(query))
-      );
-    }
-    
-    return true;
-  });
+  const filteredItems = allItems
+    .filter(item => {
+      // Filter by type
+      if (activeFilter !== 'all' && item.type !== activeFilter) {
+        return false;
+      }
+      
+      // Filter by search query
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        return (
+          item.title.toLowerCase().includes(query) ||
+          item.excerpt.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query) ||
+          item.tags?.some(tag => tag.toLowerCase().includes(query))
+        );
+      }
+      
+      return true;
+    })
+    .sort((a, b) => {
+      const dateA = parseEventDate(a.date);
+      const dateB = parseEventDate(b.date);
+      return dateB.getTime() - dateA.getTime(); // Newest first
+    });
+
+  // Split events into upcoming and past
+  const upcomingEvents = filteredItems.filter(event => !isPastEvent(event.date));
+  const pastEvents = filteredItems.filter(event => isPastEvent(event.date));
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -191,9 +229,13 @@ export default function Events() {
       {/* Content Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredItems.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredItems.map((item) => (
+          {/* Upcoming Events Section */}
+          <h2 className="text-3xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+            Upcoming Events
+          </h2>
+          {upcomingEvents.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {upcomingEvents.map((item) => (
                 <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
                   <div className="h-48 overflow-hidden">
                     <img 
@@ -240,7 +282,7 @@ export default function Events() {
                     <p className="text-gray-600 mb-4">{item.excerpt}</p>
                     
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {item.tags.map((tag, index) => (
+                      {item.tags?.map((tag, index) => (
                         <span key={index} className="inline-flex items-center text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
                           <Tag className="h-3 w-3 mr-1" />
                           {tag}
@@ -260,6 +302,91 @@ export default function Events() {
               ))}
             </div>
           ) : (
+            <div className="text-center py-12 bg-gray-50 rounded-lg mb-16">
+              <p className="text-xl text-gray-600">
+                No upcoming events at this time. Check back soon!
+              </p>
+            </div>
+          )}
+
+          {/* Past Events Section */}
+          {pastEvents.length > 0 && (
+            <>
+              <h2 className="text-3xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+                Past Events
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {pastEvents.map((item) => (
+                  <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
+                    <div className="h-48 overflow-hidden">
+                      <img 
+                        src={item.image} 
+                        alt={item.title} 
+                        className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex flex-wrap items-center mb-3 gap-2">
+                        <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
+                          item.type === 'event' 
+                            ? 'bg-green-100 text-green-800' 
+                            : item.type === 'news'
+                              ? 'bg-indigo-100 text-indigo-800'
+                              : 'bg-amber-100 text-amber-800'
+                        }`}>
+                          {item.category}
+                        </span>
+                        <div className="flex items-center text-gray-500 text-sm">
+                          <Calendar className="h-4 w-4 mr-1" />
+                          {item.date}
+                        </div>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold mb-2 hover:text-indigo-600 transition-colors duration-200">
+                        <Link to={`/events/${item.id}`}>{item.title}</Link>
+                      </h3>
+                      
+                      {item.type === 'event' && item.location && (
+                        <div className="flex items-center text-gray-600 text-sm mb-2">
+                          <MapPin className="h-4 w-4 mr-1 text-gray-400" />
+                          {item.location}
+                        </div>
+                      )}
+                      
+                      {item.type === 'event' && item.time && (
+                        <div className="flex items-center text-gray-600 text-sm mb-2">
+                          <Clock className="h-4 w-4 mr-1 text-gray-400" />
+                          {item.time}
+                        </div>
+                      )}
+                      
+                      <p className="text-gray-600 mb-4">{item.excerpt}</p>
+                      
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {item.tags?.map((tag, index) => (
+                          <span key={index} className="inline-flex items-center text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                            <Tag className="h-3 w-3 mr-1" />
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      
+                      <Link 
+                        to={`/events/${item.id}`}
+                        className="text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200 flex items-center"
+                      >
+                        Read more
+                        <ArrowRight className="ml-1 h-4 w-4" />
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Show message if no events at all */}
+          {upcomingEvents.length === 0 && pastEvents.length === 0 && (
             <div className="text-center py-12">
               <h3 className="text-xl font-semibold mb-2">No results found</h3>
               <p className="text-gray-600">Try adjusting your search or filter criteria</p>
