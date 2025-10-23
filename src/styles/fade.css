@@ -1,0 +1,29 @@
+/* Simple Fade-in Animation System */
+
+/* Base state for fade-in elements - visible by default, hidden only when JS loads */
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Hidden state - applied by JavaScript */
+.fade-in.js-loaded {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Visible state - triggered when element enters viewport */
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Performance optimization - disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+  }
+}
