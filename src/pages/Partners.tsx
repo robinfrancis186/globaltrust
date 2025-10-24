@@ -155,7 +155,7 @@ const [formData, setFormData] = useState<SponsorshipFormData>({
         <div
           className="absolute inset-0 bg-cover bg-center heroStyle"
           style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/photo-1556761175-b413da4baf72.webp")',
+            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/Partners+%26+Sponors+Background.jpg")',
            
           }}
         />
