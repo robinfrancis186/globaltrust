@@ -203,7 +203,7 @@ const partners: Partner[] = [
 {
     name: "Laura Ellis",
     role: "BBC",
-    image: "https://globalchallenge.ai/wp-content/uploads/2025/01/LauraWall.jpeg",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Laura+Ellis.jpeg",
     url: "https://www.linkedin.com/in/moira-s-patterson-896a1a2/"
   },
 {
