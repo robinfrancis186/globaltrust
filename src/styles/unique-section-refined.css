@@ -1,0 +1,247 @@
+/* Refined Unique Section - Elegant & Modern */
+
+.unique-section {
+  padding: 100px 0 120px;
+  position: relative;
+  overflow: hidden;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.unique-section .section-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 2.5rem;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.unique-section .section-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.75rem;
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.unique-section .section-description {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.unique-section .cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.unique-section .glassmorphic-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  transition: transform 0.3s ease-out;
+  box-shadow: 
+    inset 0 1px 6px rgba(255, 255, 255, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  opacity: 1 !important;
+}
+
+/* 3D Perspective removed for carousel compatibility */
+/* Cards now use Swiper carousel instead of 3D transforms */
+
+/* Bottom card hover effects */
+.bottom-card:hover {
+  box-shadow: 
+    0 10px 30px rgba(0,174,239,0.12),
+    0 0 25px rgba(0, 174, 239, 0.15);
+}
+
+.unique-section .glassmorphic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.unique-section .glassmorphic-card:hover {
+  filter: brightness(1.1);
+  box-shadow: 
+    inset 0 1px 6px rgba(255, 255, 255, 0.2),
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 0 30px rgba(0, 174, 239, 0.2);
+}
+
+.unique-section .glassmorphic-card:hover::before {
+  opacity: 1;
+}
+
+.unique-section .card-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #00AEEF, #FFD97A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(0, 174, 239, 0.3));
+  transition: all 0.3s ease;
+}
+
+.unique-section .glassmorphic-card:hover .card-icon {
+  filter: drop-shadow(0 0 20px #23B6F6);
+  transform: scale(1.05);
+}
+
+.unique-section .card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  color: #1a1a1a !important;
+  margin-bottom: 1rem;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.unique-section .card-description {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4a4a4a !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .unique-section .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .unique-section .glassmorphic-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .unique-section {
+    padding: 80px 0 100px;
+  }
+  
+  .unique-section .section-title {
+    font-size: 2rem;
+  }
+  
+  .unique-section .section-subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .unique-section .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .unique-section .glassmorphic-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .unique-section {
+    padding: 60px 0 80px;
+  }
+  
+  .unique-section .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .unique-section .section-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .unique-section .glassmorphic-card {
+    padding: 1.25rem;
+  }
+}
+
+/* Performance optimizations */
+.unique-section .glassmorphic-card {
+  will-change: transform, filter;
+  contain: layout style paint;
+}
+
+/* Mobile optimizations - disable 3D effects */
+@media (max-width: 768px) {
+  .unique-section .grid.grid-cols-1.md\:grid-cols-3.mb-16,
+  .unique-section .mt-4 {
+    perspective: none;
+  }
+  
+  .unique-section .glassmorphic-card,
+  .bottom-card {
+    transform-style: flat;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .unique-section .glassmorphic-card {
+    transition: none;
+  }
+  
+  .unique-section .glassmorphic-card:hover {
+    transform: none;
+    filter: none;
+  }
+  
+  .unique-section .glassmorphic-card:hover .card-icon {
+    transform: none;
+  }
+  
+  .bottom-card:hover {
+    box-shadow: 0 10px 30px rgba(0,174,239,0.12);
+  }
+}
+

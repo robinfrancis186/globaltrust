@@ -1,0 +1,340 @@
+/* Cinematic Scroll Experience Styles */
+
+/* CSS Variables for Filter Control */
+:root {
+  --hue-shift: 0deg;
+  --brightness: 1;
+  --contrast: 1;
+  --saturation: 1;
+  --particle-opacity: 0.3;
+  --transition-duration: 1.2s;
+  --ease-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Container */
+.cinematic-scroll-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #000;
+}
+
+/* Fixed Background Video */
+.cinematic-bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(var(--brightness)) contrast(var(--contrast)) hue-rotate(var(--hue-shift)) saturate(var(--saturation));
+  transition: filter var(--transition-duration) var(--ease-function);
+  will-change: filter;
+}
+
+/* Particle Overlay Canvas */
+.cinematic-particle-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: var(--particle-opacity);
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  will-change: opacity;
+}
+
+/* Sections Container */
+.cinematic-sections {
+  position: relative;
+  z-index: 2;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* Individual Sections */
+.cinematic-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 8rem 2rem;
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Content Styling */
+.cinematic-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.cinematic-title {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 900;
+  margin-bottom: 2rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cinematic-subtitle {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 300;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.cinematic-description {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  opacity: 0.85;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* CTA Buttons */
+.cinematic-cta {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.cinematic-button {
+  padding: 1rem 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cinematic-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cinematic-button.primary {
+  background: linear-gradient(135deg, #00AEEF 0%, #0088CC 100%);
+  border-color: #00AEEF;
+}
+
+.cinematic-button.primary:hover {
+  background: linear-gradient(135deg, #0088CC 0%, #006699 100%);
+  box-shadow: 0 10px 30px rgba(0, 174, 239, 0.4);
+}
+
+/* Features Grid */
+.cinematic-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+.cinematic-feature {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.cinematic-feature:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cinematic-feature h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #00AEEF;
+}
+
+.cinematic-feature p {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* Timeline */
+.cinematic-timeline {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+}
+
+.cinematic-phase {
+  flex: 1;
+  min-width: 250px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  border-left: 4px solid #00AEEF;
+  backdrop-filter: blur(5px);
+}
+
+.cinematic-phase h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #00AEEF;
+}
+
+.cinematic-phase p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+/* Partners */
+.cinematic-partners {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.cinematic-partner {
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.cinematic-partner:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .cinematic-section {
+    padding: 4rem 1rem;
+  }
+  
+  .cinematic-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cinematic-button {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .cinematic-features {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .cinematic-timeline {
+    flex-direction: column;
+  }
+  
+  .cinematic-partners {
+    gap: 1.5rem;
+  }
+  
+  /* Reduce video brightness shifts on mobile */
+  .cinematic-bg-video {
+    filter: brightness(0.8) contrast(1.1) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cinematic-title {
+    font-size: 2.5rem;
+  }
+  
+  .cinematic-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .cinematic-description {
+    font-size: 1rem;
+  }
+}
+
+/* Performance Optimizations */
+.cinematic-section {
+  contain: layout style paint;
+}
+
+.cinematic-bg-video {
+  contain: layout style paint;
+}
+
+.cinematic-particle-overlay {
+  contain: layout style paint;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-bg-video {
+    filter: none !important;
+    transition: none !important;
+  }
+  
+  .cinematic-section {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .cinematic-particle-overlay {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .cinematic-title {
+    text-shadow: 0 0 0 transparent;
+    -webkit-text-fill-color: white;
+  }
+  
+  .cinematic-button {
+    border-width: 3px;
+  }
+}
+

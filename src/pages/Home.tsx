@@ -1,15 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CinematicCrossfade from '../components/CinematicCrossfade';
 // import PartnersScroll from '../components/PartnersScroll';
-import CallToAction from '../components/CallToAction';
-import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb, Calendar,Trophy, Globe, Scale, Cog, Stamp, Rocket, BookCheck, Scaling, PersonStanding, MapPin, Clock, Tag } from 'lucide-react';
-import Sponsors from '../components/Sponsors';
+import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb, Calendar,Trophy, Globe, Scale, Cog, Stamp, Rocket, BookCheck, Scaling, PersonStanding, MapPin } from 'lucide-react';
 import NewsHighlights from '../components/NewsHighlights';
 import PreRegisterCTA from '../components/PreRegisterCTA';
 import SponsorsCTA from '../components/SponsorsCTA';
 //import parse from 'html-react-parser';
-import WhyNow from '../components/WhyNow';
-import Stats from '../components/Stats';
+import HeroSectionV3 from '../components/HeroSectionV3';
+import FutureRunsOnTrust from '../components/FutureRunsOnTrust';
+// import CinematicScroll from '../components/CinematicScroll';
+// import '../styles/cinematic-scroll.css';
+import '../styles/card-glow-effect.css';
+// Optional: framer-motion for subtle entrance/hover polish (install if missing)
+// import { motion } from 'framer-motion';
+import '../styles/unique-section-refined.css';
+import '../styles/warp-transitions.css';
+import '../styles/prototype-unique.css';
+import '../styles/floating-cards-3d.css';
+import WarpSectionTransition from '../components/WarpSectionTransition';
+import CardCarousel from '../components/CardCarousel';
+import CarouselSkeleton from '../components/CarouselSkeleton';
+import LayeredCarousel from '../components/LayeredCarousel';
+import '../styles/carousel-custom.css';
 
 
 interface FormData {
@@ -19,21 +34,6 @@ interface FormData {
   yourIdea: string;
 }
 
-const topSponsors = [
-  {
-    name: "IEEE",
-    logo: "https://maximages.s3.us-west-1.amazonaws.com/IEEE_SA-logo-avatar.png",
-  },
-  {
-    name: "OECD",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OECD_logo.svg/320px-OECD_logo.svg.png",
-  },
-  {
-    name: "AI Commons",
-    logo: "https://ai-commons.org/wp-content/themes/aicommons/assets/img/logo.svg",
-  },
-  
-];
 
 // Events data (same as in Events.tsx)
 const allEvents = [
@@ -106,7 +106,10 @@ const allEvents = [
 ];
 
 // Helper function to parse different date formats
-const parseEventDate = (dateString: string): Date => {
+const parseEventDate = (dateString: string | undefined): Date => {
+  if (!dateString || typeof dateString !== 'string') {
+    return new Date(0);
+  }
   // Remove ordinal suffixes (st, nd, rd, th)
   const cleanDate = dateString.replace(/(\d+)(st|nd|rd|th)/, '$1');
   
@@ -116,7 +119,7 @@ const parseEventDate = (dateString: string): Date => {
   // If parsing fails or we only have month/year, handle specially
   if (isNaN(parsed.getTime())) {
     // Handle "Month YYYY" format by setting to first of month
-    const parts = cleanDate.split(' ');
+    const parts = (cleanDate || '').split(' ');
     if (parts.length === 2) {
       return new Date(`${parts[0]} 1, ${parts[1]}`);
     }
@@ -134,7 +137,6 @@ const isPastEvent = (dateString: string): boolean => {
 };
 
 export default function Home() {
-  const [scrollPosition, setScrollPosition] = useState(0);
   const location = useLocation();
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -148,24 +150,212 @@ export default function Home() {
     message: string;
   }>({ type: null, message: '' });
 
+  // Mouse ripple effect for Unique section
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ripplesRef = useRef<Array<{ x: number; y: number; radius: number; alpha: number; velocity: number; lastX: number; lastY: number }>>([]);
+  const lastMouseRef = useRef({ x: 0, y: 0 });
+  
+  // GSAP refs removed - using Swiper carousel instead
+  
+  // Register GSAP plugins
   useEffect(() => {
-    const handleScroll = () => {
-      const position = window.scrollY;
-      setScrollPosition(position);
+    gsap.registerPlugin(ScrollTrigger);
+  }, []);
+
+
+  // Simple setup - no complex GSAP configuration
+
+  // No complex animations - let CSS handle everything
+
+  // Set video playback rate to 50% for slower animation
+  useEffect(() => {
+    const setPlaybackRate = () => {
+      const video1 = document.getElementById('video1') as HTMLVideoElement;
+      const video2 = document.getElementById('video2') as HTMLVideoElement;
+      if (video1) video1.playbackRate = 0.5;
+      if (video2) video2.playbackRate = 0.5;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Set immediately if videos are already loaded
+    setPlaybackRate();
 
+    // Also set when videos are ready
+    const video1 = document.getElementById('video1') as HTMLVideoElement;
+    const video2 = document.getElementById('video2') as HTMLVideoElement;
+    
+    if (video1) {
+      video1.addEventListener('loadedmetadata', setPlaybackRate);
+      video1.addEventListener('canplay', setPlaybackRate);
+    }
+    if (video2) {
+      video2.addEventListener('loadedmetadata', setPlaybackRate);
+      video2.addEventListener('canplay', setPlaybackRate);
+    }
+
+    return () => {
+      if (video1) {
+        video1.removeEventListener('loadedmetadata', setPlaybackRate);
+        video1.removeEventListener('canplay', setPlaybackRate);
+      }
+      if (video2) {
+        video2.removeEventListener('loadedmetadata', setPlaybackRate);
+        video2.removeEventListener('canplay', setPlaybackRate);
+      }
+    };
+  }, []);
+
+  // Canvas ripple effect (identical to Section 12)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationId: number;
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    };
+
+    const addRipple = (x: number, y: number, velocity: number) => {
+      ripplesRef.current.push({
+        x,
+        y,
+        radius: 0,
+        alpha: Math.min(0.15, velocity * 0.05 + 0.08),
+        velocity,
+        lastX: x,
+        lastY: y,
+      });
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ripplesRef.current.forEach((ripple, i) => {
+        // Expand ripple with gentle, flowy movement
+        ripple.radius += 2 + ripple.velocity * 0.3;
+        ripple.alpha -= 0.003;
+
+        // Horizontal gradient that matches Section 12 palette
+        const horizontalStretch = 2.2 + ripple.velocity * 0.4;
+        const gradient = ctx.createLinearGradient(
+          ripple.x - ripple.radius * horizontalStretch,
+          ripple.y,
+          ripple.x + ripple.radius * horizontalStretch,
+          ripple.y
+        );
+        gradient.addColorStop(0, `rgba(0,174,239,${ripple.alpha * 0.8})`);
+        gradient.addColorStop(0.3, `rgba(0,174,239,${ripple.alpha * 0.6})`);
+        gradient.addColorStop(0.7, `rgba(255,217,120,${ripple.alpha * 0.5})`);
+        gradient.addColorStop(1, `rgba(0,174,239,0)`);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.translate(ripple.x, ripple.y);
+        ctx.scale(horizontalStretch, 1);
+        ctx.arc(0, 0, ripple.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        if (ripple.alpha <= 0) {
+          ripplesRef.current.splice(i, 1);
+        }
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const dx = x - lastMouseRef.current.x;
+      const dy = y - lastMouseRef.current.y;
+      const velocity = Math.sqrt(dx * dx + dy * dy) / 10;
+
+      if (velocity > 0.5) {
+        addRipple(x, y, velocity);
+      }
+
+      lastMouseRef.current = { x, y };
+    };
+
+    // Initialize
+    resize();
+    animate();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  // GSAP animations removed - using Swiper carousel instead
+
+  // Card data for carousels
+  const topCardsData = [
+    {
+      icon: Users,
+      title: "Inclusive Contribution",
+      description: "Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI."
+    },
+    {
+      icon: Globe,
+      title: "Global Validation",
+      description: "Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots."
+    },
+    {
+      icon: Scale,
+      title: "Building Global Intelligence",
+      description: "Combining policy and technology solutions — integrated, actionable models. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age."
+    }
+  ];
+
+  const bottomCardsData = [
+    {
+      icon: Lightbulb,
+      phase: "Phase 1",
+      title: "Context",
+      description: "Key insights from leading AI and misinformation researchers — grounding ideas in the latest thinking and real-world relevance."
+    },
+    {
+      icon: Cog,
+      phase: "Phase 2",
+      title: "Infrastructure",
+      description: "A platform to prototype, test, and showcase solutions — with tools and pathways to support development."
+    },
+    {
+      icon: Stamp,
+      phase: "Phase 3",
+      title: "Legitimacy",
+      description: "Backed by global institutions like IEEE, OECD, and more — reinforcing credibility and trust."
+    },
+    {
+      icon: Rocket,
+      phase: "Phase 3",
+      title: "Opportunity",
+      description: "Routes to real impact, policy dialogue, and funding — helping your solution grow beyond the challenge."
+    }
+  ];
+
+  // Section 3 uses immediate visibility (no container fade)
+
+  useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     if (searchParams.get('scroll') === 'pre-registration') {
       const element = document.getElementById('pre-registration');
       element?.scrollIntoView({ behavior: 'smooth' });
       window.history.replaceState({}, document.title, location.pathname);
     }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, [location]);
 
   const handlePreRegisterClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -233,221 +423,271 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section with Parallax */}
-      <section className="relative h-[600px] overflow-hidden -mt-16 hero-section">
-        <div
-          className="absolute inset-0 bg-cover bg-center heroStyle"
+    <div className="flex flex-col min-h-screen relative">
+      {/* Cinematic Crossfade Depth Push */}
+      <CinematicCrossfade sectionIds={['hero', 'trust', 'partners']} />
+      
+      {/* Warp Section Transition Effect */}
+      <WarpSectionTransition sectionIds={['hero', 'trust', 'partners']} />
+
+      {/* Hero Section V3 */}
+      <HeroSectionV3 />
+
+      {/* The Future Runs on Trust Section */}
+      <FutureRunsOnTrust />
+      
+
+      {/* What Makes This Challenge Unique & What We Provide Section */}
+      <section 
+        id="unique"
+        className="unique-section relative z-10 overflow-hidden"
           style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/background1.webp")',
+           background: `linear-gradient(
+             135deg,
+             #0A1F2A 0%,     /* deeper navy base */
+             #004D5C 20%,    /* rich teal */
+             #007A8A 40%,    /* vibrant turquoise */
+             #00B4D8 60%,    /* bright cyan */
+             #FFD700 80%,    /* pure gold */
+             #FFE55C 100%    /* bright golden yellow */
+           )`
+          }}
+       >
+        {/* Animated Particle Background - Smooth Loop Transition */}
+        <div className="video-bg-wrapper absolute inset-0 z-0">
+          <video
+            id="video1"
+            className="bg-video absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            playsInline
+            style={{ 
+              mixBlendMode: 'normal',
+              opacity: 1,
+              transition: 'opacity 4s ease-in-out',
+              filter: 'blur(0.5px) brightness(1.1) contrast(1.05)'
+            }}
+            onLoadedMetadata={(e) => {
+              const video = e.target as HTMLVideoElement;
+              video.playbackRate = 0.5; // 50% speed
+            }}
+            onPlay={(e) => {
+              const video = e.target as HTMLVideoElement;
+              video.playbackRate = 0.5; // Ensure 50% speed is maintained
+            }}
+            onTimeUpdate={(e) => {
+              const video = e.target as HTMLVideoElement;
+              const duration = video.duration;
+              const currentTime = video.currentTime;
+              
+              // Start crossfade 3 seconds before the end for smoother transition
+              if (duration > 0 && currentTime >= duration - 3) {
+                const video2 = document.getElementById('video2') as HTMLVideoElement;
+                if (video2) {
+                  // Calculate crossfade progress (0 to 1 over last 3 seconds)
+                  const fadeProgress = (currentTime - (duration - 3)) / 3;
+                  video.style.opacity = (1 - fadeProgress).toString();
+                  video2.style.opacity = fadeProgress.toString();
+                  
+                  // Start video2 when we're 2 seconds from the end
+                  if (currentTime >= duration - 2 && video2.paused) {
+                    video2.currentTime = 0;
+                    video2.playbackRate = 0.5; // Set 50% speed
+                    video2.play();
+                  }
+                }
+              }
+            }}
+            onEnded={() => {
+              const video1 = document.getElementById('video1') as HTMLVideoElement;
+              const video2 = document.getElementById('video2') as HTMLVideoElement;
+              if (video1 && video2) {
+                video1.style.opacity = '0';
+                video2.style.opacity = '1';
+                video1.currentTime = 0;
+                video1.playbackRate = 0.5; // Maintain 50% speed
+              }
+            }}
+          >
+            <source src="https://maximages.s3.us-west-1.amazonaws.com/Unique+Section+v4.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          
+          <video
+            id="video2"
+            className="bg-video absolute inset-0 w-full h-full object-cover"
+            muted
+            playsInline
+            style={{ 
+              mixBlendMode: 'normal',
+              opacity: 0,
+              transition: 'opacity 4s ease-in-out',
+              filter: 'blur(0.5px) brightness(1.1) contrast(1.05)'
+            }}
+            onLoadedMetadata={(e) => {
+              const video = e.target as HTMLVideoElement;
+              video.playbackRate = 0.5; // 50% speed
+            }}
+            onPlay={(e) => {
+              const video = e.target as HTMLVideoElement;
+              video.playbackRate = 0.5; // Ensure 50% speed is maintained
+            }}
+            onTimeUpdate={(e) => {
+              const video = e.target as HTMLVideoElement;
+              const duration = video.duration;
+              const currentTime = video.currentTime;
+              
+              // Start crossfade 3 seconds before the end for smoother transition
+              if (duration > 0 && currentTime >= duration - 3) {
+                const video1 = document.getElementById('video1') as HTMLVideoElement;
+                if (video1) {
+                  // Calculate crossfade progress (0 to 1 over last 3 seconds)
+                  const fadeProgress = (currentTime - (duration - 3)) / 3;
+                  video.style.opacity = (1 - fadeProgress).toString();
+                  video1.style.opacity = fadeProgress.toString();
+                  
+                  // Start video1 when we're 2 seconds from the end
+                  if (currentTime >= duration - 2 && video1.paused) {
+                    video1.currentTime = 0;
+                    video1.playbackRate = 0.5; // Set 50% speed
+                    video1.play();
+                  }
+                }
+              }
+            }}
+            onEnded={() => {
+              const video1 = document.getElementById('video1') as HTMLVideoElement;
+              const video2 = document.getElementById('video2') as HTMLVideoElement;
+              if (video1 && video2) {
+                video2.style.opacity = '0';
+                video1.style.opacity = '1';
+                video2.currentTime = 0;
+                video2.playbackRate = 0.5; // Maintain 50% speed
+              }
+            }}
+          >
+            <source src="https://maximages.s3.us-west-1.amazonaws.com/Unique+Section+v4.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+                  </div>
+        
+        {/* Gradient Overlay */}
+        <div className="gradient-overlay absolute inset-0 z-1" />
+        
+        {/* Mouse Ripple Canvas (matching Section 12) */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-20"
+          style={{
+            mixBlendMode: 'screen',
+            opacity: 0.4
           }}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-20" />
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:justify-between h-full">
-            <div className="text-white max-w-3xl pt-16 hero-content" style={{paddingTop: '6rem'}}>
-              <h1 className="text-5xl font-bold mb-6 hero-title" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase',fontSize: '5.5rem'}}>Global Trust Challenge</h1>
-              <p className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '600',textTransform: 'uppercase',fontSize: '2.5rem'}}>Building Trust in the Age of Generative AI</p>
-              <p className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '600',fontSize: '1.5rem'}}>A worldwide innovation challenge uniting technologists, policymakers, and organizations to secure information integrity in an era of AI-generated content</p>
-              {/* <p className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '400',fontSize: '1.0rem'}}>Much more than a contest – this is a global call to action. Teams around the world will develop bold tech-and-policy solutions to counter AI-driven misinformation and reinforce trust in our digital ecosystem</p> */}
-              <a 
-                href="#pre-registration"
-                onClick={handlePreRegisterClick}
-                className="inline-flex items-center bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 mb-8"
-                style={{marginRight:'2.5rem'}}
-              >
-                Join the Challenge
-                <ArrowRight className="ml-2" size={20} />
-              </a>
-              <a 
-                href="/partners"
-                // onClick={handlePreRegisterClick}
-                className="inline-flex items-center bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 mb-8"
-                
-                >
-                Partner with Us
-                <ArrowRight className="ml-2" size={20} />
-              </a>
+            
+        {/* Seamless Digital Aurora Focal Area */}
+        <div 
+          className="absolute inset-0 z-5"
+          style={{
+            background: `radial-gradient(
+              circle at center,
+              rgba(255,255,255,0.4) 0%,
+              rgba(227,200,90,0.15) 30%,
+              rgba(143,166,138,0.1) 60%,
+              rgba(0,110,128,0.08) 100%
+            )`,
+            filter: 'blur(0.5px)'
+          }}
+        />
+            
+        <div className="unique-proto">
+        <div className="unique-wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Two-column layout: left headline, right stacked feature cards */}
+          <div className="unique-layout">
+            <div className="left-col">
+              <h2 className="section-title unique-heading">
+                What Makes This
+                <br />
+                Challenge <span className="text-gradient-unique">Unique</span>
+              </h2>
+              <div className="text-contrast-block">
+                <p className="section-description">
+                  A transformative platform where innovation meets opportunity, backed by world-class institutions and real-world impact.
+                </p>
+              </div>
 
-              {/* Mobile Sponsors */}
-              <div className="md:hidden">
-                <div className="text-white text-sm font-medium mb-4">Led by a coalition of global institutions</div>
-                <div className="flex flex-row space-x-4 overflow-x-auto pb-4">
-                  {topSponsors.map((sponsor, index) => (
-                    <div 
-                      key={index} 
-                      className="flex-shrink-0 bg-white bg-opacity-90 rounded-lg p-2 w-24 h-12 flex items-center justify-center hover:bg-opacity-100 transition-all duration-200"
-                    >
-                      <img
-                        src={sponsor.logo}
-                        alt={sponsor.name}
-                        className="max-h-8 w-auto object-contain"
-                      />
-                    </div>
-                  ))}
+            </div>
+
+            <div className="right-col">
+              <div className="feature-card feature-cyan" onMouseMove={(e) => {
+                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                t.style.setProperty('--my', `${e.clientY - r.top}px`);
+              }}>
+                <div className="icon-badge">🏅</div>
+                <div>
+                  <h3 className="feature-title">Inclusive Contribution</h3>
+                  <p className="feature-sub">Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI.</p>
+                </div>
+              </div>
+              <div className="feature-card feature-amber" onMouseMove={(e) => {
+                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                t.style.setProperty('--my', `${e.clientY - r.top}px`);
+              }}>
+                <div className="icon-badge">🌐</div>
+                <div>
+                  <h3 className="feature-title">Global Validation</h3>
+                  <p className="feature-sub">Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots.</p>
+                </div>
+              </div>
+              <div className="feature-card feature-blue" onMouseMove={(e) => {
+                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                t.style.setProperty('--my', `${e.clientY - r.top}px`);
+              }}>
+                <div className="icon-badge">🏗️</div>
+                <div>
+                  <h3 className="feature-title">Building Global Intelligence</h3>
+                  <p className="feature-sub">Combining policy and technology solutions — integrated, actionable models. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age.</p>
                 </div>
               </div>
             </div>
-            
-            {/* Desktop Sponsors */}
-            <div className="hidden md:flex flex-col items-end space-y-4 pt-16" style={{paddingTop: '6rem'}}>
-              <div className="text-white text-sm font-medium">Led by a coalition of global institutions</div>
-              <div className="flex flex-col space-y-4">
-                {topSponsors.map((sponsor, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-white bg-opacity-90 rounded-lg p-2 w-32 h-16 flex items-center justify-center hover:bg-opacity-100 transition-all duration-200"
-                  >
-                    <img
-                      src={sponsor.logo}
-                      alt={sponsor.name}
-                      className="max-h-12 w-auto object-contain"
-                    />
-                  </div>
-                ))}
+          </div>
+
+          {/* What We Provide grid (bottom) - Vercel prototype styling */}
+          <div className="title text-center mt-16">
+            <h2 className="provide-title">What We Provide</h2>
+          </div>
+          <div className="provide-cards" aria-label="What we provide cards grid">
+            {[
+              { ...bottomCardsData[0], accent: '#22d3ee', variant: 'dark' },
+              { ...bottomCardsData[1], accent: '#facc15', variant: 'gold' },
+              { ...bottomCardsData[2], accent: '#22d3ee', variant: 'dark' },
+              { ...bottomCardsData[3], accent: '#facc15', variant: 'gold' },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className={`provide-card variant-${item.variant}`}
+                style={{ ['--accent' as any]: item.accent }}
+                onMouseMove={(e) => {
+                  const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                  t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                  t.style.setProperty('--my', `${e.clientY - r.top}px`);
+                }}
+              >
+                <div className="provide-icon"><item.icon /></div>
+                <div className="provide-content">
+                  <h5 className="provide-heading">{item.title}</h5>
+                  <p className="provide-text">{item.description}</p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
+
+        </div>
         </div>
       </section>
-
-      {/*Overview */}
-      <section className="py-10 bg-white relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Can You Still Tell What's Real?</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            <div>
-              <p className="text-lg text-gray-600 mb-6">
-                Misinformation is amplifying—and AI is supercharging it. 
-                Deepfakes, fake news, synthetic voices… the line between real and fake is blurring fast.
-                </p>
-                <p className="text-lg text-gray-600 mb-6">
-                That's what the <span style={{fontWeight:'600'}}>Global Trust Challenge (GTC) </span> wants to remedy. Born out of a G7 call to action, as a rallying cry to rebuild trust in the digital age, the GTC is being launched by a <span style={{fontWeight:'600'}}>global coalition of changemakers</span>
-                (IEEE, OECD, AI Commons).<br/>
-                We're calling on technologists, policymakers, and truth defenders everywhere to create bold, practical solutions—technical tools and policies that work together to <span style={{fontWeight:'600'}}>fight back against AI-driven misinformation</span>.
-                More than just a challenge, this is a movement to ensure  that the future of AI is built on transparency, accountability, and truth.
-
-                </p>
-            </div>
-            <div>
-              <img
-                src="https://maximages.s3.us-west-1.amazonaws.com/Real.png"
-                alt="Technology collaboration"
-                className="rounded-lg shadow-xl"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/*Why Now Map Section */}
-      <WhyNow />
-
-      {/* Stats */}
-      <Stats />
       
-
-       {/* What Makes This Challenge Unique Section */}
-       <section className="py-10 bg-white relative z-10 fade-in">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', marginBottom:'1rem'}}>What Makes This Challenge Unique</h2>
-          <p className="text-3xl font-bold mb-12" style={{fontWeight: '600', fontSize:'1.4rem', marginBottom:'1rem'}}>A Global Call — For Everyone</p>
-          <p className="text-lg text-gray-600 mb-6">        
-            This isn't just for governments or tech experts. If you have an idea, a voice, or a vision—you belong here.<br/>
-            We've built a global platform to support bold ideas from anyone, anywhere. 
-            Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea—we want to hear from you.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-                        {
-                          icon: Users,
-                          phase: "Phase 1",
-                          title: "Inclusive Contribution",
-                          duration: "",
-                          description: "Enables diversity, collaboration, and global scalability. \n\n We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI."
-                        },
-                        {
-                          icon: Globe,
-                          phase: "Phase 2",
-                          title: "Global Validation",
-                          duration: "",
-                          description: "Designed to create practical prototypes, test them in real-world environments, and measure impact.\n\n A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots."
-                        },
-                        {
-                          icon: Scale,
-                          phase: "Phase 3",
-                          title: "Building Global Intelligence",
-                          duration: "",
-                          description: "Combining policy and technology solutions — integrated, actionable models.\n\nThe Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age."
-                        }
-                      ].map((item, index) => (
-                        <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md">
-                          <item.icon className="w-12 h-12 text-indigo-600 mb-4" />
-                          {/* <h4 className="text-lg font-semibold text-indigo-600 mb-2">{item.phase}</h4> */}
-                          <h5 className="text-xl font-bold mb-2">{item.title}</h5>
-                          {/* <p className="text-gray-600 mb-2">{item.duration}</p> */}
-                          <p className="text-gray-500">{item.description}</p>
-                        </div>
-                      ))}
-
-            
-          </div>
-       
-        </div>
-      </section>
-
-      {/* What We Provide Section */ }
-      <section className="py-10 bg-white relative z-10 fade-in">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', marginBottom:'1rem'}}>What We Provide</h2>
-          
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-                        {
-                          icon: Lightbulb,
-                          phase: "Phase 1",
-                          title: "Context",
-                          duration: "",
-                          description: "Key insights from leading AI and misinformation researchers — grounding ideas in the latest thinking and real-world relevance."
-                        },
-                        {
-                          icon: Cog,
-                          phase: "Phase 2",
-                          title: "Infrastructure",
-                          duration: "",
-                          description: "A platform to prototype, test, and showcase solutions — with tools and pathways to support development."
-                        },
-                        {
-                          icon: Stamp,
-                          phase: "Phase 3",
-                          title: "Legitimacy",
-                          duration: "",
-                          description: "Backed by global institutions like IEEE, OECD, and more — reinforcing credibility and trust."
-                        },
-                        {
-                          icon: Rocket,
-                          phase: "Phase 3",
-                          title: "Opportunity",
-                          duration: "",
-                          description: "Routes to real impact, policy dialogue, and funding — helping your solution grow beyond the challenge."
-                        }
-                      ].map((item, index) => (
-                        <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-md">
-                          <item.icon className="w-12 h-12 text-indigo-600 mb-4" />
-                          {/* <h4 className="text-lg font-semibold text-indigo-600 mb-2">{item.phase}</h4> */}
-                          <h5 className="text-xl font-bold mb-2">{item.title}</h5>
-                          {/* <p className="text-gray-600 mb-2">{item.duration}</p> */}
-                          <p className="text-gray-500">{item.description}</p>
-                        </div>
-                      ))}
-
-            
-          </div>
-       
-        </div>
-      </section>
 
 
 
@@ -540,7 +780,7 @@ export default function Home() {
       </section> */}
 
        {/* Is This for You Section - Redesigned */}
-      <section className="py-20 bg-gray-50 relative z-10 fade-in">
+      <section className="py-20 bg-gray-50 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             {/* Left Content */}
@@ -631,7 +871,7 @@ export default function Home() {
 
 
 {/* The Challenge Section - Redesigned */}
-      <section className="py-20 bg-white fade-in">
+      <section id="phases" className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
@@ -727,7 +967,7 @@ export default function Home() {
       </section>
 
         {/* How Ideas Are Selected Section */}
-      <section className="py-10 bg-gray-50 fade-in" style={{paddingTop:'5px'}}>
+      <section className="py-10 bg-gray-50" style={{paddingTop:'5px'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
             How Ideas Are Selected
@@ -788,7 +1028,7 @@ export default function Home() {
      
 
       {/* Upcoming Events Section */}
-      <section className="py-16 bg-white fade-in">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-10">
             <h2 className="text-3xl font-bold" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
@@ -895,10 +1135,12 @@ export default function Home() {
         </div>
       </section> */}
 
+      <section id="partners" className="relative z-10">
       <SponsorsCTA />
+      </section>
 
       {/* Pre-registration Form */}
-      <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700 fade-in">
+      <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', color:'#ffffff'}}>Bring your idea to life. Join the Challenge.</h2>
           <p className="text-xl text-indigo-100 max-w-3xl mx-auto">Please complete this form to register your interest in competing as part of the Global Challenge to Build Trust in the Age of Generative AI. We will be in touch when the official launch is approaching.</p>

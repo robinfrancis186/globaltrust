@@ -1,0 +1,142 @@
+/* Card Glow Effect - CodePen Inspired */
+
+.glow-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  border: 1px solid rgba(0, 174, 239, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 174, 239, 0.08);
+}
+
+.glow-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(45deg, 
+    #00AEEF, 
+    #FFD97A, 
+    #00AEEF, 
+    #53BC28, 
+    #6958D5, 
+    #00AEEF
+  );
+  background-size: 300% 300%;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: gradientShift 3s ease infinite;
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+.glow-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 6px 24px rgba(0, 174, 239, 0.15),
+    0 0 40px rgba(0, 174, 239, 0.1);
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced glow effect for better visibility */
+.glow-card::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, 
+    rgba(0, 174, 239, 0.3), 
+    rgba(255, 217, 122, 0.3), 
+    rgba(0, 174, 239, 0.3), 
+    rgba(83, 188, 40, 0.3), 
+    rgba(105, 88, 213, 0.3), 
+    rgba(0, 174, 239, 0.3)
+  );
+  background-size: 300% 300%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: gradientShift 3s ease infinite;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.glow-card:hover::after {
+  opacity: 0.6;
+}
+
+/* Icon glow effect */
+.glow-card .glow-icon {
+  background: linear-gradient(135deg, #00AEEF, #FFD97A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 12px rgba(0, 174, 239, 0.3));
+  transition: all 0.3s ease;
+}
+
+.glow-card:hover .glow-icon {
+  filter: drop-shadow(0 0 20px rgba(0, 174, 239, 0.6));
+  transform: scale(1.05);
+}
+
+/* Text glow effect */
+.glow-card .glow-text {
+  transition: all 0.3s ease;
+}
+
+.glow-card:hover .glow-text {
+  text-shadow: 0 0 8px rgba(0, 174, 239, 0.3);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .glow-card {
+    padding: 1.5rem;
+  }
+  
+  .glow-card::before,
+  .glow-card::after {
+    animation-duration: 4s; /* Slower on mobile for better performance */
+  }
+}
+
+/* Accessibility - respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glow-card::before,
+  .glow-card::after {
+    animation: none;
+  }
+  
+  .glow-card:hover {
+    transform: none;
+  }
+  
+  .glow-card:hover .glow-icon {
+    transform: none;
+  }
+}
+

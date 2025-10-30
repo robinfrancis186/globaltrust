@@ -1,0 +1,279 @@
+/* Vertical Timeline Layout - Alternating Cards */
+
+.timeline-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 174, 239, 0.3) 0%,
+    rgba(255, 217, 120, 0.5) 50%,
+    rgba(0, 174, 239, 0.3) 100%
+  );
+  transform: translateX(-50%);
+  border-radius: 2px;
+  box-shadow: 0 0 20px rgba(0, 174, 239, 0.2);
+}
+
+.timeline-card {
+  position: relative;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(60px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-card.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.timeline-card:nth-child(odd) {
+  text-align: left;
+  padding-right: 50%;
+}
+
+.timeline-card:nth-child(even) {
+  text-align: right;
+  padding-left: 50%;
+}
+
+.timeline-card-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 6px rgba(255, 255, 255, 0.3);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 500px;
+}
+
+.timeline-card:nth-child(odd) .timeline-card-content {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.timeline-card:nth-child(even) .timeline-card-content {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.timeline-card-content:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 0 60px rgba(0, 174, 239, 0.2);
+}
+
+/* Timeline Node */
+.timeline-node {
+  position: absolute;
+  top: 2rem;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #00AEEF, #FFD97A);
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 20px rgba(0, 174, 239, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-card:nth-child(odd) .timeline-node {
+  right: -10px;
+}
+
+.timeline-card:nth-child(even) .timeline-node {
+  left: -10px;
+}
+
+.timeline-card:hover .timeline-node {
+  transform: scale(1.2);
+  box-shadow: 
+    0 0 30px rgba(0, 174, 239, 0.6),
+    0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Content Styling */
+.timeline-card .card-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #00AEEF, #FFD97A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(0, 174, 239, 0.3));
+  transition: all 0.3s ease;
+}
+
+.timeline-card:hover .card-icon {
+  filter: drop-shadow(0 0 20px rgba(0, 174, 239, 0.6));
+  transform: scale(1.1);
+}
+
+.timeline-card .card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  text-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.timeline-card:hover .card-title {
+  text-shadow: 0 2px 12px rgba(0, 174, 239, 0.4);
+}
+
+.timeline-card .card-description {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4a4a4a;
+  text-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.timeline-card:hover .card-description {
+  color: #2a2a2a;
+  text-shadow: 0 1px 6px rgba(0, 174, 239, 0.3);
+}
+
+/* Phase Badge */
+.timeline-phase {
+  display: inline-block;
+  background: linear-gradient(135deg, #00AEEF, #FFD97A);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 174, 239, 0.3);
+  transition: all 0.3s ease;
+}
+
+.timeline-card:hover .timeline-phase {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 174, 239, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .timeline-card:nth-child(odd),
+  .timeline-card:nth-child(even) {
+    text-align: left;
+    padding-right: 0;
+    padding-left: 0;
+  }
+  
+  .timeline-card-content {
+    max-width: 100%;
+  }
+  
+  .timeline-card:nth-child(odd) .timeline-card-content,
+  .timeline-card:nth-child(even) .timeline-card-content {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .timeline-card:nth-child(odd) .timeline-node,
+  .timeline-card:nth-child(even) .timeline-node {
+    left: -10px;
+    right: auto;
+  }
+  
+  .timeline-line {
+    left: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-container {
+    padding: 0 1rem;
+  }
+  
+  .timeline-card {
+    margin-bottom: 3rem;
+  }
+  
+  .timeline-card-content {
+    padding: 2rem;
+  }
+  
+  .timeline-card .card-title {
+    font-size: 1.25rem;
+  }
+  
+  .timeline-line {
+    left: 15px;
+    width: 3px;
+  }
+  
+  .timeline-node {
+    width: 16px;
+    height: 16px;
+    border-width: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-card-content {
+    padding: 1.5rem;
+  }
+  
+  .timeline-card .card-title {
+    font-size: 1.125rem;
+  }
+  
+  .timeline-card .card-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Performance optimizations */
+.timeline-card {
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-card {
+    transition: none;
+  }
+  
+  .timeline-card-content {
+    transition: none;
+  }
+  
+  .timeline-card:hover .timeline-card-content {
+    transform: none;
+  }
+  
+  .timeline-card:hover .timeline-node {
+    transform: none;
+  }
+  
+  .timeline-card:hover .card-icon {
+    transform: none;
+  }
+}
