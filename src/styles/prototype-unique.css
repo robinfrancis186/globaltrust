@@ -65,6 +65,11 @@
 	backdrop-filter: blur(6px);
 }
 
+/* reduce left padding on large screens to shift headline left */
+.unique-proto .unique-wrap { padding-left: 1rem; }
+@media (min-width: 640px) { .unique-proto .unique-wrap { padding-left: 1.5rem; } }
+@media (min-width: 1024px) { .unique-proto .unique-wrap { padding-left: 0; } }
+
 .unique-proto .right-col { display:flex; flex-direction:column; gap:1.25rem; }
 .unique-proto .feature-card {
 	display:flex; gap:1rem; align-items:center; padding:1.25rem 1.5rem; border-radius: 1rem;

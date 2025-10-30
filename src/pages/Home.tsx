@@ -615,7 +615,7 @@ export default function Home() {
         />
             
         <div className="unique-proto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="unique-wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Two-column layout: left headline, right stacked feature cards */}
           <div className="unique-layout">
             <div className="left-col">
@@ -627,12 +627,7 @@ export default function Home() {
               <p className="section-description">
                 A transformative platform where innovation meets opportunity, backed by world-class institutions and real-world impact.
               </p>
-              <div className="pill-icons">
-                <div className="pill"><CheckCircle size={18} /></div>
-                <div className="pill"><Globe size={18} /></div>
-                <div className="pill"><BookCheck size={18} /></div>
-                <div className="pill"><Rocket size={18} /></div>
-              </div>
+
             </div>
 
             <div className="right-col">
