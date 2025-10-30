@@ -1,0 +1,70 @@
+/* Pinned Zoom Scroll Styles */
+
+body {
+  perspective: 1200px;
+}
+
+.pinned-zoom-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.pinned-zoom-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(1) contrast(1);
+  transform-origin: center center;
+  will-change: transform, filter;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8rem 2rem;
+  transform-style: preserve-3d;
+  position: relative;
+  z-index: 1;
+}
+
+.pz-content {
+  max-width: 1100px;
+  text-align: center;
+  color: white;
+}
+
+.pz-title {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.pz-sub {
+  font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+  opacity: 0.95;
+}
+
+.pz-desc {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 5rem 1.25rem; }
+}
+
+
+

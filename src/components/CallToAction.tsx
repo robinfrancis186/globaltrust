@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Calendar, Users, Trophy, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import '../styles/card-glow-effect.css';
 
 export default function CallToAction() {
   return (
@@ -40,10 +41,10 @@ export default function CallToAction() {
               description: "Gain visibility as leader in ethical AI innovation"
             }
           ].map((item, index) => (
-            <div key={index} className="text-center p-6 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm">
-              <item.icon className="w-12 h-12 text-white mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">{item.title}</h3>
-              <p className="text-indigo-100">{item.description}</p>
+            <div key={index} className="glow-card text-center" style={{ background: 'rgba(255, 255, 255, 0.1)' }}>
+              <item.icon className="glow-icon w-12 h-12 text-white mx-auto mb-4" />
+              <h3 className="glow-text text-xl font-semibold text-white mb-2">{item.title}</h3>
+              <p className="glow-text text-indigo-100">{item.description}</p>
             </div>
           ))}
         </div>

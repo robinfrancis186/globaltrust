@@ -152,13 +152,21 @@ const [formData, setFormData] = useState<SponsorshipFormData>({
     <div className="flex flex-col min-h-screen">
            {/* Hero Section with Parallax */}
       <section className="relative h-[600px] overflow-hidden -mt-16">
-        <div
-          className="absolute inset-0 bg-cover bg-center heroStyle"
-          style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/photo-1556761175-b413da4baf72.webp")',
-           
-          }}
-        />
+        {/* Background Video */}
+        <video
+          src="https://maximages.s3.us-west-1.amazonaws.com/Partners+%26+Sponrsors+Animation.mp4"
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          playsInline
+          loop
+          aria-label="Partners and sponsors animation"
+        >
+          <source src="https://maximages.s3.us-west-1.amazonaws.com/Partners+%26+Sponrsors+Animation.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-20" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16">
@@ -182,10 +190,10 @@ const [formData, setFormData] = useState<SponsorshipFormData>({
               Our partners help make the Challenge possible
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-              Our partners don’t just endorse the Challenge — they help make it possible.
+              Our partners don't just endorse the Challenge — they help make it possible.
 From hosting pilot programs and mentoring teams to providing infrastructure, outreach, or visibility, each partner contributes in ways that align with their mission and strengths.
-</p><p className="text-xl text-gray-600 max-w-4xl mx-auto">Whether you’re a city government, tech platform, multilateral body, or grassroots organization — you can play a vital role in shaping how the world responds to AI-driven misinformation.
-Together, we’re building an ecosystem of trust.
+</p><p className="text-xl text-gray-600 max-w-4xl mx-auto">Whether you're a city government, tech platform, multilateral body, or grassroots organization — you can play a vital role in shaping how the world responds to AI-driven misinformation.
+Together, we're building an ecosystem of trust.
  
             </p>
             

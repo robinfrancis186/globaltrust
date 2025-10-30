@@ -24,7 +24,6 @@ const incidents: Incident[] = [
   { location: [9.1, 8.7], city: "Nigeria", title: "Military Coup Deepfake", date: "July 2024", desc: "AI-generated video falsely claimed army had overthrown government" },
   { location: [30.0, 31.2], city: "Egypt", title: "AI Cleric Fatwa", date: "June 2024", desc: "Fake sermon circulated with political fatwa from religious leader" },
   { location: [5.6, -0.2], city: "Ghana", title: "Election Day Chaos Video", date: "August 2024", desc: "Deepfake of electoral commission chair announcing ballot cancellation" },
-  { location: [38.9, -77.0], city: "United States", title: "Biden Deepfake Robocalls", date: "January 2024", desc: "AI-generated robocalls using President Biden's voice urged 25,000 voters not to vote in the Democratic primary" },
   { location: [-33.4, -70.6], city: "Chile", title: "Election Disinformation Video", date: "March 2024", desc: "AI-generated video aimed to discredit presidential candidate went viral" },
   { location: [14.6, -90.5], city: "Guatemala", title: "Deepfake Hoax Against Journalist", date: "May 2024", desc: "AI-generated footage falsely showed a journalist accepting bribes" },
   { location: [6.5, 3.4], city: "Nigeria", title: "Political Deepfake Scandal", date: "February 2024", desc: "AI-generated audio aimed to destabilize public trust ahead of elections" },
