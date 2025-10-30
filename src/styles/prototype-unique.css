@@ -119,19 +119,8 @@
 .unique-proto .feature-card * { opacity: 1; mix-blend-mode: normal; }
 
 /* vertical alignment tweak: push headline down further */
-.unique-proto .left-col { margin-top: 3rem; position: relative; }
-@media (min-width: 1024px) { .unique-proto .left-col { margin-top: 8rem; position: relative; } }
-.unique-proto .left-col::before {
-    content: "";
-    position: absolute;
-    inset: -1rem -1rem -1rem -1rem;
-    z-index: -1;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
-    border-radius: 1rem;
-}
-@media (max-width: 768px) {
-    .unique-proto .left-col::before { background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.75)); }
-}
+.unique-proto .left-col { margin-top: 3rem; }
+@media (min-width: 1024px) { .unique-proto .left-col { margin-top: 8rem; } }
 .unique-proto .cards {
 	display: grid;
 	grid-template-columns: repeat(1, minmax(0, 1fr));
