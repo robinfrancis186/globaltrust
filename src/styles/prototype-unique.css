@@ -133,8 +133,8 @@
     box-shadow: inset 0 0 10px rgba(0,0,0,0.25), 0 0 12px rgba(255,255,255,0.12);
 }
 
-.unique-proto .feature-title { color:#ffffff; font-weight:800; font-size:1.55rem; text-shadow: 0 1px 2px rgba(0,0,0,0.45), 0 0 1px rgba(255,255,255,0.25); }
-.unique-proto .feature-sub { color: #e6eef9; margin-top:0.35rem; font-size: 1rem; line-height: 1.65; text-shadow: 0 1px 1px rgba(0,0,0,0.35); }
+.unique-proto .feature-title { color:#ffffff; font-weight:800; font-size:1.6rem; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+.unique-proto .feature-sub { color: #f8fafc; margin-top:0.35rem; font-size: 1.05rem; line-height: 1.7; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
 .unique-proto .feature-card { color: #ffffff; }
 .unique-proto .feature-card * { opacity: 1; mix-blend-mode: normal; }
 
