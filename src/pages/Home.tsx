@@ -616,18 +616,51 @@ export default function Home() {
             
         <div className="unique-proto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="title text-center">
-            <h2 className="section-title">What Makes This Challenge Unique</h2>
-            <h3 className="section-subtitle">A Global Call — For Everyone</h3>
-            <p className="section-description">
-              This isn't just for governments or tech experts. If you have an idea, a voice, or a vision—you belong here.
-              We've built a global platform to support bold ideas from anyone, anywhere.
-            </p>
+          {/* Two-column layout: left headline, right stacked feature cards */}
+          <div className="unique-layout">
+            <div className="left-col">
+              <h2 className="section-title unique-heading">
+                What Makes This
+                <br />
+                Challenge <span className="text-gradient-unique">Unique</span>
+              </h2>
+              <p className="section-description">
+                A transformative platform where innovation meets opportunity, backed by world-class institutions and real-world impact.
+              </p>
+              <div className="pill-icons">
+                <div className="pill"><CheckCircle size={18} /></div>
+                <div className="pill"><Globe size={18} /></div>
+                <div className="pill"><BookCheck size={18} /></div>
+                <div className="pill"><Rocket size={18} /></div>
+              </div>
+            </div>
+
+            <div className="right-col">
+              <div className="feature-card feature-cyan">
+                <div className="icon-badge">🏅</div>
+                <div>
+                  <h3 className="feature-title">Legitimacy</h3>
+                  <p className="feature-sub">Backed by leading global institutions and industry partners worldwide</p>
+                </div>
+              </div>
+              <div className="feature-card feature-amber">
+                <div className="icon-badge">🌐</div>
+                <div>
+                  <h3 className="feature-title">Context</h3>
+                  <p className="feature-sub">Real-world problems from actual organizations seeking innovative solutions</p>
+                </div>
+              </div>
+              <div className="feature-card feature-blue">
+                <div className="icon-badge">🏗️</div>
+                <div>
+                  <h3 className="feature-title">Infrastructure</h3>
+                  <p className="feature-sub">State-of-the-art tools, platforms, and resources to bring ideas to life</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Prototype shell: top content area (no cards yet) */}
-          <div className="cards mt-12" aria-label="Unique section content area" />
-
+          {/* What We Provide grid (bottom) */}
           <div className="title text-center mt-16">
             <h2 
               className="text-3xl font-bold mb-6"
@@ -643,8 +676,6 @@ export default function Home() {
               What We Provide
             </h2>
           </div>
-
-          {/* Prototype shell: bottom cards grid */}
           <div className="cards" aria-label="What we provide cards grid">
             {bottomCardsData.map((item, index) => (
               <div key={index} className="card">
