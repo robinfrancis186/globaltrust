@@ -114,6 +114,8 @@
 
 .unique-proto .feature-title { color:#ffffff; font-weight:800; font-size:1.55rem; text-shadow: 0 1px 2px rgba(0,0,0,0.35); }
 .unique-proto .feature-sub { color: #ffffff; margin-top:0.35rem; font-size: 1rem; line-height: 1.6; }
+.unique-proto .feature-card { color: #ffffff; }
+.unique-proto .feature-card * { opacity: 1; mix-blend-mode: normal; }
 
 /* vertical alignment tweak: push headline down further */
 .unique-proto .left-col { margin-top: 3rem; }
