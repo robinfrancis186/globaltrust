@@ -73,14 +73,28 @@
 .unique-proto .right-col { display:flex; flex-direction:column; gap:1.25rem; }
 .unique-proto .feature-card {
 	display:flex; gap:1rem; align-items:center; padding:1.25rem 1.5rem; border-radius: 1rem;
-	border: 1px solid rgba(255,255,255,0.12);
-	box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-	background: radial-gradient(120% 120% at 10% 0%, rgba(255,255,255,0.06), rgba(0,0,0,0.35) 70%);
+	border: 1px solid rgba(255,255,255,0.18);
+	box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+	background: linear-gradient(135deg, rgba(10,30,45,0.75), rgba(5,15,25,0.65));
+	backdrop-filter: blur(8px);
+	position: relative; overflow: hidden;
+	transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
 }
 
+/* light ray sweep */
+.unique-proto .feature-card::before {
+	content: ""; position: absolute; inset: -20%;
+	background: linear-gradient(75deg, transparent 35%, rgba(255,255,255,0.35) 50%, transparent 65%);
+	transform: rotate(18deg) translateX(-160%);
+	transition: transform 700ms ease;
+}
+
+.unique-proto .feature-card:hover::before { transform: rotate(18deg) translateX(160%); }
+.unique-proto .feature-card:hover { box-shadow: 0 16px 44px rgba(0,0,0,0.45); border-color: rgba(255,255,255,0.28); }
+
 .unique-proto .feature-cyan { background: linear-gradient(135deg, rgba(0,174,239,0.25), rgba(0,0,0,0.35)); }
-.unique-proto .feature-amber { background: linear-gradient(135deg, rgba(255,174,0,0.27), rgba(0,0,0,0.35)); }
-.unique-proto .feature-blue { background: linear-gradient(135deg, rgba(0,102,204,0.25), rgba(0,0,0,0.35)); }
+.unique-proto .feature-amber { background: linear-gradient(135deg, rgba(255,174,0,0.28), rgba(0,0,0,0.45)); }
+.unique-proto .feature-blue { background: linear-gradient(135deg, rgba(0,102,204,0.28), rgba(0,0,0,0.45)); }
 
 .unique-proto .icon-badge {
 	width: 56px; height: 56px; border-radius: 16px; display:flex; align-items:center; justify-content:center; font-size: 1.5rem;
@@ -90,6 +104,10 @@
 
 .unique-proto .feature-title { color:#fff; font-weight:800; font-size:1.5rem; }
 .unique-proto .feature-sub { color: rgba(255,255,255,0.9); margin-top:0.25rem; }
+
+/* vertical alignment tweak: push headline down on large screens */
+.unique-proto .left-col { margin-top: 0.5rem; }
+@media (min-width: 1024px) { .unique-proto .left-col { margin-top: 1.75rem; } }
 .unique-proto .cards {
 	display: grid;
 	grid-template-columns: repeat(1, minmax(0, 1fr));
