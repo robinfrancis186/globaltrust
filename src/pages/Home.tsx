@@ -440,10 +440,10 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Cinematic Crossfade Depth Push */}
-      <CinematicCrossfade sectionIds={['hero', 'trust', 'unique', 'partners']} />
+      <CinematicCrossfade sectionIds={['hero', 'trust', 'partners']} />
       
       {/* Warp Section Transition Effect */}
-      <WarpSectionTransition sectionIds={['hero', 'trust', 'unique', 'partners']} />
+      <WarpSectionTransition sectionIds={['hero', 'trust', 'partners']} />
 
       {/* Hero Section V3 */}
       <HeroSectionV3 />
