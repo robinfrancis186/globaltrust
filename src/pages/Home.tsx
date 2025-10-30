@@ -241,7 +241,7 @@ export default function Home() {
         // Simple circle instead of complex gradient
         ctx.beginPath();
         ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,174,239,${ripple.alpha * 0.3})`;
+        ctx.fillStyle = `rgba(255,215,0,${ripple.alpha * 0.35})`;
         ctx.fill();
 
         // Remove expired ripples
@@ -624,9 +624,11 @@ export default function Home() {
                 <br />
                 Challenge <span className="text-gradient-unique">Unique</span>
               </h2>
-              <p className="section-description">
-                A transformative platform where innovation meets opportunity, backed by world-class institutions and real-world impact.
-              </p>
+              <div className="text-contrast-block">
+                <p className="section-description">
+                  A transformative platform where innovation meets opportunity, backed by world-class institutions and real-world impact.
+                </p>
+              </div>
 
             </div>
 

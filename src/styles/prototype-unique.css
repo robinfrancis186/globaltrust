@@ -24,7 +24,18 @@
 .unique-proto .section-description {
 	margin: 0.75rem auto 0;
 	max-width: 48rem;
-	color: rgba(255,255,255,0.9);
+	color: rgba(255,255,255,0.92);
+}
+
+/* contrast block just for paragraph (excludes header) */
+.unique-proto .text-contrast-block {
+	margin-top: 0.75rem;
+	padding: 0.75rem 1rem;
+	border-radius: 0.75rem;
+	background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+}
+@media (max-width: 768px) {
+	.unique-proto .text-contrast-block { background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.75)); }
 }
 
 .unique-proto .title {}
