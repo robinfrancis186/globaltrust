@@ -639,22 +639,22 @@ export default function Home() {
               <div className="feature-card feature-cyan">
                 <div className="icon-badge">🏅</div>
                 <div>
-                  <h3 className="feature-title">Legitimacy</h3>
-                  <p className="feature-sub">Backed by leading global institutions and industry partners worldwide</p>
+                  <h3 className="feature-title">Inclusive Contribution</h3>
+                  <p className="feature-sub">Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI.</p>
                 </div>
               </div>
               <div className="feature-card feature-amber">
                 <div className="icon-badge">🌐</div>
                 <div>
-                  <h3 className="feature-title">Context</h3>
-                  <p className="feature-sub">Real-world problems from actual organizations seeking innovative solutions</p>
+                  <h3 className="feature-title">Global Validation</h3>
+                  <p className="feature-sub">Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots.</p>
                 </div>
               </div>
               <div className="feature-card feature-blue">
                 <div className="icon-badge">🏗️</div>
                 <div>
-                  <h3 className="feature-title">Infrastructure</h3>
-                  <p className="feature-sub">State-of-the-art tools, platforms, and resources to bring ideas to life</p>
+                  <h3 className="feature-title">Building Global Intelligence</h3>
+                  <p className="feature-sub">Combining policy and technology solutions — integrated, actionable models. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age.</p>
                 </div>
               </div>
             </div>
