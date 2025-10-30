@@ -113,7 +113,7 @@
 /* mouse-follow ripple */
 .unique-proto .feature-card::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(180px 180px at var(--mx) var(--my), rgba(255,255,255,0.18), transparent 65%);
+    background: radial-gradient(240px 240px at var(--mx) var(--my), rgba(255,255,255,0.25), transparent 70%);
     opacity: 0; transition: opacity 800ms ease;
 }
 .unique-proto .feature-card:hover::after { opacity: 1; }
@@ -137,6 +137,17 @@
 .unique-proto .feature-sub { color: #e6eef9; margin-top:0.35rem; font-size: 1rem; line-height: 1.65; text-shadow: 0 1px 1px rgba(0,0,0,0.35); }
 .unique-proto .feature-card { color: #ffffff; }
 .unique-proto .feature-card * { opacity: 1; mix-blend-mode: normal; }
+
+/* Per-card ripple color tints */
+.unique-proto .feature-cyan::after {
+    background: radial-gradient(260px 260px at var(--mx) var(--my), rgba(34,211,238,0.32), transparent 72%);
+}
+.unique-proto .feature-amber::after {
+    background: radial-gradient(260px 260px at var(--mx) var(--my), rgba(250,204,21,0.32), transparent 72%);
+}
+.unique-proto .feature-blue::after {
+    background: radial-gradient(260px 260px at var(--mx) var(--my), rgba(132,204,22,0.32), transparent 72%);
+}
 
 /* vertical alignment tweak: push headline down further */
 .unique-proto .left-col { margin-top: 3rem; }
