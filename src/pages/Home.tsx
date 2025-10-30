@@ -644,8 +644,16 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* Prototype shell: bottom cards grid placeholder */}
-          <div className="cards" aria-label="What we provide cards grid" />
+          {/* Prototype shell: bottom cards grid */}
+          <div className="cards" aria-label="What we provide cards grid">
+            {bottomCardsData.map((item, index) => (
+              <div key={index} className="card">
+                <item.icon className="icon" />
+                <h5>{item.title}</h5>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
 
         </div>
         </div>
