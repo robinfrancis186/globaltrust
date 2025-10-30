@@ -1,0 +1,88 @@
+/* Warp Section Transition Styles - Performance Optimized */
+
+/* Ensure sections are optimized for transforms */
+section[id="hero"],
+section[id="trust"],
+section[id="unique"],
+section[id="phases"],
+section[id="partners"] {
+  position: relative;
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  contain: layout style paint;
+}
+
+/* Background elements optimization */
+.bg-video,
+.gradient-overlay,
+.video-bg-wrapper {
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+
+/* Content elements optimization */
+section h1,
+section h2,
+section h3,
+section p,
+section button,
+section a,
+section .glassmorphic-card,
+section .section-title,
+section .section-subtitle {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Smooth transitions for content */
+section h1,
+section h2,
+section h3,
+section p,
+section button,
+section a {
+  transform-origin: center center;
+}
+
+/* Performance hints */
+section[class*="hero"],
+section[class*="trust"],
+section[class*="unique"],
+section[class*="phases"],
+section[class*="partners"] {
+  isolation: isolate;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  section[id="hero"],
+  section[id="trust"],
+  section[id="unique"],
+  section[id="phases"],
+  section[id="partners"] {
+    will-change: auto;
+  }
+  
+  /* Reduce blur on mobile for better performance */
+  .bg-video,
+  .gradient-overlay {
+    filter: none !important;
+  }
+}
+
+/* Accessibility - respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  section[id="hero"],
+  section[id="trust"],
+  section[id="unique"],
+  section[id="phases"],
+  section[id="partners"],
+  .bg-video,
+  .gradient-overlay {
+    will-change: auto;
+    transition: none !important;
+  }
+}
+

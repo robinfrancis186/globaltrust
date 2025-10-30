@@ -66,7 +66,10 @@ const recentNews: NewsItem[] = [
 ];
 
 // Helper function to parse different date formats
-const parseEventDate = (dateString: string): Date => {
+const parseEventDate = (dateString: string | undefined): Date => {
+  if (!dateString || typeof dateString !== 'string') {
+    return new Date(0);
+  }
   // Remove ordinal suffixes (st, nd, rd, th)
   const cleanDate = dateString.replace(/(\d+)(st|nd|rd|th)/, '$1');
   
@@ -76,7 +79,7 @@ const parseEventDate = (dateString: string): Date => {
   // If parsing fails or we only have month/year, handle specially
   if (isNaN(parsed.getTime())) {
     // Handle "Month YYYY" format by setting to first of month
-    const parts = cleanDate.split(' ');
+    const parts = (cleanDate || '').split(' ');
     if (parts.length === 2) {
       return new Date(`${parts[0]} 1, ${parts[1]}`);
     }
