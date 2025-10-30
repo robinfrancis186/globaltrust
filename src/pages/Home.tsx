@@ -14,6 +14,8 @@ import FutureRunsOnTrust from '../components/FutureRunsOnTrust';
 // import CinematicScroll from '../components/CinematicScroll';
 // import '../styles/cinematic-scroll.css';
 import '../styles/card-glow-effect.css';
+// Optional: framer-motion for subtle entrance/hover polish (install if missing)
+// import { motion } from 'framer-motion';
 import '../styles/unique-section-refined.css';
 import '../styles/warp-transitions.css';
 import '../styles/prototype-unique.css';
@@ -202,7 +204,7 @@ export default function Home() {
     };
   }, []);
 
-  // Canvas ripple effect
+  // Canvas ripple effect (identical to Section 12)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -234,83 +236,66 @@ export default function Home() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ripplesRef.current.forEach((ripple, i) => {
-        // Simplified ripple animation for better performance
-        ripple.radius += 2;
-        ripple.alpha -= 0.008;
+        // Expand ripple with gentle, flowy movement
+        ripple.radius += 2 + ripple.velocity * 0.3;
+        ripple.alpha -= 0.003;
 
-        // Simple circle instead of complex gradient
+        // Horizontal gradient that matches Section 12 palette
+        const horizontalStretch = 2.2 + ripple.velocity * 0.4;
+        const gradient = ctx.createLinearGradient(
+          ripple.x - ripple.radius * horizontalStretch,
+          ripple.y,
+          ripple.x + ripple.radius * horizontalStretch,
+          ripple.y
+        );
+        gradient.addColorStop(0, `rgba(0,174,239,${ripple.alpha * 0.8})`);
+        gradient.addColorStop(0.3, `rgba(0,174,239,${ripple.alpha * 0.6})`);
+        gradient.addColorStop(0.7, `rgba(255,217,120,${ripple.alpha * 0.5})`);
+        gradient.addColorStop(1, `rgba(0,174,239,0)`);
+
+        ctx.save();
         ctx.beginPath();
-        ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,215,0,${ripple.alpha * 0.35})`;
+        ctx.fillStyle = gradient;
+        ctx.translate(ripple.x, ripple.y);
+        ctx.scale(horizontalStretch, 1);
+        ctx.arc(0, 0, ripple.radius, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
 
-        // Remove expired ripples
         if (ripple.alpha <= 0) {
           ripplesRef.current.splice(i, 1);
         }
       });
 
-      // Reduce animation frequency
-      animationId = requestAnimationFrame(() => {
-        setTimeout(animate, 16); // ~60fps instead of unlimited
-      });
+      animationId = requestAnimationFrame(animate);
     };
 
-    let mouseMoveThrottle: number | null = null;
-    let isScrolling = false;
-    let scrollTimeout: number | null = null;
-    
     const handleMouseMove = (e: MouseEvent) => {
-      // Skip if scrolling for better performance
-      if (isScrolling) return;
-      
-      // Throttle mouse move events to improve performance
-      if (mouseMoveThrottle) return;
-      
-      mouseMoveThrottle = requestAnimationFrame(() => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-        // Calculate velocity for dynamic ripple behavior
-        const dx = x - lastMouseRef.current.x;
-        const dy = y - lastMouseRef.current.y;
-        const velocity = Math.sqrt(dx * dx + dy * dy) / 10;
+      const dx = x - lastMouseRef.current.x;
+      const dy = y - lastMouseRef.current.y;
+      const velocity = Math.sqrt(dx * dx + dy * dy) / 10;
 
-        // Only add ripple if mouse moved significantly and reduce frequency
-        if (velocity > 1.5) {
-          addRipple(x, y, velocity);
-        }
+      if (velocity > 0.5) {
+        addRipple(x, y, velocity);
+      }
 
-        lastMouseRef.current = { x, y };
-        mouseMoveThrottle = null;
-      });
-    };
-
-    const handleScroll = () => {
-      isScrolling = true;
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-      }, 150);
+      lastMouseRef.current = { x, y };
     };
 
     // Initialize
     resize();
     animate();
-
-    // Event listeners
     window.addEventListener('resize', resize);
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Cleanup
     return () => {
       cancelAnimationFrame(animationId);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -589,13 +574,13 @@ export default function Home() {
         {/* Gradient Overlay */}
         <div className="gradient-overlay absolute inset-0 z-1" />
         
-        {/* Mouse Ripple Canvas */}
+        {/* Mouse Ripple Canvas (matching Section 12) */}
         <canvas
           ref={canvasRef}
           className="absolute inset-0 w-full h-full pointer-events-none z-20"
           style={{
             mixBlendMode: 'screen',
-            opacity: 0.6
+            opacity: 0.4
           }}
         />
             
@@ -669,28 +654,32 @@ export default function Home() {
             </div>
           </div>
 
-          {/* What We Provide grid (bottom) */}
+          {/* What We Provide grid (bottom) - Vercel prototype styling */}
           <div className="title text-center mt-16">
-            <h2 
-              className="text-3xl font-bold mb-6"
-              style={{
-                fontFamily: '"Barlow Condensed", serif',
-                fontWeight: '800',
-                textTransform: 'uppercase',
-                fontSize: '2.5rem',
-                color: '#ffffff',
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
-              }}
-            >
-              What We Provide
-            </h2>
+            <h2 className="provide-title">What We Provide</h2>
           </div>
-          <div className="cards" aria-label="What we provide cards grid">
-            {bottomCardsData.map((item, index) => (
-              <div key={index} className="card">
-                <item.icon className="icon" />
-                <h5>{item.title}</h5>
-                <p>{item.description}</p>
+          <div className="provide-cards" aria-label="What we provide cards grid">
+            {[
+              { ...bottomCardsData[0], accent: '#22d3ee', variant: 'dark' },
+              { ...bottomCardsData[1], accent: '#facc15', variant: 'gold' },
+              { ...bottomCardsData[2], accent: '#22d3ee', variant: 'dark' },
+              { ...bottomCardsData[3], accent: '#facc15', variant: 'gold' },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className={`provide-card variant-${item.variant}`}
+                style={{ ['--accent' as any]: item.accent }}
+                onMouseMove={(e) => {
+                  const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                  t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                  t.style.setProperty('--my', `${e.clientY - r.top}px`);
+                }}
+              >
+                <div className="provide-icon"><item.icon /></div>
+                <div className="provide-content">
+                  <h5 className="provide-heading">{item.title}</h5>
+                  <p className="provide-text">{item.description}</p>
+                </div>
               </div>
             ))}
           </div>
