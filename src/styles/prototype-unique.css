@@ -114,9 +114,9 @@
 .unique-proto .feature-card::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(480px 480px at var(--mx) var(--my), rgba(255,255,255,0.15), transparent 70%);
-    opacity: 0; transform: scale(0.95); transition: opacity 1300ms ease, transform 1300ms ease;
+    opacity: 0; transform: scale(1); transition: none;
 }
-.unique-proto .feature-card:hover::after { opacity: 1; transform: scale(1.05); }
+.unique-proto .feature-card:hover::after { opacity: 1; transform: scale(1); }
 
 .unique-proto .feature-cyan { background-image: linear-gradient(135deg, rgba(0,174,239,0.22), rgba(255,255,255,0.12)); }
 .unique-proto .feature-amber { background-image: linear-gradient(135deg, rgba(255,174,0,0.22), rgba(255,255,255,0.12)); }
