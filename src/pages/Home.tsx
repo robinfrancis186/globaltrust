@@ -633,21 +633,33 @@ export default function Home() {
             </div>
 
             <div className="right-col">
-              <div className="feature-card feature-cyan">
+              <div className="feature-card feature-cyan" onMouseMove={(e) => {
+                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                t.style.setProperty('--my', `${e.clientY - r.top}px`);
+              }}>
                 <div className="icon-badge">🏅</div>
                 <div>
                   <h3 className="feature-title">Inclusive Contribution</h3>
                   <p className="feature-sub">Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI.</p>
                 </div>
               </div>
-              <div className="feature-card feature-amber">
+              <div className="feature-card feature-amber" onMouseMove={(e) => {
+                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                t.style.setProperty('--my', `${e.clientY - r.top}px`);
+              }}>
                 <div className="icon-badge">🌐</div>
                 <div>
                   <h3 className="feature-title">Global Validation</h3>
                   <p className="feature-sub">Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots.</p>
                 </div>
               </div>
-              <div className="feature-card feature-blue">
+              <div className="feature-card feature-blue" onMouseMove={(e) => {
+                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
+                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                t.style.setProperty('--my', `${e.clientY - r.top}px`);
+              }}>
                 <div className="icon-badge">🏗️</div>
                 <div>
                   <h3 className="feature-title">Building Global Intelligence</h3>
