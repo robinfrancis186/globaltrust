@@ -616,29 +616,21 @@ export default function Home() {
             
         <div className="unique-proto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <h2 className="section-title">
-            What Makes This Challenge Unique
-          </h2>
-
-          <h3 className="section-subtitle">
-            A Global Call — For Everyone
-          </h3>
-
-          <p className="section-description">
-            This isn't just for governments or tech experts. If you have an idea, a voice, or a vision—you belong here.<br/>
-            We've built a global platform to support bold ideas from anyone, anywhere. 
-            Whether you're a coder, a policymaker, a teacher, or a teenager with a big idea—we want to hear from you.
-          </p>
-          
-          {/* Phase 1: Skeleton Swiper (top only) */}
-          <div className="mb-16 carousel-right-half">
-            <LayeredCarousel />
+          <div className="title text-center">
+            <h2 className="section-title">What Makes This Challenge Unique</h2>
+            <h3 className="section-subtitle">A Global Call — For Everyone</h3>
+            <p className="section-description">
+              This isn't just for governments or tech experts. If you have an idea, a voice, or a vision—you belong here.
+              We've built a global platform to support bold ideas from anyone, anywhere.
+            </p>
           </div>
 
-          {/* Bottom 4 Cards - What We Provide - Carousel */}
-          <div className="mt-4 relative z-30">
+          {/* Prototype shell: top content area (no cards yet) */}
+          <div className="cards mt-12" aria-label="Unique section content area" />
+
+          <div className="title text-center mt-16">
             <h2 
-              className="text-3xl font-bold mb-12 text-center"
+              className="text-3xl font-bold mb-6"
               style={{
                 fontFamily: '"Barlow Condensed", serif',
                 fontWeight: '800',
@@ -650,59 +642,11 @@ export default function Home() {
             >
               What We Provide
             </h2>
-            
-            <CardCarousel
-              cards={bottomCardsData.map((item, index) => (
-                <div 
-                  key={index} 
-                  className="bottom-card relative z-30 bg-white p-6 rounded-xl transition-all duration-400 ease-in-out hover:-translate-y-1 min-h-[300px] flex flex-col flex-shrink-0 shadow-xl"
-                  style={{
-                    border: '1px solid rgba(0,174,239,0.18)',
-                    boxShadow: '0 10px 30px rgba(0,174,239,0.12)',
-                    width: '250px',
-                    zIndex: 30
-                  }}
-                >
-                  <item.icon 
-                    className="w-12 h-12 mb-4 flex-shrink-0"
-                    style={{
-                      background: 'linear-gradient(135deg, #00AEEF, #FFD97A)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      filter: 'drop-shadow(0 0 12px rgba(0,174,239,0.3))',
-                    }}
-                  />
-                  <h5 
-                    className="text-xl font-bold mb-3 flex-shrink-0"
-                    style={{
-                      fontFamily: '"Inter", sans-serif',
-                      fontWeight: '700',
-                      color: '#222',
-                    }}
-                  >
-                    {item.title}
-                  </h5>
-                  <p 
-                    className="text-gray-500 flex-grow leading-relaxed"
-                    style={{
-                      fontFamily: '"Inter", sans-serif',
-                      fontWeight: '400',
-                      fontSize: '0.95rem',
-                      lineHeight: '1.5',
-                    }}
-                  >
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-              slidesPerView={4}
-              autoplay={true}
-              showNav={true}
-              prevLabel="Previous"
-              nextLabel="Next"
-            />
           </div>
-       
+
+          {/* Prototype shell: bottom cards grid placeholder */}
+          <div className="cards" aria-label="What we provide cards grid" />
+
         </div>
         </div>
       </section>
