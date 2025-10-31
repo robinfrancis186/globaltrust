@@ -8,15 +8,15 @@ interface Sponsor {
 const sponsors = [
     {
     name: "IEEE",
-    logo: "https://brand-experience.ieee.org/wp-content/uploads/2016/12/LogoTest-e1481836752230.png",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/IEEE_SA-logo-avatar.png",
   },
    {
     name: "OECD",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OECD_logo.svg/320px-OECD_logo.svg.png",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/QECDLogo.png",
   },
   {
     name: "AI Commons",
-    logo: "https://ai-commons.org/wp-content/themes/aicommons/assets/img/logo.svg",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/aicommonlogo.svg",
   },
   {
     name: "UNESCO",
@@ -29,11 +29,8 @@ const sponsors = [
   {
     name: "IDB",
     logo: "https://www.greenclimate.fund/sites/default/files/styles/small/public/organisation/logo-idb.png",
-  },
-  {
-    name: "AWS",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
-  },
+  }
+  
 ];
 
 const supportingSponsors = [
@@ -57,6 +54,10 @@ const supportingSponsors = [
     name: "ITU",
     logo: "https://www.un.org/sites/un2.un.org/files/field/image/ituv2-01.jpg",
   },
+  {
+    name: "AWS",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
+  }
 ];
 
 export default function Sponsors() {

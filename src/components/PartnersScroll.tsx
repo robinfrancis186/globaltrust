@@ -27,17 +27,18 @@ const partners: Partner[] = [
     url: "https://www.itu.int/en/ITU-T/AI/Pages/karachalios.aspx"
   },
   {
-    name: "Sebastian Hallensleben",
-    role: "CEN-CENELEC JTC 21",
-    image: "https://maximages.s3.us-west-1.amazonaws.com/sebastian.jpg",
-    url: "https://oecd.ai/en/community/sebastian-hallensleben"
-  },
-  {
     name: "Mariagrazia Squicciarini",
     role: "UNESCO",
     image: "https://maximages.s3.us-west-1.amazonaws.com/mariagrazia.jpg",
     url: "https://www.linkedin.com/in/mariagrazia-squicciarini-9a607bba/"
   },
+  {
+    name: "Sebastian Hallensleben",
+    role: "CEN-CENELEC JTC 21",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/sebastian.jpg",
+    url: "https://oecd.ai/en/community/sebastian-hallensleben"
+  },
+
   {
     name: "David Satola",
     role: "World Bank",

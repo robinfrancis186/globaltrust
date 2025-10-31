@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@thebcms/cli": "^1.4.1",
+    "@thebcms/client": "^1.5.5",
     "html-react-parser": "^5.2.5",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.344.0",

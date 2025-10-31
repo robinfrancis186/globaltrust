@@ -34,7 +34,7 @@ export default function Stats() {
                                 Election Vulnerability
                              </h3>
                              <p className="text-gray-600">
-                                In 2024 alone, over 40 countries holding elections face unprecedented Al-generates misinformation campaigns, potentially affecting more than 2 billion voters worldwide.
+                                In 2024 alone, over 40 countries holding elections faced unprecedented Al-generated misinformation campaigns, potentially affecting more than 2 billion voters worldwide.
                              </p>
                         </div>
                   </div>

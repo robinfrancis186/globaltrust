@@ -35,7 +35,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4" style={{    fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2rem'}}>Global Trust Challenge</h3>
-            <p className="text-gray-400" style={{fontStyle: 'italic'}}>Together, We Can Build Trust in the Age of AI</p>
+            <p className="text-gray-400" style={{fontStyle: 'italic'}}>Together, We Can Build Trust in the Age of Generative AI</p>
           </div>
           
           <div className="space-y-2">

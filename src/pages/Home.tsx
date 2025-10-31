@@ -10,6 +10,7 @@ import SponsorsCTA from '../components/SponsorsCTA';
 //import parse from 'html-react-parser';
 import WhyNow from '../components/WhyNow';
 import Stats from '../components/Stats';
+import BCMSNewsHighlights from '../components/BCMSNewsHighlights';
 
 
 interface FormData {
@@ -26,11 +27,11 @@ const topSponsors = [
   },
   {
     name: "OECD",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OECD_logo.svg/320px-OECD_logo.svg.png",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/QECDLogo.png",
   },
   {
     name: "AI Commons",
-    logo: "https://ai-commons.org/wp-content/themes/aicommons/assets/img/logo.svg",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/aicommonlogo.svg",
   },
   
 ];
@@ -554,7 +555,7 @@ export default function Home() {
                 description: "Submit your idea — policy + tech solutions to build trust.",
                 benefits: [
                   "Expert feedback",
-                  "~10 teams advance",
+                  "~50 teams advance",
                   "Recognition & mentorship"
                 ]
               },
@@ -564,7 +565,7 @@ export default function Home() {
                 title: "Prototype",
                 description: "Build it with support.",
                 benefits: [
-                  "$50K funding per team",
+                  "Teams receive funding",
                   "Mentorship + sandbox",
                   "Submit working prototype"
                 ]
@@ -575,7 +576,7 @@ export default function Home() {
                 title: "Pilot",
                 description: "Test in real-world settings.",
                 benefits: [
-                  "$250K per finalist team",
+                  "Finalist teams receive financial awards",
                   "Partner-led pilots",
                   "Impact measured"
                 ]
@@ -690,7 +691,8 @@ export default function Home() {
      
 
       {/* News Highlights Section */}
-      <NewsHighlights />
+      {/*<NewsHighlights />*/}
+      <BCMSNewsHighlights/>
 
       {/* Challenge Mission */}
       {/* <section className="py-20 bg-gray-100 relative z-10">
