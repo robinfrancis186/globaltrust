@@ -8,11 +8,11 @@ interface Sponsor {
 const sponsors = [
     {
     name: "IEEE",
-    logo: "https://maximages.s3.us-west-1.amazonaws.com/IEEE_SA-logo-avatar.png",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/IEEE+SA+Logo.webp",
   },
    {
     name: "OECD",
-    logo: "https://maximages.s3.us-west-1.amazonaws.com/QECDLogo.png",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/OECD+AI+logo.jpeg",
   },
   {
     name: "AI Commons",
@@ -29,11 +29,14 @@ const sponsors = [
   {
     name: "IDB",
     logo: "https://www.greenclimate.fund/sites/default/files/styles/small/public/organisation/logo-idb.png",
-  }
-  
+  },
 ];
 
 const supportingSponsors = [
+  {
+    name: "AWS",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
+  },
   {
     name: "Adobe",
     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Adobe_Corporate_logo.svg/320px-Adobe_Corporate_logo.svg.png",
@@ -47,8 +50,8 @@ const supportingSponsors = [
     logo: "https://adobe-cai-contentauthenticity-backend-prod.s3.us-east-1.amazonaws.com/CAI_Logo_322a6a374f.svg",
   },
   {
-    name: "CEIMIA",
-    logo: "https://www.scaleai.ca/wp-content/uploads/2022/08/ceimia_logo_fondblanc_rgb_bil_rev-e1662475989317-1920x1296.png",
+    name: "Fondation Abeona",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/Fondation+Albeona.png",
   },
   {
     name: "ITU",

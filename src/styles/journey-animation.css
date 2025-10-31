@@ -1,0 +1,301 @@
+/* Journey Animation - Scroll-Triggered Card Movement */
+
+.journey-container {
+  position: relative;
+  width: 100%;
+  height: 200vh; /* Extra height for scroll journey */
+  overflow: hidden;
+  background: transparent;
+}
+
+.journey-path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.journey-path svg {
+  width: 100%;
+  height: 100%;
+}
+
+.journey-path-line {
+  stroke: url(#journeyGradient);
+  stroke-width: 4;
+  fill: none;
+  filter: drop-shadow(0 0 20px rgba(0, 174, 239, 0.6));
+  opacity: 0.8;
+}
+
+.journey-path-glow {
+  stroke: url(#journeyGradient);
+  stroke-width: 12;
+  fill: none;
+  opacity: 0.3;
+  filter: blur(8px);
+}
+
+/* Journey Cards */
+.journey-card {
+  position: absolute;
+  width: 350px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 6px rgba(255, 255, 255, 0.3);
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  z-index: 10;
+  will-change: transform, opacity;
+}
+
+.journey-card.active {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 0 60px rgba(0, 174, 239, 0.3);
+}
+
+.journey-card.entering {
+  opacity: 0.7;
+  transform: scale(0.9);
+}
+
+/* Card Content Styling */
+.journey-card .card-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #00AEEF, #FFD97A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(0, 174, 239, 0.3));
+  transition: all 0.3s ease;
+}
+
+.journey-card.active .card-icon {
+  filter: drop-shadow(0 0 20px rgba(0, 174, 239, 0.6));
+  transform: scale(1.1);
+}
+
+.journey-card .card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  text-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.journey-card.active .card-title {
+  text-shadow: 0 2px 12px rgba(0, 174, 239, 0.4);
+}
+
+.journey-card .card-description {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4a4a4a;
+  text-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.journey-card.active .card-description {
+  color: #2a2a2a;
+  text-shadow: 0 1px 6px rgba(0, 174, 239, 0.3);
+}
+
+/* Phase Badge */
+.journey-phase {
+  display: inline-block;
+  background: linear-gradient(135deg, #00AEEF, #FFD97A);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 174, 239, 0.3);
+  transition: all 0.3s ease;
+}
+
+.journey-card.active .journey-phase {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 174, 239, 0.4);
+}
+
+/* Particle Effects */
+.journey-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.journey-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(0, 174, 239, 0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: particleFloat 8s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
+}
+
+/* Glow Effects */
+.journey-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 174, 239, 0.1) 0%,
+    rgba(255, 217, 120, 0.05) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 1024px) {
+  .journey-container {
+    height: 150vh;
+  }
+  
+  .journey-card {
+    width: 300px;
+    height: 350px;
+    padding: 2rem;
+  }
+  
+  .journey-card .card-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .journey-container {
+    height: 120vh;
+  }
+  
+  .journey-card {
+    width: 280px;
+    height: 320px;
+    padding: 1.5rem;
+  }
+  
+  .journey-path-line {
+    stroke-width: 3;
+  }
+  
+  .journey-path-glow {
+    stroke-width: 8;
+  }
+  
+  /* Simplified mobile animation */
+  .journey-card {
+    position: relative;
+    margin: 2rem auto;
+    transform: none !important;
+    opacity: 1;
+  }
+  
+  .journey-card.active {
+    transform: scale(1.02) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .journey-card {
+    width: 260px;
+    height: 300px;
+    padding: 1.25rem;
+  }
+  
+  .journey-card .card-title {
+    font-size: 1.125rem;
+  }
+  
+  .journey-card .card-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .journey-container {
+    height: auto;
+  }
+  
+  .journey-card {
+    position: relative;
+    margin: 2rem auto;
+    transform: none !important;
+    opacity: 1;
+  }
+  
+  .journey-card.active {
+    transform: scale(1.02) !important;
+  }
+  
+  .journey-particle {
+    animation: none;
+  }
+  
+  .journey-glow {
+    animation: none;
+  }
+}
+
+/* Performance optimizations */
+.journey-card {
+  contain: layout style paint;
+  backface-visibility: hidden;
+}
+
+.journey-path {
+  will-change: transform;
+}
