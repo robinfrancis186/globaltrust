@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import ScrollArrow from './ScrollArrow';
 
 const FutureRunsOnTrust = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -52,19 +53,50 @@ const FutureRunsOnTrust = () => {
     };
   }, []);
 
-  // Particle interaction with cursor movement
+  // Particle interaction with cursor movement (throttled for performance)
   useEffect(() => {
     const video = document.querySelector('#backgroundVideo') as HTMLVideoElement;
     if (!video) return;
 
+    let ticking = false;
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 10;
-      const y = (e.clientY / window.innerHeight - 0.5) * 10;
-      video.style.transform = `translate(${x}px, ${y}px) scale(1.03)`;
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 10;
+          const y = (e.clientY / window.innerHeight - 0.5) * 10;
+          video.style.transform = `translate(${x}px, ${y}px) scale(1.03)`;
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Intersection Observer to pause video when off-screen
+  useEffect(() => {
+    const video = document.querySelector('#backgroundVideo') as HTMLVideoElement;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // Ignore autoplay errors
+            });
+          } else {
+            video.pause(); // Pause when not visible
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   // Interactive word component with proximity-based highlighting
@@ -343,7 +375,7 @@ const FutureRunsOnTrust = () => {
         .textContainer {
           animation: trustPulse 12s ease-in-out infinite;
           transition: box-shadow 0.3s ease;
-          backdrop-filter: blur(8px);
+          backdrop-filter: blur(0px);
           border: 1px solid rgba(255,255,255,0.08);
           border-radius: 18px;
         }
@@ -372,9 +404,9 @@ const FutureRunsOnTrust = () => {
           muted
           playsInline
           loop
+          preload="metadata"
           style={{
             mixBlendMode: 'screen',
-            filter: 'blur(0.5px)',
           }}
           aria-label="Ambient background animation"
         >
@@ -443,24 +475,12 @@ const FutureRunsOnTrust = () => {
         >
           <span className="relative inline-block">
             The Future Runs on Trust
-            {/* Scroll Progress Glow Line */}
+            {/* Balanced Underline Accent */}
             <motion.div
-              className="h-[3px] bg-gradient-to-r from-[#00AEEF] via-[#FFD97A] to-[#00AEEF] mx-auto mt-4 rounded-full progressGlow"
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-              viewport={{ once: true }}
-            />
-            {/* Soft Golden Ambient Ring */}
-            <motion.div
-              className="absolute inset-0 -z-10 rounded-full"
-              style={{
-                background: 'radial-gradient(circle, rgba(255,217,120,0.1) 0%, transparent 70%)',
-                filter: 'blur(20px)',
-              }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut", delay: 0.8 }}
+              className="h-[3px] w-[150px] bg-gradient-to-r from-[#00AEEF]/90 via-[#FFD97A]/70 to-transparent mx-auto mt-3 rounded-full shadow-[0_0_15px_rgba(0,174,239,0.5)]"
+              initial={{ opacity: 0, scaleX: 0 }}
+              whileInView={{ opacity: 0.9, scaleX: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 1.0 }}
               viewport={{ once: true }}
             />
           </span>
@@ -506,6 +526,7 @@ const FutureRunsOnTrust = () => {
 
       {/* Soft Motion Transition at Bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#F5E2A1]/40 to-transparent animate-fadeIn pointer-events-none" />
+      <ScrollArrow targetId="#unique" />
     </section>
     </>
   );

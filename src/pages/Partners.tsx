@@ -160,6 +160,7 @@ const [formData, setFormData] = useState<SponsorshipFormData>({
           muted
           playsInline
           loop
+          preload="metadata"
           aria-label="Partners and sponsors animation"
         >
           <source src="https://maximages.s3.us-west-1.amazonaws.com/Partners+%26+Sponrsors+Animation.mp4" type="video/mp4" />

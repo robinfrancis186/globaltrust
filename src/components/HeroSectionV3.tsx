@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 
@@ -51,6 +51,31 @@ const VideoBackground = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -100]);
   const scale = useTransform(scrollY, [0, 1000], [1, 1.05]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Intersection Observer to pause video when off-screen
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // Ignore autoplay errors
+            });
+          } else {
+            video.pause(); // Pause when not visible
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <motion.div
@@ -58,12 +83,14 @@ const VideoBackground = () => {
       style={{ y, scale }}
     >
       <video
+        ref={videoRef}
         className="bg-video absolute inset-0 w-full h-full object-cover"
         style={{ transform: 'translateX(-50px)' }}
         autoPlay
         loop
         muted
         playsInline
+        preload="metadata"
         aria-label="Animated globe background"
       >
         <source src="https://maximages.s3.us-west-1.amazonaws.com/Globe+Animation.mp4" type="video/mp4" />

@@ -228,6 +228,44 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
         });
       });
 
+      // Ensure hero section is always clear when at top
+      const heroSection = sections.find(s => s.id === 'hero');
+      if (heroSection) {
+        ScrollTrigger.create({
+          trigger: heroSection,
+          start: 'top top',
+          end: 'bottom top',
+          onEnter: () => {
+            gsap.set(heroSection, {
+              opacity: 1,
+              scale: 1,
+              z: 0,
+              filter: 'blur(0px)'
+            });
+            const heroVideo = heroSection.querySelector('video.bg-video') as HTMLVideoElement;
+            const heroGradient = heroSection.querySelector('.gradient-overlay') as HTMLElement;
+            const heroFog = heroSection.querySelector('.fog-layer') as HTMLElement;
+            if (heroVideo) gsap.set(heroVideo, { opacity: 1 });
+            if (heroGradient) gsap.set(heroGradient, { opacity: 0.5 });
+            if (heroFog) gsap.set(heroFog, { opacity: 0.15 });
+          },
+          onEnterBack: () => {
+            gsap.set(heroSection, {
+              opacity: 1,
+              scale: 1,
+              z: 0,
+              filter: 'blur(0px)'
+            });
+            const heroVideo = heroSection.querySelector('video.bg-video') as HTMLVideoElement;
+            const heroGradient = heroSection.querySelector('.gradient-overlay') as HTMLElement;
+            const heroFog = heroSection.querySelector('.fog-layer') as HTMLElement;
+            if (heroVideo) gsap.set(heroVideo, { opacity: 1 });
+            if (heroGradient) gsap.set(heroGradient, { opacity: 0.5 });
+            if (heroFog) gsap.set(heroFog, { opacity: 0.15 });
+          }
+        });
+      }
+
       // Create cinematic push-through transitions
       sections.forEach((currentSection, i) => {
         const nextSection = sections[i + 1];
@@ -245,7 +283,7 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
           opacity: 0,
           scale: 1.08,
           z: 200, // Start in back of 3D space
-          filter: "blur(3px)",
+          filter: "blur(1px)",
           transformOrigin: "center center"
         });
 
@@ -269,6 +307,20 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
             start: "top bottom", // Begin when next section enters viewport
             end: "top 50%", // End when it reaches mid-screen
             scrub: true,
+            onLeaveBack: () => {
+              // Reset current section (especially hero) when scrolling back up
+              if (currentSection.id === 'hero') {
+                gsap.set(currentSection, {
+                  opacity: 1,
+                  scale: 1,
+                  z: 0,
+                  filter: 'blur(0px)'
+                });
+                if (currentVideo) gsap.set(currentVideo, { opacity: 1 });
+                if (currentGradient) gsap.set(currentGradient, { opacity: 0.5 });
+                if (currentFog) gsap.set(currentFog, { opacity: 0.15 });
+              }
+            }
           },
         });
 
@@ -277,7 +329,7 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
           opacity: 0.3,
           scale: 0.92,
           z: -200, // Move backward in 3D space
-          filter: "blur(2px)",
+          filter: "blur(1px)",
           transformOrigin: "center center",
           ease: "power3.inOut",
         }, 0);
@@ -334,7 +386,7 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
           opacity: 0,
           scale: 1.08,
           z: 200, // Start further back in 3D space
-          filter: "blur(3px)",
+          filter: "blur(1px)",
           transformOrigin: "center center",
         }, {
           opacity: 1,

@@ -65,10 +65,22 @@ section[class*="partners"] {
     will-change: auto;
   }
   
-  /* Reduce blur on mobile for better performance */
+  /* Reduce expensive effects on mobile for better performance */
   .bg-video,
   .gradient-overlay {
     filter: none !important;
+    mix-blend-mode: normal !important;
+  }
+  
+  /* Disable parallax transforms on mobile */
+  section[class*="hero"] .bg-video,
+  section[class*="hero"] .video-bg-wrapper {
+    transform: none !important;
+  }
+  
+  /* Reduce canvas animations on mobile */
+  canvas {
+    display: none;
   }
 }
 
@@ -85,4 +97,7 @@ section[class*="partners"] {
     transition: none !important;
   }
 }
+
+
+
 

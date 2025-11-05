@@ -216,3 +216,6 @@ This cinematic scroll system is part of the Global Trust Challenge project and f
 
 Visit `/cinematic` to see it in action, then customize it to match your vision!
 
+
+
+
