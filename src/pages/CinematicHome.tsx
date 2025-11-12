@@ -12,3 +12,10 @@ const CinematicHome = () => {
 
 export default CinematicHome;
 
+
+
+
+
+
+
+

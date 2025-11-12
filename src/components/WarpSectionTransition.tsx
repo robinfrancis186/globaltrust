@@ -39,6 +39,39 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
 
     if (sections.length < 2) return;
 
+    // Ensure all sections start without blur, especially hero section
+    sections.forEach((section) => {
+      gsap.set(section, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
+      
+      // Special handling for hero section - ensure it's always clear at the top
+      if (section.id === 'hero') {
+        // Create a ScrollTrigger that resets hero section when at top
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          end: 'bottom top',
+          onEnter: () => {
+            gsap.set(section, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
+            const heroBg = section.querySelector('.bg-video, .gradient-overlay, .video-bg-wrapper') as HTMLElement;
+            if (heroBg) {
+              gsap.set(heroBg, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
+            }
+          },
+          onEnterBack: () => {
+            gsap.set(section, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
+            const heroBg = section.querySelector('.bg-video, .gradient-overlay, .video-bg-wrapper') as HTMLElement;
+            if (heroBg) {
+              gsap.set(heroBg, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
+            }
+            const heroContent = Array.from(section.querySelectorAll('h1, h2, h3, p, button, a')) as HTMLElement[];
+            heroContent.forEach(content => {
+              gsap.set(content, { opacity: 1, y: 0, scale: 1 });
+            });
+          }
+        });
+      }
+    });
+
     sections.forEach((currentSection, index) => {
       const nextSection = sections[index + 1];
       if (!nextSection) return;
@@ -55,7 +88,7 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
       gsap.set(nextSection, {
         opacity: 0.2, // Start slightly visible for better merging
         scale: 0.98, // Closer to final scale
-        filter: 'blur(6px) brightness(0.8)'
+        filter: 'blur(0px) brightness(0.8)'
       });
 
       gsap.set(nextContent, {
@@ -69,7 +102,7 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
         trigger: currentSection,
         start: 'bottom bottom',
         end: 'top -=100px', // Extended even further for longer overlap
-        scrub: 3.5, // Increased even more for much more gradual transition
+        scrub: 1.2, // Reduced for faster, more readable transitions
         onUpdate: (self) => {
           const progress = self.progress;
           
@@ -80,19 +113,19 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
           // Current section - warps out much more gradually
           const currentOpacity = easeOut(1 - progress * 0.5); // Much slower fade (0.5x speed)
           const currentScale = 1 + (easeOut(progress) * 0.04); // Even gentler scale
-          const currentBlur = easeOut(progress) * 3; // Even less aggressive blur
+          // No blur - removed for clarity
           
           gsap.set(currentSection, {
             opacity: currentOpacity,
             scale: currentScale,
-            filter: `blur(${currentBlur}px) brightness(${1 - progress * 0.3})`
+            filter: `blur(0px) brightness(${1 - progress * 0.3})`
           });
 
           if (currentBg) {
             gsap.set(currentBg, {
               scale: 1 + (easeOut(progress) * 0.08), // Even gentler background warp
               opacity: 1 - (progress * 0.3), // Much slower background fade
-              filter: `blur(${easeOut(progress) * 6}px) brightness(${1 - progress * 0.25})`
+              filter: `blur(0px) brightness(${1 - progress * 0.25})`
             });
           }
 
@@ -112,19 +145,19 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
           // Next section - warps in much more gradually
           const nextOpacity = easeIn(progress * 0.8); // Slower appearance for better overlap
           const nextScale = 0.98 + (easeIn(progress) * 0.015); // Even gentler scale
-          const nextBlur = (1 - easeIn(progress)) * 4; // Even less aggressive blur
+          // No blur - removed for clarity
           
           gsap.set(nextSection, {
             opacity: nextOpacity,
             scale: nextScale,
-            filter: `blur(${nextBlur}px) brightness(${0.8 + progress * 0.2})`
+            filter: `blur(0px) brightness(${0.8 + progress * 0.2})`
           });
 
           if (nextBg) {
             gsap.set(nextBg, {
               scale: 1.03 - ((1 - easeIn(progress)) * 0.03), // Even gentler background scale
               opacity: progress * 0.4 + 0.6, // Starts even more visible
-              filter: `blur(${(1 - easeIn(progress)) * 5}px) brightness(${0.8 + progress * 0.2})`
+              filter: `blur(0px) brightness(${0.8 + progress * 0.2})`
             });
           }
 
@@ -156,7 +189,8 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
             scale: 1,
             filter: 'blur(0px) brightness(1)',
             duration: 0.8,
-            ease: 'power2.out'
+            ease: 'power2.out',
+            immediateRender: false
           });
           
           if (currentBg) {
@@ -165,7 +199,8 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
               opacity: 1,
               filter: 'blur(0px) brightness(1)',
               duration: 0.8,
-              ease: 'power2.out'
+              ease: 'power2.out',
+              immediateRender: false
             });
           }
           
@@ -175,8 +210,35 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
             scale: 1,
             duration: 0.6,
             ease: 'power2.out',
-            stagger: 0.02
+            stagger: 0.02,
+            immediateRender: false
           });
+        },
+        onEnterBack: () => {
+          // Ensure hero section (first section) is completely reset when scrolling back to it
+          if (index === 0 && currentSection.id === 'hero') {
+            gsap.set(currentSection, {
+              opacity: 1,
+              scale: 1,
+              filter: 'blur(0px) brightness(1)'
+            });
+            
+            if (currentBg) {
+              gsap.set(currentBg, {
+                scale: 1,
+                opacity: 1,
+                filter: 'blur(0px) brightness(1)'
+              });
+            }
+            
+            currentContent.forEach(content => {
+              gsap.set(content, {
+                opacity: 1,
+                y: 0,
+                scale: 1
+              });
+            });
+          }
         }
       });
     });

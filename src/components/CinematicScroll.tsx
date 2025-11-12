@@ -7,81 +7,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CinematicScroll = () => {
   const bgVideoRef = useRef<HTMLVideoElement>(null);
-  const overlayCanvasRef = useRef<HTMLCanvasElement>(null);
   const sectionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const bgVideo = bgVideoRef.current;
-    const overlayCanvas = overlayCanvasRef.current;
     const sections = sectionsRef.current;
 
-    if (!bgVideo || !overlayCanvas || !sections) return;
-
-    // Initialize canvas for particle overlay
-    const ctx = overlayCanvas.getContext('2d');
-    if (!ctx) return;
-
-    const resizeCanvas = () => {
-      const rect = overlayCanvas.getBoundingClientRect();
-      overlayCanvas.width = rect.width;
-      overlayCanvas.height = rect.height;
-    };
-
-    // Particle system for fog effect
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-      life: number;
-    }> = [];
-
-    const createParticle = () => {
-      particles.push({
-        x: Math.random() * overlayCanvas.width,
-        y: Math.random() * overlayCanvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 3 + 1,
-        opacity: Math.random() * 0.3 + 0.1,
-        life: 1
-      });
-    };
-
-    const animateParticles = () => {
-      ctx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-      
-      // Update and draw particles
-      particles.forEach((particle, index) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.life -= 0.005;
-        particle.opacity = particle.life * 0.3;
-
-        if (particle.life <= 0) {
-          particles.splice(index, 1);
-          return;
-        }
-
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
-        ctx.fill();
-      });
-
-      // Add new particles occasionally
-      if (Math.random() < 0.1) {
-        createParticle();
-      }
-
-      requestAnimationFrame(animateParticles);
-    };
-
-    // Initialize canvas and particles
-    resizeCanvas();
-    animateParticles();
+    if (!bgVideo || !sections) return;
 
     // GSAP ScrollTrigger setup
     const sectionElements = gsap.utils.toArray('.cinematic-section');
@@ -128,13 +60,6 @@ const CinematicScroll = () => {
         duration: 1.5,
         ease: "power3.inOut",
       }, 0);
-
-      // Particle overlay opacity modulation
-      tl.to(overlayCanvas, {
-        opacity: 0.3 + (i * 0.1),
-        duration: 1.5,
-        ease: "power3.inOut",
-      }, 0);
     });
 
     // Mobile optimization
@@ -168,20 +93,13 @@ const CinematicScroll = () => {
         Your browser does not support the video tag.
       </video>
 
-      {/* Particle Overlay Canvas */}
-      <canvas
-        ref={overlayCanvasRef}
-        id="overlayParticles"
-        className="cinematic-particle-overlay"
-      />
-
       {/* Scrollable Sections Container */}
       <div ref={sectionsRef} className="cinematic-sections">
         {/* Hero Section */}
         <section className="cinematic-section" id="hero-section">
           <div className="cinematic-content">
             <h1 className="cinematic-title">GLOBAL TRUST CHALLENGE</h1>
-            <p className="cinematic-subtitle">Building Trust in the Age of Generative AI</p>
+            <p className="cinematic-subtitle">Building Trustworthy Digital and Information Ecosystems for Future Generations</p>
             <div className="cinematic-cta">
               <button className="cinematic-button primary">Learn More</button>
               <button className="cinematic-button secondary">Get Involved</button>
@@ -264,4 +182,8 @@ const CinematicScroll = () => {
 };
 
 export default CinematicScroll;
+
+
+
+
 

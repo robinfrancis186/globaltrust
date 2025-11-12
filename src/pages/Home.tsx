@@ -14,17 +14,22 @@ import FutureRunsOnTrust from '../components/FutureRunsOnTrust';
 // import CinematicScroll from '../components/CinematicScroll';
 // import '../styles/cinematic-scroll.css';
 import '../styles/card-glow-effect.css';
-// Optional: framer-motion for subtle entrance/hover polish (install if missing)
-// import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import '../styles/unique-section-refined.css';
 import '../styles/warp-transitions.css';
 import '../styles/prototype-unique.css';
 import '../styles/floating-cards-3d.css';
+import '../styles/is-this-for-you.css';
 import WarpSectionTransition from '../components/WarpSectionTransition';
 import CardCarousel from '../components/CardCarousel';
 import CarouselSkeleton from '../components/CarouselSkeleton';
 import LayeredCarousel from '../components/LayeredCarousel';
 import '../styles/carousel-custom.css';
+import GlowingCardWrapper from '../components/GlowingCardWrapper';
+import ScrollArrow from '../components/ScrollArrow';
+import JourneyCTA from '../components/JourneyCTA';
+import SelectionCriteria from '../components/SelectionCriteria';
+import ImmersiveBackground from '../components/ImmersiveBackground';
 
 
 interface FormData {
@@ -150,10 +155,18 @@ export default function Home() {
     message: string;
   }>({ type: null, message: '' });
 
+  // Word highlight state for Is This for You section
+  const [highlightedWords, setHighlightedWords] = useState<Set<string>>(new Set());
+
   // Mouse ripple effect for Unique section
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ripplesRef = useRef<Array<{ x: number; y: number; radius: number; alpha: number; velocity: number; lastX: number; lastY: number }>>([]);
   const lastMouseRef = useRef({ x: 0, y: 0 });
+  
+  // Mouse ripple effect for Is This for You section (violet-indigo)
+  const isThisForYouCanvasRef = useRef<HTMLCanvasElement>(null);
+  const isThisForYouRipplesRef = useRef<Array<{ x: number; y: number; radius: number; alpha: number; velocity: number; lastX: number; lastY: number }>>([]);
+  const isThisForYouLastMouseRef = useRef({ x: 0, y: 0 });
   
   // GSAP refs removed - using Swiper carousel instead
   
@@ -163,48 +176,12 @@ export default function Home() {
   }, []);
 
 
+
   // Simple setup - no complex GSAP configuration
 
   // No complex animations - let CSS handle everything
 
-  // Set video playback rate to 50% for slower animation
-  useEffect(() => {
-    const setPlaybackRate = () => {
-      const video1 = document.getElementById('video1') as HTMLVideoElement;
-      const video2 = document.getElementById('video2') as HTMLVideoElement;
-      if (video1) video1.playbackRate = 0.5;
-      if (video2) video2.playbackRate = 0.5;
-    };
-
-    // Set immediately if videos are already loaded
-    setPlaybackRate();
-
-    // Also set when videos are ready
-    const video1 = document.getElementById('video1') as HTMLVideoElement;
-    const video2 = document.getElementById('video2') as HTMLVideoElement;
-    
-    if (video1) {
-      video1.addEventListener('loadedmetadata', setPlaybackRate);
-      video1.addEventListener('canplay', setPlaybackRate);
-    }
-    if (video2) {
-      video2.addEventListener('loadedmetadata', setPlaybackRate);
-      video2.addEventListener('canplay', setPlaybackRate);
-    }
-
-    return () => {
-      if (video1) {
-        video1.removeEventListener('loadedmetadata', setPlaybackRate);
-        video1.removeEventListener('canplay', setPlaybackRate);
-      }
-      if (video2) {
-        video2.removeEventListener('loadedmetadata', setPlaybackRate);
-        video2.removeEventListener('canplay', setPlaybackRate);
-      }
-    };
-  }, []);
-
-  // Canvas ripple effect (identical to Section 12)
+  // Canvas ripple effect (for unique section - removed, keeping for potential future use)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -298,6 +275,173 @@ export default function Home() {
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
+
+  // Canvas ripple effect for Is This for You section (violet-indigo)
+  useEffect(() => {
+    const canvas = isThisForYouCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationId: number;
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    };
+
+    const addRipple = (x: number, y: number, velocity: number) => {
+      isThisForYouRipplesRef.current.push({
+        x,
+        y,
+        radius: 0,
+        alpha: Math.min(0.15, velocity * 0.05 + 0.08),
+        velocity,
+        lastX: x,
+        lastY: y,
+      });
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      isThisForYouRipplesRef.current.forEach((ripple, i) => {
+        // Expand ripple with gentle, flowy movement
+        ripple.radius += 2 + ripple.velocity * 0.3;
+        ripple.alpha -= 0.003;
+
+        // Horizontal gradient with vibrant violet-indigo palette
+        const horizontalStretch = 2.2 + ripple.velocity * 0.4;
+        const gradient = ctx.createLinearGradient(
+          ripple.x - ripple.radius * horizontalStretch,
+          ripple.y,
+          ripple.x + ripple.radius * horizontalStretch,
+          ripple.y
+        );
+        gradient.addColorStop(0, `rgba(147,51,234,${ripple.alpha * 1.0})`);  // Vibrant violet
+        gradient.addColorStop(0.3, `rgba(124,58,237,${ripple.alpha * 0.9})`); // Deep purple
+        gradient.addColorStop(0.7, `rgba(167,139,250,${ripple.alpha * 0.7})`); // Light violet
+        gradient.addColorStop(1, `rgba(147,51,234,0)`);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.translate(ripple.x, ripple.y);
+        ctx.scale(horizontalStretch, 1);
+        ctx.arc(0, 0, ripple.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        if (ripple.alpha <= 0) {
+          isThisForYouRipplesRef.current.splice(i, 1);
+        }
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const section = document.getElementById('is-this-for-you');
+      if (!section) return;
+      
+      const rect = section.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Only create ripples when mouse is within the section
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+
+      const dx = x - isThisForYouLastMouseRef.current.x;
+      const dy = y - isThisForYouLastMouseRef.current.y;
+      const velocity = Math.sqrt(dx * dx + dy * dy) / 10;
+
+      if (velocity > 0.5) {
+        addRipple(x, y, velocity);
+      }
+
+      isThisForYouLastMouseRef.current = { x, y };
+    };
+
+    // Initialize
+    resize();
+    animate();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  // Interactive word highlighting for Is This for You section
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Find all highlightable words within the Is This for You section
+      const section = document.getElementById('is-this-for-you');
+      if (!section) return;
+
+      const words = section.querySelectorAll('[data-highlight-word]');
+      const newHighlightedWords = new Set<string>();
+
+      words.forEach((word) => {
+        const rect = word.getBoundingClientRect();
+        const wordCenterX = rect.left + rect.width / 2;
+        const wordCenterY = rect.top + rect.height / 2;
+
+        const distance = Math.sqrt(
+          Math.pow(e.clientX - wordCenterX, 2) + Math.pow(e.clientY - wordCenterY, 2)
+        );
+
+        // Highlight if within 100px
+        if (distance < 100) {
+          const wordText = word.getAttribute('data-highlight-word');
+          if (wordText) {
+            newHighlightedWords.add(wordText);
+          }
+        }
+      });
+
+      setHighlightedWords(newHighlightedWords);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Interactive word component for highlighting
+  const InteractiveWord = ({
+    children,
+    wordKey,
+    color = '#A78BFA',
+    className = ''
+  }: {
+    children: string;
+    wordKey: string;
+    color?: string;
+    className?: string;
+  }) => {
+    const isHighlighted = highlightedWords.has(wordKey);
+
+    return (
+      <span
+        data-highlight-word={wordKey}
+        className={`transition-all duration-500 ease-out ${className}`}
+        style={{
+          textShadow: isHighlighted
+            ? `0 0 12px ${color}50, 0 0 24px ${color}30`
+            : 'none',
+          color: isHighlighted ? color : 'inherit',
+          filter: isHighlighted ? 'brightness(1.2)' : 'brightness(1)',
+        }}
+      >
+        {children}
+      </span>
+    );
+  };
 
   // GSAP animations removed - using Swiper carousel instead
 
@@ -425,10 +569,10 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Cinematic Crossfade Depth Push */}
-      <CinematicCrossfade sectionIds={['hero', 'trust', 'partners']} />
+      <CinematicCrossfade sectionIds={['hero', 'partners']} />
       
       {/* Warp Section Transition Effect */}
-      <WarpSectionTransition sectionIds={['hero', 'trust', 'partners']} />
+      <WarpSectionTransition sectionIds={['hero', 'partners']} />
 
       {/* Hero Section V3 */}
       <HeroSectionV3 />
@@ -441,162 +585,12 @@ export default function Home() {
       <section 
         id="unique"
         className="unique-section relative z-10 overflow-hidden"
-          style={{
-           background: `linear-gradient(
-             135deg,
-             #0A1F2A 0%,     /* deeper navy base */
-             #004D5C 20%,    /* rich teal */
-             #007A8A 40%,    /* vibrant turquoise */
-             #00B4D8 60%,    /* bright cyan */
-             #FFD700 80%,    /* pure gold */
-             #FFE55C 100%    /* bright golden yellow */
-           )`
-          }}
        >
-        {/* Animated Particle Background - Smooth Loop Transition */}
-        <div className="video-bg-wrapper absolute inset-0 z-0">
-          <video
-            id="video1"
-            className="bg-video absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            playsInline
-            style={{ 
-              mixBlendMode: 'normal',
-              opacity: 1,
-              transition: 'opacity 4s ease-in-out',
-              filter: 'blur(0.5px) brightness(1.1) contrast(1.05)'
-            }}
-            onLoadedMetadata={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // 50% speed
-            }}
-            onPlay={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // Ensure 50% speed is maintained
-            }}
-            onTimeUpdate={(e) => {
-              const video = e.target as HTMLVideoElement;
-              const duration = video.duration;
-              const currentTime = video.currentTime;
-              
-              // Start crossfade 3 seconds before the end for smoother transition
-              if (duration > 0 && currentTime >= duration - 3) {
-                const video2 = document.getElementById('video2') as HTMLVideoElement;
-                if (video2) {
-                  // Calculate crossfade progress (0 to 1 over last 3 seconds)
-                  const fadeProgress = (currentTime - (duration - 3)) / 3;
-                  video.style.opacity = (1 - fadeProgress).toString();
-                  video2.style.opacity = fadeProgress.toString();
-                  
-                  // Start video2 when we're 2 seconds from the end
-                  if (currentTime >= duration - 2 && video2.paused) {
-                    video2.currentTime = 0;
-                    video2.playbackRate = 0.5; // Set 50% speed
-                    video2.play();
-                  }
-                }
-              }
-            }}
-            onEnded={() => {
-              const video1 = document.getElementById('video1') as HTMLVideoElement;
-              const video2 = document.getElementById('video2') as HTMLVideoElement;
-              if (video1 && video2) {
-                video1.style.opacity = '0';
-                video2.style.opacity = '1';
-                video1.currentTime = 0;
-                video1.playbackRate = 0.5; // Maintain 50% speed
-              }
-            }}
-          >
-            <source src="https://maximages.s3.us-west-1.amazonaws.com/Unique+Section+v4.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          
-          <video
-            id="video2"
-            className="bg-video absolute inset-0 w-full h-full object-cover"
-            muted
-            playsInline
-            style={{ 
-              mixBlendMode: 'normal',
-              opacity: 0,
-              transition: 'opacity 4s ease-in-out',
-              filter: 'blur(0.5px) brightness(1.1) contrast(1.05)'
-            }}
-            onLoadedMetadata={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // 50% speed
-            }}
-            onPlay={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // Ensure 50% speed is maintained
-            }}
-            onTimeUpdate={(e) => {
-              const video = e.target as HTMLVideoElement;
-              const duration = video.duration;
-              const currentTime = video.currentTime;
-              
-              // Start crossfade 3 seconds before the end for smoother transition
-              if (duration > 0 && currentTime >= duration - 3) {
-                const video1 = document.getElementById('video1') as HTMLVideoElement;
-                if (video1) {
-                  // Calculate crossfade progress (0 to 1 over last 3 seconds)
-                  const fadeProgress = (currentTime - (duration - 3)) / 3;
-                  video.style.opacity = (1 - fadeProgress).toString();
-                  video1.style.opacity = fadeProgress.toString();
-                  
-                  // Start video1 when we're 2 seconds from the end
-                  if (currentTime >= duration - 2 && video1.paused) {
-                    video1.currentTime = 0;
-                    video1.playbackRate = 0.5; // Set 50% speed
-                    video1.play();
-                  }
-                }
-              }
-            }}
-            onEnded={() => {
-              const video1 = document.getElementById('video1') as HTMLVideoElement;
-              const video2 = document.getElementById('video2') as HTMLVideoElement;
-              if (video1 && video2) {
-                video2.style.opacity = '0';
-                video1.style.opacity = '1';
-                video2.currentTime = 0;
-                video2.playbackRate = 0.5; // Maintain 50% speed
-              }
-            }}
-          >
-            <source src="https://maximages.s3.us-west-1.amazonaws.com/Unique+Section+v4.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-                  </div>
-        
-        {/* Gradient Overlay */}
-        <div className="gradient-overlay absolute inset-0 z-1" />
-        
-        {/* Mouse Ripple Canvas (matching Section 12) */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none z-20"
-          style={{
-            mixBlendMode: 'screen',
-            opacity: 0.4
-          }}
-        />
-            
-        {/* Seamless Digital Aurora Focal Area */}
-        <div 
-          className="absolute inset-0 z-5"
-          style={{
-            background: `radial-gradient(
-              circle at center,
-              rgba(255,255,255,0.4) 0%,
-              rgba(227,200,90,0.15) 30%,
-              rgba(143,166,138,0.1) 60%,
-              rgba(0,110,128,0.08) 100%
-            )`,
-            filter: 'blur(0.5px)'
-          }}
+        {/* Cinematic animated background */}
+        <ImmersiveBackground 
+          variant="teal"
+          overlayOpacity={0.35}
+          className="unique-bg-teal-gold"
         />
             
         <div className="unique-proto">
@@ -683,8 +677,12 @@ export default function Home() {
               </div>
             ))}
           </div>
-
         </div>
+        </div>
+
+        {/* Scroll arrows - positioned lower to avoid overlapping text boxes */}
+        <div className="relative" style={{ marginTop: '8rem', paddingBottom: '4rem' }}>
+          <ScrollArrow targetId="#is-this-for-you" />
         </div>
       </section>
       
@@ -779,24 +777,224 @@ export default function Home() {
         </div>
       </section> */}
 
-       {/* Is This for You Section - Redesigned */}
-      <section className="py-20 bg-gray-50 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+               {/* Is This for You Section - Redesigned */}
+       <section id="is-this-for-you" className="is-this-for-you-section py-20 relative z-10 overflow-hidden">
+        {/* Animated Gradient Background */}
+        <div className="animated-gradient-background absolute inset-0 z-0" style={{
+          background: `linear-gradient(
+            135deg,
+            #007A8A 0%,
+            #004D5C 10%,
+            #0A1F2A 20%,
+            #3B3A7A 35%,
+            #554C96 50%,
+            #6B5AAB 65%,
+            #8B7EC8 80%,
+            #A78BFA 100%
+          )`
+        }} />
+        
+        {/* Subtle Moving Fog Overlay */}
+        <div className="moving-fog-overlay absolute inset-0 z-[1]" style={{
+          background: `radial-gradient(
+            ellipse at 20% 30%,
+            rgba(139, 92, 246, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 80% 70%,
+            rgba(99, 102, 241, 0.12) 0%,
+            transparent 50%
+          )`
+        }} />
+        
+        {/* Shimmer Overlay */}
+        <div className="shimmer-overlay absolute inset-0 z-[1]" style={{
+          background: `linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(167, 139, 250, 0.1) 50%,
+            transparent 100%
+          )`
+        }} />
+        
+        {/* Light Particles */}
+        {(() => {
+          const particleColors = [
+            {
+              bg: 'radial-gradient(circle, rgba(139,92,246,1) 0%, rgba(99,102,241,0.8) 40%, rgba(167,139,250,0.4) 70%, transparent 100%)',
+              shadow: '0 0 30px rgba(139,92,246,1), 0 0 60px rgba(99,102,241,0.6)'
+            },
+            {
+              bg: 'radial-gradient(circle, rgba(236,72,153,1) 0%, rgba(219,39,119,0.8) 40%, rgba(244,114,182,0.4) 70%, transparent 100%)',
+              shadow: '0 0 30px rgba(236,72,153,1), 0 0 60px rgba(219,39,119,0.6)'
+            },
+            {
+              bg: 'radial-gradient(circle, rgba(59,130,246,1) 0%, rgba(37,99,235,0.8) 40%, rgba(96,165,250,0.4) 70%, transparent 100%)',
+              shadow: '0 0 30px rgba(59,130,246,1), 0 0 60px rgba(37,99,235,0.6)'
+            },
+            {
+              bg: 'radial-gradient(circle, rgba(34,197,94,1) 0%, rgba(22,163,74,0.8) 40%, rgba(74,222,128,0.4) 70%, transparent 100%)',
+              shadow: '0 0 30px rgba(34,197,94,1), 0 0 60px rgba(22,163,74,0.6)'
+            }
+          ];
+
+          const particles = Array.from({ length: 50 }, (_, i) => {
+            const colorSet = particleColors[i % particleColors.length];
+            return {
+              id: i,
+              x: Math.random() * 100,
+              y: Math.random() * 100,
+              size: Math.random() * 8 + 2,
+              delay: Math.random() * 20,
+              duration: Math.random() * 12 + 12,
+              opacity: Math.random() * 0.8 + 0.6,
+              bg: colorSet.bg,
+              shadow: colorSet.shadow,
+              xMovement: (Math.random() - 0.5) * 100,
+              yMovement: (Math.random() - 0.5) * 100,
+            };
+          });
+
+          return (
+            <div className="absolute inset-0 z-[2] pointer-events-none">
+              {particles.map((particle) => (
+                <motion.div
+                  key={particle.id}
+                  className="absolute rounded-full"
+                  style={{
+                    left: `${particle.x}%`,
+                    top: `${particle.y}%`,
+                    width: `${particle.size}px`,
+                    height: `${particle.size}px`,
+                    background: particle.bg,
+                    boxShadow: particle.shadow,
+                    filter: 'blur(1px)',
+                  }}
+                  animate={{
+                    y: [0, particle.yMovement, 0],
+                    x: [0, particle.xMovement, 0],
+                    opacity: [particle.opacity, particle.opacity * 2, particle.opacity],
+                    scale: [1, 1.8, 1],
+                  }}
+                  transition={{
+                    duration: particle.duration,
+                    delay: particle.delay,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
+            </div>
+          );
+        })()}
+        
+        {/* Light Rays */}
+        {(() => {
+          const rays = Array.from({ length: 12 }, (_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            angle: (Math.random() - 0.5) * 60,
+            height: Math.random() * 200 + 150,
+            delay: Math.random() * 20,
+            duration: Math.random() * 8 + 6,
+            opacity: Math.random() * 0.4 + 0.2,
+          }));
+
+          return (
+            <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
+              {rays.map((ray) => (
+                <motion.div
+                  key={ray.id}
+                  className="absolute origin-bottom"
+                  style={{
+                    left: `${ray.x}%`,
+                    bottom: 0,
+                    width: '3px',
+                    height: `${ray.height}%`,
+                    background: 'linear-gradient(to top, rgba(139,92,246,0.6), rgba(99,102,241,0.3), transparent)',
+                    boxShadow: '0 0 15px rgba(139,92,246,0.8), 0 0 30px rgba(99,102,241,0.4)',
+                    transform: `rotate(${ray.angle}deg)`,
+                    filter: 'blur(1px)',
+                  }}
+                  animate={{
+                    opacity: [ray.opacity, ray.opacity * 1.8, ray.opacity],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: ray.duration,
+                    delay: ray.delay,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
+            </div>
+          );
+        })()}
+        
+        {/* Mouse Ripple Canvas (violet-indigo) */}
+        <canvas
+          ref={isThisForYouCanvasRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-20"
+          style={{
+            mixBlendMode: 'screen',
+            opacity: 0.4
+          }}
+        />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-            {/* Left Content */}
-            <div className="lg:col-span-2">
-              <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-                Is This for You?
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Anyone with a bold idea - students, startups, nonprofits, researchers, policymakers, designers - if you have something to say or build, we want to hear it.
-              </p>
-              <p className="text-xl text-gray-600 mb-8">
-                Whether you're a solo thinker or part of a global team, you're invited.
-              </p>
-              <p className="text-xl text-gray-600 mb-12">
-                Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online - through innovation, collaboration, and vision.
-              </p>
+            {/* Left Content - Frosted Glass Text Box with Image Background */}
+            <div className="lg:col-span-2 relative">
+              <div 
+                className="header-text-box w-full rounded-2xl overflow-hidden relative p-8 lg:p-10"
+                style={{
+                  backgroundImage: 'url(https://maximages.s3.us-west-1.amazonaws.com/Isthisforyousection.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  minHeight: '400px'
+                }}
+                onMouseMove={(e) => {
+                  const t = e.currentTarget as HTMLDivElement;
+                  const r = t.getBoundingClientRect();
+                  t.style.setProperty('--header-mx', `${e.clientX - r.left}px`);
+                  t.style.setProperty('--header-my', `${e.clientY - r.top}px`);
+                }}
+              >
+                {/* Light ray sweep effect */}
+                <div className="light-ray" />
+                
+                {/* Dark overlay for better text readability - enhanced */}
+                <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/65 to-black/55" />
+                
+                {/* Frosted Glass Effect */}
+                <div className="absolute inset-0 backdrop-blur-md" />
+                
+                {/* Light overlay for frosted glass effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent" />
+                
+                {/* Frame Border */}
+                <div className="frame-border absolute inset-0 rounded-2xl border-2 border-white/40 shadow-[0_0_40px_rgba(139,92,246,0.3)]" />
+                
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="header-title-wrapper relative inline-block">
+                    <h2 className="mb-8" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+                      Is This for You?
+                    </h2>
+                  </div>
+                  <p className="text-xl text-white/90 mb-8">
+                    Anyone with a bold idea - <InteractiveWord wordKey="students" color="#A78BFA">students</InteractiveWord>, <InteractiveWord wordKey="startups" color="#A78BFA">startups</InteractiveWord>, <InteractiveWord wordKey="nonprofits" color="#A78BFA">nonprofits</InteractiveWord>, <InteractiveWord wordKey="researchers" color="#A78BFA">researchers</InteractiveWord>, <InteractiveWord wordKey="policymakers" color="#A78BFA">policymakers</InteractiveWord>, <InteractiveWord wordKey="designers" color="#A78BFA">designers</InteractiveWord> - if you have something to say or build, we want to hear it.
+                  </p>
+                  <p className="text-xl text-white/90 mb-8">
+                    Whether you're a <InteractiveWord wordKey="solo-thinker" color="#A78BFA">solo thinker</InteractiveWord> or part of a <InteractiveWord wordKey="global-team" color="#A78BFA">global team</InteractiveWord>, you're invited.
+                  </p>
+                  <p className="text-xl text-white/90 mb-12">
+                    Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online - through innovation, collaboration, and vision.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Right Image */}
@@ -809,219 +1007,105 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Criteria Cards - Full Width Below */}
-          <div className="mt-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                {
-                  icon: Shield,
-                  title: "Impact-Driven",
-                  description: "Strengthen how we verify and trust AI-generated content - so people can rely on what they see and hear."
-                },
-                {
-                  icon: Lightbulb,
-                  title: "Ambitious & Visionary",
-                  description: "Go beyond today's standard approaches. We're seeking solutions that rethink how we uphold information integrity at global scale."
-                },
-                {
-                  icon: Target,
-                  title: "Tech + Policy Integration",
-                  description: "The best solutions combine technology and policy. Think tools plus rules - practical, holistic, and ready for the real world."
-                },
-                {
-                  icon: Users,
-                  title: "Feasible & Scalable",
-                  description: "Your solution doesn't have to be perfect - but it should be realistic, sustainable, and able to grow."
-                }
-              ].map((item, index) => (
-                <div key={index} className="flex items-start bg-white p-6 rounded-lg shadow-md transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <div className="flex-shrink-0">
-                    <div className="p-3 bg-indigo-100 rounded-lg">
-                      <item.icon className="w-6 h-6 text-indigo-600" />
-                    </div>
-                  </div>
-                  <div className="ml-6">
-                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                    <p className="text-gray-600">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                     {/* Criteria Cards - Full Width Below */}
+           <div className="mt-16">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+               {[
+                 {
+                   icon: Shield,
+                   title: "Impact-Driven",
+                   description: "Strengthen how we verify and trust AI-generated content - so people can rely on what they see and hear.",
+                   variant: "violet"
+                 },
+                 {
+                   icon: Lightbulb,
+                   title: "Ambitious & Visionary",
+                   description: "Go beyond today's standard approaches. We're seeking solutions that rethink how we uphold information integrity at global scale.",
+                   variant: "indigo"
+                 },
+                 {
+                   icon: Target,
+                   title: "Tech + Policy Integration",
+                   description: "The best solutions combine technology and policy. Think tools plus rules - practical, holistic, and ready for the real world.",
+                   variant: "purple"
+                 },
+                 {
+                   icon: Users,
+                   title: "Feasible & Scalable",
+                   description: "Your solution doesn't have to be perfect - but it should be realistic, sustainable, and able to grow.",
+                   variant: "pink"
+                 }
+               ].map((item, index) => (
+                 <div
+                   key={index}
+                   className={`feature-card feature-${item.variant}`}
+                   onMouseMove={(e) => {
+                     const t = e.currentTarget as HTMLDivElement;
+                     const r = t.getBoundingClientRect();
+                     t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                     t.style.setProperty('--my', `${e.clientY - r.top}px`);
+                   }}
+                 >
+                   <div className="icon-badge">
+                     <item.icon />
+                   </div>
+                   <div>
+                     <h3 className="feature-title">{item.title}</h3>
+                     <p className="feature-sub">{item.description}</p>
+                   </div>
+                 </div>
+               ))}
+             </div>
+           </div>
 
-          {/* Call to Action */}
-          <div className="mt-12 bg-white p-8 rounded-lg shadow-md text-center">
-            <h3 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
-              Who Can Participate?
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Anyone with a bold idea - from students and startups to researchers, nonprofits, or companies. Teams from around the globe are encouraged to join. Great ideas can come from anyone, anywhere
-            </p>
-            <a
-              href="#pre-registration"
-              onClick={handlePreRegisterClick}
-              className="inline-flex items-center justify-center bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
-            >
-              Register Your Team
-              <ArrowRight className="ml-2" size={20} />
-            </a>
-          </div>
+                     {/* Call to Action */}
+           <div className="mt-12">
+             <div
+               className="feature-card feature-violet"
+               style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
+               onMouseMove={(e) => {
+                 const t = e.currentTarget as HTMLDivElement;
+                 const r = t.getBoundingClientRect();
+                 t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                 t.style.setProperty('--my', `${e.clientY - r.top}px`);
+               }}
+             >
+               <div className="who-can-participate-header-wrapper">
+                 <h3 className="who-can-participate-header mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2rem'}}>
+                   Who Can Participate?
+                 </h3>
+               </div>
+               <p className="feature-sub mb-6">
+                 Anyone with a bold idea - from students and startups to researchers, nonprofits, or companies. Teams from around the globe are encouraged to join. Great ideas can come from anyone, anywhere
+               </p>
+               <a
+                 href="#pre-registration"
+                 onClick={handlePreRegisterClick}
+                 className="register-team-btn group relative inline-flex items-center justify-center text-white px-8 py-3 rounded-full font-semibold overflow-hidden transition-all duration-300"
+               >
+                 <span className="relative z-10 flex items-center">
+                   Register Your Team
+                   <ArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" size={20} />
+                 </span>
+                 {/* Animated gradient background */}
+                 <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                 {/* Shine effect */}
+                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+               </a>
+             </div>
+           </div>
+        </div>
+
+        {/* Scroll arrow after "Is This for You" section */}
+        <div className="relative" style={{ marginTop: '8rem', paddingBottom: '4rem' }}>
+          <ScrollArrow targetId="#phases" />
         </div>
       </section>
 
 
 {/* The Challenge Section - Redesigned */}
-      <section id="phases" className="py-20 bg-white relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              The Challenge
-            </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-              The Challenge is divided into three phases, with a rigorous evaluation by a neutral, expert jury at the end of each phase to identify the most promising solutions that will move forward and receive recognition.
-            </p>
-          </div>
-          
-          {/* Phase Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {[
-              {
-                icon: Calendar,
-                phase: "Phase 1",
-                title: "Proposal",
-                description: "Submit your idea — policy + tech solutions to build trust.",
-                benefits: [
-                  "Expert feedback",
-                  "~10 teams advance",
-                  "Recognition & mentorship"
-                ]
-              },
-              {
-                icon: Users,
-                phase: "Phase 2", 
-                title: "Prototype",
-                description: "Build it with support.",
-                benefits: [
-                  "$50K funding per team",
-                  "Mentorship + sandbox",
-                  "Submit working prototype"
-                ]
-              },
-              {
-                icon: CheckCircle,
-                phase: "Phase 3",
-                title: "Pilot",
-                description: "Test in real-world settings.",
-                benefits: [
-                  "$250K per finalist team",
-                  "Partner-led pilots",
-                  "Impact measured"
-                ]
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-lg shadow-md text-center relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                    {item.phase}
-                  </div>
-                </div>
-                <item.icon className="w-16 h-16 text-indigo-600 mx-auto mb-6 mt-4" />
-                <h3 className="text-2xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 mb-6">{item.description}</p>
-                <ul className="space-y-2">
-                  {item.benefits.map((benefit, idx) => (
-                    <li key={idx} className="flex items-center justify-center text-sm text-gray-700">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Final Awards Section */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-8 text-center text-white">
-            <Trophy className="w-16 h-16 mx-auto mb-6" />
-            <h3 className="text-2xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
-              Final Awards
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-              <div className="flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                <span>Cash prize for winning teams</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                <span>Present at major events</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                <span>Spotlight in global reports</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-        {/* How Ideas Are Selected Section */}
-      <section className="py-10 bg-gray-50" style={{paddingTop:'5px'}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-            How Ideas Are Selected
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto py-5">
-            Submissions will be reviewed by an independent panel of global experts — spanning AI, law, digital policy, civil society, and ethics. Ideas will be assessed based on:
-          
-          </p>
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {[
-              {
-                icon: Target,
-                title: "Relevance",
-                description: "Does it meaningfully tackle AI-driven mistrust?"
-              },
-              {
-                icon: Lightbulb,
-                title: "Originality",
-                description: "Is the idea novel or visionary?"
-              },
-              {
-                icon: BookCheck,
-                title: "Feasibility",
-                description: "Could it be implemented or piloted?"
-              },
-              {
-                icon: Scaling,
-                title: "Scalability",
-                description: "Can it grow or inform larger systems?"
-              },
-              {
-                icon: PersonStanding,
-                title: "Values",
-                description: "Does it promote transparency, equity, and accountability?"
-              }
-              
-            ].map((step, index) => (
-              <div key={index} className="relative">
-                <div className="bg-white p-6 rounded-lg shadow-lg text-center h-full">
-                  <step.icon className="w-12 h-12 text-indigo-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                  <p className="text-gray-600">{step.description}</p>
-                </div>
-                
-              </div>
-            ))}
-
-          </div>
-
-          
-        </div>
-
-        
-      </section>
+      <JourneyCTA />
+      <SelectionCriteria />
       {/* Call to Action Section */}
       <PreRegisterCTA />
 

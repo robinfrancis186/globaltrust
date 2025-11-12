@@ -1,0 +1,86 @@
+/* Scroll Arrow Styles */
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: floatArrow 2.5s ease-in-out infinite;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.9;
+}
+
+.scroll-arrow svg {
+  color: #F5C36D;
+  filter: drop-shadow(0 0 8px rgba(245, 195, 109, 0.6));
+  transition: all 0.3s ease;
+}
+
+.scroll-arrow:hover {
+  opacity: 1;
+}
+
+.scroll-arrow:hover svg {
+  color: #F5C36D;
+  filter: drop-shadow(0 0 12px rgba(245, 195, 109, 0.8));
+  transform: translateY(-6px) scale(1.1);
+}
+
+.scroll-arrow:active svg {
+  transform: translateY(-3px) scale(0.95);
+}
+
+/* Floating animation */
+@keyframes floatArrow {
+  0%, 100% { 
+    transform: translateX(-50%) translateY(0); 
+  }
+  50% { 
+    transform: translateX(-50%) translateY(-10px); 
+  }
+}
+
+/* Fade out when near bottom of page */
+.scroll-arrow.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scroll-arrow {
+    bottom: 1.5rem;
+    animation-duration: 2s;
+  }
+  
+  .scroll-arrow svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Accessibility - respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-arrow {
+    animation: none;
+  }
+  
+  .scroll-arrow:hover svg {
+    transform: none;
+  }
+}
+
+/* Ensure section has relative positioning */
+section {
+  position: relative;
+}
+

@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import ImmersiveBackground from './ImmersiveBackground';
+import { throttle } from '../utils/throttle';
 
 // Floating particles component with enhanced atmospheric effects
 const FloatingParticles = () => {
@@ -51,6 +53,31 @@ const VideoBackground = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -100]);
   const scale = useTransform(scrollY, [0, 1000], [1, 1.05]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Intersection Observer to pause video when off-screen
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // Ignore autoplay errors
+            });
+          } else {
+            video.pause(); // Pause when not visible
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <motion.div
@@ -58,12 +85,14 @@ const VideoBackground = () => {
       style={{ y, scale }}
     >
       <video
+        ref={videoRef}
         className="bg-video absolute inset-0 w-full h-full object-cover"
         style={{ transform: 'translateX(-50px)' }}
         autoPlay
         loop
         muted
         playsInline
+        preload="metadata"
         aria-label="Animated globe background"
       >
         <source src="https://maximages.s3.us-west-1.amazonaws.com/Globe+Animation.mp4" type="video/mp4" />
@@ -132,7 +161,7 @@ const LensFlare = () => {
       style={{
         background: 'radial-gradient(circle, rgba(255,200,120,0.3) 0%, rgba(255,200,120,0.1) 30%, transparent 70%)',
         borderRadius: '50%',
-        filter: 'blur(20px)',
+        filter: 'none',
       }}
       animate={{
         x: [0, 50, 0],
@@ -195,12 +224,12 @@ const Content = () => {
       <div className="relative flex justify-center items-center -z-10 mb-8">
         {/* Light Atmospheric Glow */}
         <div className="absolute inset-0 flex justify-center items-center">
-          <div className="w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(0,174,239,0.12)_0%,rgba(0,120,200,0.08)_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] blur-3xl opacity-50" />
+          <div className="w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(0,174,239,0.12)_0%,rgba(0,120,200,0.08)_25%,rgba(255,255,255,0.05)_50%,transparent_75%)] opacity-50" />
         </div>
         
         {/* Minimal Depth Layer */}
         <div className="absolute inset-0 flex justify-center items-center">
-          <div className="w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,200,120,0.06)_0%,rgba(0,174,239,0.04)_40%,transparent_70%)] blur-2xl opacity-30" />
+          <div className="w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,200,120,0.06)_0%,rgba(0,174,239,0.04)_40%,transparent_70%)] opacity-30" />
         </div>
       </div>
 
@@ -231,7 +260,7 @@ const Content = () => {
           />
           
           {/* Balanced Ambient Reflection */}
-          <div className="absolute top-[calc(100%+1.5rem)] left-1/2 -translate-x-1/2 w-[75%] h-[55px] bg-gradient-to-b from-white/20 via-white/10 to-transparent blur-[25px] opacity-60 rounded-full" />
+          <div className="absolute top-[calc(100%+1.5rem)] left-1/2 -translate-x-1/2 w-[75%] h-[55px] bg-gradient-to-b from-white/20 via-white/10 to-transparent opacity-60 rounded-full" />
         </span>
       </motion.h1>
 
@@ -247,12 +276,14 @@ const Content = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
       >
-        Building Trust in the Age of Generative AI
+        Building Trustworthy Digital and Information Ecosystems
+        <br />
+        For Future Generations
       </motion.p>
 
       {/* Description */}
       <motion.p
-        className="relative max-w-3xl mx-auto mt-12 text-lg leading-relaxed text-white text-center px-8 py-6 bg-gradient-to-r from-[#000000]/60 via-[#000010]/40 to-[#000000]/60 backdrop-blur-sm rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-white/10"
+        className="relative max-w-3xl mx-auto mt-12 text-lg leading-relaxed text-white text-center px-8 py-6 bg-gradient-to-r from-[#000000]/60 via-[#000010]/40 to-[#000000]/60 rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-white/10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
@@ -307,7 +338,7 @@ const Content = () => {
           Led by a coalition of global partners
         </motion.p>
         
-        <div className="mt-10 flex flex-wrap justify-center items-center gap-10 backdrop-blur-md bg-white/25 rounded-2xl px-8 py-5 shadow-[0_0_40px_rgba(0,180,255,0.2)] border border-white/30">
+        <div className="mt-10 flex flex-wrap justify-center items-center gap-10 bg-white/25 rounded-2xl px-8 py-5 shadow-[0_0_40px_rgba(0,180,255,0.2)] border border-white/30">
           {[
             { src: 'https://maximages.s3.us-west-1.amazonaws.com/IEEE_SA-logo-avatar.png', alt: 'IEEE SA', size: 'h-14 md:h-16' },
             { src: 'https://maximages.s3.us-west-1.amazonaws.com/OECD+AI+logo.jpeg', alt: 'OECD AI', size: 'h-12 md:h-14' },
@@ -426,7 +457,7 @@ const HeroSectionV3 = () => {
         <OverlayLayers />
         
         {/* Ambient gradient overlay for cinematic warmth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FFD97A]/8 via-transparent to-[#00AEEF]/5 blur-2xl pointer-events-none z-15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FFD97A]/8 via-transparent to-[#00AEEF]/5 pointer-events-none z-15" />
         
         {/* Content */}
         <Content />

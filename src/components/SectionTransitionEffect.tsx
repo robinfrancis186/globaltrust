@@ -107,3 +107,10 @@ const SectionTransitionEffect: React.FC<SectionTransitionEffectProps> = ({
 
 export default SectionTransitionEffect;
 
+
+
+
+
+
+
+
