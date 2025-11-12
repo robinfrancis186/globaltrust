@@ -301,7 +301,7 @@ const Content = () => {
         {/* Primary CTA */}
         <motion.button
           onClick={handleJoinChallenge}
-          className="bg-[#00AEEF] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#0088CC] transition-all duration-300 shadow-lg"
+          className="bg-[#00AEEF] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#0088CC] transition-colors duration-300 shadow-lg"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -314,7 +314,7 @@ const Content = () => {
         {/* Secondary CTA */}
         <motion.button
           onClick={handlePartnerWithUs}
-          className="border border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition-all duration-300"
+          className="border border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition-colors duration-300"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -348,7 +348,7 @@ const Content = () => {
               key={i}
               src={logo.src}
               alt={logo.alt}
-              className={`${logo.size} object-contain opacity-100 hover:opacity-100 hover:scale-105 transition-all duration-500 hover:drop-shadow-[0_0_20px_rgba(0,180,255,0.8)] hover:shadow-[0_0_25px_rgba(0,180,255,0.6)] brightness-110 contrast-110`}
+              className={`${logo.size} object-contain opacity-100 hover:opacity-100 hover:scale-105 transition-transform duration-500 hover:drop-shadow-[0_0_20px_rgba(0,180,255,0.8)] hover:shadow-[0_0_25px_rgba(0,180,255,0.6)] brightness-110 contrast-110`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 + i * 0.2, duration: 0.6 }}

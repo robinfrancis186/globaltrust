@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CinematicCrossfade from '../components/CinematicCrossfade';
 // import PartnersScroll from '../components/PartnersScroll';
-import { ArrowRight, CheckCircle, Target, Users, Shield, Lightbulb, Calendar,Trophy, Globe, Scale, Cog, Stamp, Rocket, BookCheck, Scaling, PersonStanding, MapPin } from 'lucide-react';
+import { ArrowRight, Target, Users, Shield, Lightbulb, Calendar, Cog, Stamp, Rocket, MapPin } from 'lucide-react';
 import NewsHighlights from '../components/NewsHighlights';
 import PreRegisterCTA from '../components/PreRegisterCTA';
 import SponsorsCTA from '../components/SponsorsCTA';
@@ -21,11 +21,11 @@ import '../styles/prototype-unique.css';
 import '../styles/floating-cards-3d.css';
 import '../styles/is-this-for-you.css';
 import WarpSectionTransition from '../components/WarpSectionTransition';
-import CardCarousel from '../components/CardCarousel';
-import CarouselSkeleton from '../components/CarouselSkeleton';
-import LayeredCarousel from '../components/LayeredCarousel';
-import '../styles/carousel-custom.css';
-import GlowingCardWrapper from '../components/GlowingCardWrapper';
+// import CardCarousel from '../components/CardCarousel';
+// import CarouselSkeleton from '../components/CarouselSkeleton';
+// import LayeredCarousel from '../components/LayeredCarousel';
+// import '../styles/carousel-custom.css';
+// import GlowingCardWrapper from '../components/GlowingCardWrapper';
 import ScrollArrow from '../components/ScrollArrow';
 import JourneyCTA from '../components/JourneyCTA';
 import SelectionCriteria from '../components/SelectionCriteria';
@@ -446,23 +446,23 @@ export default function Home() {
   // GSAP animations removed - using Swiper carousel instead
 
   // Card data for carousels
-  const topCardsData = [
-    {
-      icon: Users,
-      title: "Inclusive Contribution",
-      description: "Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI."
-    },
-    {
-      icon: Globe,
-      title: "Global Validation",
-      description: "Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots."
-    },
-    {
-      icon: Scale,
-      title: "Building Global Intelligence",
-      description: "Combining policy and technology solutions — integrated, actionable models. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age."
-    }
-  ];
+  // const topCardsData = [
+  //   {
+  //     icon: Users,
+  //     title: "Inclusive Contribution",
+  //     description: "Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI."
+  //   },
+  //   {
+  //     icon: Globe,
+  //     title: "Global Validation",
+  //     description: "Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots."
+  //   },
+  //   {
+  //     icon: Scale,
+  //     title: "Building Global Intelligence",
+  //     description: "Combining policy and technology solutions — integrated, actionable models. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age."
+  //   }
+  // ];
 
   const bottomCardsData = [
     {
