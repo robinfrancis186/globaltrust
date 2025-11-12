@@ -56,17 +56,37 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
             if (heroBg) {
               gsap.set(heroBg, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
             }
+            const heroContent = Array.from(section.querySelectorAll('h1, h2, h3, p, button, a, .relative')) as HTMLElement[];
+            heroContent.forEach(content => {
+              gsap.set(content, { opacity: 1, y: 0, scale: 1, filter: 'none' });
+            });
           },
           onEnterBack: () => {
+            // Immediately reset hero section when scrolling back to it
             gsap.set(section, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
             const heroBg = section.querySelector('.bg-video, .gradient-overlay, .video-bg-wrapper') as HTMLElement;
             if (heroBg) {
               gsap.set(heroBg, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
             }
-            const heroContent = Array.from(section.querySelectorAll('h1, h2, h3, p, button, a')) as HTMLElement[];
+            const heroContent = Array.from(section.querySelectorAll('h1, h2, h3, p, button, a, .relative')) as HTMLElement[];
             heroContent.forEach(content => {
-              gsap.set(content, { opacity: 1, y: 0, scale: 1 });
+              gsap.set(content, { opacity: 1, y: 0, scale: 1, filter: 'none' });
             });
+          },
+          // Also monitor when hero section is in viewport
+          onUpdate: (self) => {
+            if (self.progress === 0 || self.direction === -1) {
+              // Hero section is at top or scrolling back up
+              gsap.set(section, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
+              const heroBg = section.querySelector('.bg-video, .gradient-overlay, .video-bg-wrapper') as HTMLElement;
+              if (heroBg) {
+                gsap.set(heroBg, { filter: 'blur(0px) brightness(1)', opacity: 1, scale: 1 });
+              }
+              const heroContent = Array.from(section.querySelectorAll('h1, h2, h3, p, button, a, .relative')) as HTMLElement[];
+              heroContent.forEach(content => {
+                gsap.set(content, { opacity: 1, y: 0, scale: 1, filter: 'none' });
+              });
+            }
           }
         });
       }
@@ -235,7 +255,35 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
               gsap.set(content, {
                 opacity: 1,
                 y: 0,
-                scale: 1
+                scale: 1,
+                filter: 'none'
+              });
+            });
+          }
+        },
+        onLeaveBack: () => {
+          // When leaving hero section going back up, ensure it stays clear
+          if (index === 0 && currentSection.id === 'hero') {
+            gsap.set(currentSection, {
+              opacity: 1,
+              scale: 1,
+              filter: 'blur(0px) brightness(1)'
+            });
+            
+            if (currentBg) {
+              gsap.set(currentBg, {
+                scale: 1,
+                opacity: 1,
+                filter: 'blur(0px) brightness(1)'
+              });
+            }
+            
+            currentContent.forEach(content => {
+              gsap.set(content, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: 'none'
               });
             });
           }

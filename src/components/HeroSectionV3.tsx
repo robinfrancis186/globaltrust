@@ -407,6 +407,7 @@ const ScrollIndicator = () => {
 // Main HeroSectionV3 component
 const HeroSectionV3 = () => {
   const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const heroSectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -418,6 +419,57 @@ const HeroSectionV3 = () => {
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // Ensure hero section never gets blurred when scrolling back to it
+  useEffect(() => {
+    const heroSection = heroSectionRef.current || document.getElementById('hero');
+    if (!heroSection) return;
+
+    // Intersection Observer to ensure hero section stays clear when in view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            // Hero section is prominently in view - ensure no blur
+            const heroContent = Array.from(entry.target.querySelectorAll('h1, h2, h3, p, button, a, .relative')) as HTMLElement[];
+            heroContent.forEach((content) => {
+              content.style.filter = 'none';
+              content.style.opacity = '1';
+              content.style.transform = 'translateZ(0)';
+            });
+            
+            // Ensure section itself has no blur
+            (entry.target as HTMLElement).style.filter = 'blur(0px) brightness(1)';
+          }
+        });
+      },
+      { threshold: [0, 0.5, 1] }
+    );
+
+    observer.observe(heroSection);
+
+    // Also listen for scroll events to immediately clear any blur
+    const handleScroll = () => {
+      const rect = heroSection.getBoundingClientRect();
+      const isHeroInView = rect.top <= 100 && rect.bottom >= window.innerHeight * 0.3;
+      
+      if (isHeroInView) {
+        const heroContent = Array.from(heroSection.querySelectorAll('h1, h2, h3, p, button, a, .relative')) as HTMLElement[];
+        heroContent.forEach((content) => {
+          content.style.filter = 'none';
+          content.style.opacity = '1';
+        });
+        heroSection.style.filter = 'blur(0px) brightness(1)';
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
@@ -456,10 +508,24 @@ const HeroSectionV3 = () => {
           will-change: auto;
         }
         
-        /* Prevent text blur during load - ensure text is always sharp */
+        /* Prevent text blur during load and scroll - ensure text is always sharp */
         #hero h1,
         #hero h1 *,
-        #hero p {
+        #hero p,
+        #hero button,
+        #hero a,
+        #hero .relative {
+          filter: none !important;
+        }
+        
+        /* Ensure hero section never gets blurred when scrolling back */
+        #hero[style*="blur"] {
+          filter: blur(0px) !important;
+        }
+        
+        #hero h1[style*="blur"],
+        #hero p[style*="blur"],
+        #hero button[style*="blur"] {
           filter: none !important;
         }
         
@@ -470,7 +536,7 @@ const HeroSectionV3 = () => {
         }
       `}</style>
 
-      <section id="hero" className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden z-10">
+      <section id="hero" ref={heroSectionRef} className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden z-10">
         {/* Background */}
         <VideoBackground />
         
