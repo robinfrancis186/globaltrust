@@ -181,24 +181,24 @@ const LensFlare = () => {
 // Enhanced content component with cinematic effects
 const Content = () => {
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.4,
-        delayChildren: 0.3,
+        staggerChildren: 0,
+        delayChildren: 0,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 1, y: 0 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.3 + i * 0.4,
-        duration: 0.8,
+        delay: 0,
+        duration: 0,
         ease: "easeOut",
       },
     }),
@@ -217,8 +217,9 @@ const Content = () => {
     <motion.div
       className="relative z-20 max-w-6xl mx-auto px-6"
       variants={containerVariants}
-      initial="hidden"
+      initial="visible"
       animate="visible"
+      style={{ willChange: 'auto' }}
     >
       {/* Subtle Background Enhancement Layers */}
       <div className="relative flex justify-center items-center -z-10 mb-8">
@@ -239,10 +240,11 @@ const Content = () => {
           fontFamily: '"Barlow Condensed", serif',
           textShadow: '0 4px 8px rgba(0,0,0,0.9), 0 0 30px rgba(0,174,239,0.4)',
           marginLeft: '50px',
+          willChange: 'auto',
         }}
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 1, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+        transition={{ duration: 0, ease: "easeOut" }}
       >
         <span className="relative inline-block">
           <span className="text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
@@ -254,9 +256,9 @@ const Content = () => {
           {/* Balanced Underline Accent */}
           <motion.div 
             className="h-[3px] w-[150px] bg-gradient-to-r from-[#00AEEF]/90 via-[#FFD97A]/70 to-transparent mx-auto mt-3 rounded-full shadow-[0_0_15px_rgba(0,174,239,0.5)]"
-            initial={{ opacity: 0, scaleX: 0 }}
+            initial={{ opacity: 0.9, scaleX: 1 }}
             animate={{ opacity: 0.9, scaleX: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut", delay: 1.0 }}
+            transition={{ duration: 0, ease: "easeOut" }}
           />
           
           {/* Balanced Ambient Reflection */}
@@ -271,10 +273,11 @@ const Content = () => {
           fontFamily: '"Inter", sans-serif',
           textShadow: '0 2px 4px rgba(0,0,0,0.9)',
           marginLeft: '50px',
+          willChange: 'auto',
         }}
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 1, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+        transition={{ duration: 0, ease: "easeOut" }}
       >
         Building Trustworthy Digital and Information Ecosystems
         <br />
@@ -284,9 +287,10 @@ const Content = () => {
       {/* Description */}
       <motion.p
         className="relative max-w-3xl mx-auto mt-12 text-lg leading-relaxed text-white text-center px-8 py-6 bg-gradient-to-r from-[#000000]/60 via-[#000010]/40 to-[#000000]/60 rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.3)] border border-white/10"
-        initial={{ opacity: 0, y: 20 }}
+        style={{ willChange: 'auto' }}
+        initial={{ opacity: 1, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+        transition={{ duration: 0, ease: "easeOut" }}
       >
         A worldwide innovation challenge uniting technologists, policymakers, and organizations to secure information integrity in an era of AI-generated content.
       </motion.p>
@@ -294,9 +298,10 @@ const Content = () => {
       {/* CTA buttons */}
       <motion.div
         className="flex flex-col sm:flex-row justify-center gap-4 mt-8"
-        initial={{ opacity: 0, y: 20 }}
+        style={{ willChange: 'auto' }}
+        initial={{ opacity: 1, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 1.2 }}
+        transition={{ duration: 0, ease: "easeOut" }}
       >
         {/* Primary CTA */}
         <motion.button
@@ -331,9 +336,9 @@ const Content = () => {
       >
         <motion.p
           className="text-gray-300 text-sm font-medium mb-6"
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.5 }}
+          transition={{ delay: 0 }}
         >
           Led by a coalition of global partners
         </motion.p>
@@ -349,11 +354,12 @@ const Content = () => {
               src={logo.src}
               alt={logo.alt}
               className={`${logo.size} object-contain opacity-100 hover:opacity-100 hover:scale-105 transition-transform duration-500 hover:drop-shadow-[0_0_20px_rgba(0,180,255,0.8)] hover:shadow-[0_0_25px_rgba(0,180,255,0.6)] brightness-110 contrast-110`}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 + i * 0.2, duration: 0.6 }}
+              transition={{ delay: 0, duration: 0 }}
               style={{
                 filter: 'brightness(1.1) contrast(1.1)',
+                willChange: 'auto',
               }}
             />
           ))}
@@ -373,9 +379,9 @@ const ScrollIndicator = () => {
   return (
     <motion.div
       className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 1, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 4, duration: 0.8 }}
+      transition={{ delay: 0, duration: 0 }}
     >
       <motion.button
         onClick={handleScrollDown}
@@ -437,6 +443,24 @@ const HeroSectionV3 = () => {
           background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
           background-size: 200% auto;
           animation: buttonShine 4s linear infinite;
+        }
+        
+        /* Ensure crisp text rendering */
+        #hero h1,
+        #hero p {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-rendering: optimizeLegibility;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          will-change: auto;
+        }
+        
+        /* Prevent text blur during load - ensure text is always sharp */
+        #hero h1,
+        #hero h1 *,
+        #hero p {
+          filter: none !important;
         }
         
         @media (prefers-reduced-motion: reduce) {
