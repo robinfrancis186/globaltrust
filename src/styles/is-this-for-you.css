@@ -9,21 +9,6 @@
   }
 }
 
-@keyframes fogFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-  }
-  33% {
-    transform: translate(-20px, -15px) scale(1.05);
-    opacity: 0.8;
-  }
-  66% {
-    transform: translate(15px, 10px) scale(0.95);
-    opacity: 0.9;
-  }
-}
-
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -38,10 +23,6 @@
   animation: gradientShift 20s ease infinite;
 }
 
-.moving-fog-overlay {
-  animation: fogFloat 25s ease-in-out infinite;
-}
-
 .shimmer-overlay {
   background-size: 200% 200% !important;
   animation: shimmer 15s linear infinite;
@@ -49,7 +30,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .animated-gradient-background,
-  .moving-fog-overlay,
   .shimmer-overlay {
     animation: none !important;
   }
@@ -98,8 +78,8 @@
     linear-gradient(135deg, var(--current-surface) 0%, var(--current-surface) 100%),
     linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.25) 100%);
-  backdrop-filter: saturate(160%) blur(20px);
-  -webkit-backdrop-filter: saturate(160%) blur(20px);
+  backdrop-filter: saturate(160%);
+  -webkit-backdrop-filter: saturate(160%);
   box-shadow: var(--shadow-card);
   
   position: relative;

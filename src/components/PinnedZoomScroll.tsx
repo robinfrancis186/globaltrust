@@ -78,7 +78,7 @@ const PinnedZoomScroll: React.FC = () => {
       <section className="section" id="hero">
         <div className="pz-content">
           <h1 className="pz-title">GLOBAL TRUST CHALLENGE</h1>
-          <p className="pz-sub">Building Trust in the Age of Generative AI</p>
+          <p className="pz-sub">Building Trustworthy Digital and Information Ecosystems for Future Generations</p>
         </div>
       </section>
 
@@ -100,6 +100,7 @@ const PinnedZoomScroll: React.FC = () => {
 };
 
 export default PinnedZoomScroll;
+
 
 
 

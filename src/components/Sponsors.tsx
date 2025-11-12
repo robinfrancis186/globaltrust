@@ -8,7 +8,7 @@ interface Sponsor {
 
 const sponsors = [
     {
-    name: "IEEE",
+    name: "IEEE SA",
     logo: "https://maximages.s3.us-west-1.amazonaws.com/IEEE+SA+Logo.webp",
   },
    {
@@ -45,6 +45,10 @@ const supportingSponsors = [
   {
     name: "CAI",
     logo: "https://adobe-cai-contentauthenticity-backend-prod.s3.us-east-1.amazonaws.com/CAI_Logo_322a6a374f.svg",
+  },
+  {
+    name: "Ceimia",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/Ceimia+Logo.png",
   },
   {
     name: "Fondation Abeona",
@@ -104,7 +108,9 @@ export default function Sponsors() {
                   <img
                     src={sponsor.logo}
                     alt={sponsor.name}
-                    className="max-h-16 w-auto object-contain filter hover:brightness-110 transition-all duration-300"
+                    className={`w-auto object-contain filter hover:brightness-110 transition-all duration-300 ${
+                      sponsor.name === 'C2PA' ? 'max-h-24' : 'max-h-16'
+                    }`}
                   />
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

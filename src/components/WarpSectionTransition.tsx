@@ -113,19 +113,19 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
           // Current section - warps out much more gradually
           const currentOpacity = easeOut(1 - progress * 0.5); // Much slower fade (0.5x speed)
           const currentScale = 1 + (easeOut(progress) * 0.04); // Even gentler scale
-          const currentBlur = easeOut(progress) * 1.5; // Reduced blur for readability
+          // No blur - removed for clarity
           
           gsap.set(currentSection, {
             opacity: currentOpacity,
             scale: currentScale,
-            filter: `blur(${currentBlur}px) brightness(${1 - progress * 0.3})`
+            filter: `blur(0px) brightness(${1 - progress * 0.3})`
           });
 
           if (currentBg) {
             gsap.set(currentBg, {
               scale: 1 + (easeOut(progress) * 0.08), // Even gentler background warp
               opacity: 1 - (progress * 0.3), // Much slower background fade
-              filter: `blur(${easeOut(progress) * 3}px) brightness(${1 - progress * 0.25})`
+              filter: `blur(0px) brightness(${1 - progress * 0.25})`
             });
           }
 
@@ -145,19 +145,19 @@ const WarpSectionTransition: React.FC<WarpSectionTransitionProps> = ({ sectionId
           // Next section - warps in much more gradually
           const nextOpacity = easeIn(progress * 0.8); // Slower appearance for better overlap
           const nextScale = 0.98 + (easeIn(progress) * 0.015); // Even gentler scale
-          const nextBlur = (1 - easeIn(progress)) * 2; // Reduced blur for readability
+          // No blur - removed for clarity
           
           gsap.set(nextSection, {
             opacity: nextOpacity,
             scale: nextScale,
-            filter: `blur(${nextBlur}px) brightness(${0.8 + progress * 0.2})`
+            filter: `blur(0px) brightness(${0.8 + progress * 0.2})`
           });
 
           if (nextBg) {
             gsap.set(nextBg, {
               scale: 1.03 - ((1 - easeIn(progress)) * 0.03), // Even gentler background scale
               opacity: progress * 0.4 + 0.6, // Starts even more visible
-              filter: `blur(${(1 - easeIn(progress)) * 2.5}px) brightness(${0.8 + progress * 0.2})`
+              filter: `blur(0px) brightness(${0.8 + progress * 0.2})`
             });
           }
 

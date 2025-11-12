@@ -146,7 +146,7 @@ const Content = () => {
         variants={itemVariants}
         custom={1}
       >
-        Building Trust in the Age of Generative AI
+        Building Trustworthy Digital and Information Ecosystems for Future Generations
       </motion.p>
 
       {/* Description */}

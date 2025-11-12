@@ -59,7 +59,7 @@
 
 .unique-section .glassmorphic-card {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
+  backdrop-filter: none;
   border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 16px;
   padding: 2.5rem;

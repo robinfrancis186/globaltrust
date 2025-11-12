@@ -145,64 +145,8 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
           gsap.set(gradientOverlay, { opacity: i === 0 ? 0.5 : 0 });
         }
 
-        // Add fog/particle layer (Leonardo-style 10s loop)
-        let fogLayer = section.querySelector('.fog-layer') as HTMLElement;
-        const fogVideoUrl = 'https://maximages.s3.us-west-1.amazonaws.com/Leonardo+Fog+Particle+Loop.mp4';
-        if (!fogLayer) {
-          fogLayer = document.createElement('div');
-          fogLayer.className = 'fog-layer';
-          fogLayer.style.cssText = `
-            position: absolute;
-            inset: 0;
-            z-index: 1.5;
-            pointer-events: none;
-            mix-blend-mode: soft-light;
-            filter: blur(0.5px);
-          `;
-          
-          // Use video for fog
-          const fogVideo = document.createElement('video');
-          fogVideo.src = fogVideoUrl;
-          fogVideo.autoplay = true;
-          fogVideo.loop = true;
-          fogVideo.muted = true;
-          fogVideo.playsInline = true;
-          fogVideo.style.cssText = `
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 1;
-            mix-blend-mode: soft-light;
-            filter: blur(0.5px);
-          `;
-          fogLayer.appendChild(fogVideo);
-          
-          // Insert fog layer after gradient
-          if (gradientOverlay) {
-            gradientOverlay.parentNode?.insertBefore(fogLayer, gradientOverlay.nextSibling);
-          } else {
-            section.insertBefore(fogLayer, section.firstChild);
-          }
-          
-          // Set initial opacity via GSAP
-          gsap.set(fogLayer, { opacity: i === 0 ? 0.15 : 0 });
-        } else {
-          // Update existing fog layer
-          if (!fogLayer.style.mixBlendMode) {
-            fogLayer.style.mixBlendMode = 'soft-light';
-          }
-          if (!fogLayer.style.pointerEvents) {
-            fogLayer.style.pointerEvents = 'none';
-          }
-          
-          // Set initial opacity via GSAP
-          gsap.set(fogLayer, { opacity: i === 0 ? 0.15 : 0 });
-        }
-
         // Ensure content has proper z-index and transform-style
-        const contentElements = section.querySelectorAll('*:not(.bg-video):not(.gradient-overlay):not(.fog-layer)');
+        const contentElements = section.querySelectorAll('*:not(.bg-video):not(.gradient-overlay)');
         contentElements.forEach((el) => {
           const elStyle = window.getComputedStyle(el as HTMLElement);
           if (elStyle.position === 'relative' || elStyle.position === 'absolute' || elStyle.position === 'fixed') {
@@ -244,10 +188,8 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
             });
             const heroVideo = heroSection.querySelector('video.bg-video') as HTMLVideoElement;
             const heroGradient = heroSection.querySelector('.gradient-overlay') as HTMLElement;
-            const heroFog = heroSection.querySelector('.fog-layer') as HTMLElement;
             if (heroVideo) gsap.set(heroVideo, { opacity: 1 });
             if (heroGradient) gsap.set(heroGradient, { opacity: 0.5 });
-            if (heroFog) gsap.set(heroFog, { opacity: 0.15 });
           },
           onEnterBack: () => {
             gsap.set(heroSection, {
@@ -258,10 +200,8 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
             });
             const heroVideo = heroSection.querySelector('video.bg-video') as HTMLVideoElement;
             const heroGradient = heroSection.querySelector('.gradient-overlay') as HTMLElement;
-            const heroFog = heroSection.querySelector('.fog-layer') as HTMLElement;
             if (heroVideo) gsap.set(heroVideo, { opacity: 1 });
             if (heroGradient) gsap.set(heroGradient, { opacity: 0.5 });
-            if (heroFog) gsap.set(heroFog, { opacity: 0.15 });
           }
         });
       }
@@ -275,15 +215,13 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
         const nextVideo = nextSection.querySelector('video.bg-video') as HTMLVideoElement;
         const currentGradient = currentSection.querySelector('.gradient-overlay') as HTMLElement;
         const nextGradient = nextSection.querySelector('.gradient-overlay') as HTMLElement;
-        const currentFog = currentSection.querySelector('.fog-layer') as HTMLElement;
-        const nextFog = nextSection.querySelector('.fog-layer') as HTMLElement;
 
         // Set initial state for next section: positioned behind current
         gsap.set(nextSection, {
           opacity: 0,
           scale: 1.08,
           z: 200, // Start in back of 3D space
-          filter: "blur(1px)",
+          filter: "blur(0px)",
           transformOrigin: "center center"
         });
 
@@ -293,10 +231,6 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
 
         if (nextGradient) {
           gsap.set(nextGradient, { opacity: 0 });
-        }
-
-        if (nextFog) {
-          gsap.set(nextFog, { opacity: 0 });
         }
 
         // Crossfade and depth-push timeline
@@ -318,7 +252,6 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
                 });
                 if (currentVideo) gsap.set(currentVideo, { opacity: 1 });
                 if (currentGradient) gsap.set(currentGradient, { opacity: 0.5 });
-                if (currentFog) gsap.set(currentFog, { opacity: 0.15 });
               }
             }
           },
@@ -329,7 +262,7 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
           opacity: 0.3,
           scale: 0.92,
           z: -200, // Move backward in 3D space
-          filter: "blur(1px)",
+          filter: "blur(0px)",
           transformOrigin: "center center",
           ease: "power3.inOut",
         }, 0);
@@ -366,27 +299,12 @@ export const CinematicCrossfade: React.FC<CinematicCrossfadeProps> = ({ sectionI
           }, 0);
         }
 
-        // Fog layer blending synchronized with section transition
-        if (currentFog) {
-          tl.to(currentFog, { 
-            opacity: 0.05,
-            ease: "power3.inOut"
-          }, 0);
-        }
-        
-        if (nextFog) {
-          tl.to(nextFog, { 
-            opacity: 0.15,
-            ease: "power3.inOut"
-          }, 0);
-        }
-
         // Next section: fade in and move forward in 3D space
         tl.fromTo(nextSection, {
           opacity: 0,
           scale: 1.08,
           z: 200, // Start further back in 3D space
-          filter: "blur(1px)",
+          filter: "blur(0px)",
           transformOrigin: "center center",
         }, {
           opacity: 1,

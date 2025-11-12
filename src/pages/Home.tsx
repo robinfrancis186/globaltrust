@@ -27,6 +27,9 @@ import LayeredCarousel from '../components/LayeredCarousel';
 import '../styles/carousel-custom.css';
 import GlowingCardWrapper from '../components/GlowingCardWrapper';
 import ScrollArrow from '../components/ScrollArrow';
+import JourneyCTA from '../components/JourneyCTA';
+import SelectionCriteria from '../components/SelectionCriteria';
+import ImmersiveBackground from '../components/ImmersiveBackground';
 
 
 interface FormData {
@@ -173,48 +176,12 @@ export default function Home() {
   }, []);
 
 
+
   // Simple setup - no complex GSAP configuration
 
   // No complex animations - let CSS handle everything
 
-  // Set video playback rate to 50% for slower animation
-  useEffect(() => {
-    const setPlaybackRate = () => {
-      const video1 = document.getElementById('video1') as HTMLVideoElement;
-      const video2 = document.getElementById('video2') as HTMLVideoElement;
-      if (video1) video1.playbackRate = 0.5;
-      if (video2) video2.playbackRate = 0.5;
-    };
-
-    // Set immediately if videos are already loaded
-    setPlaybackRate();
-
-    // Also set when videos are ready
-    const video1 = document.getElementById('video1') as HTMLVideoElement;
-    const video2 = document.getElementById('video2') as HTMLVideoElement;
-    
-    if (video1) {
-      video1.addEventListener('loadedmetadata', setPlaybackRate);
-      video1.addEventListener('canplay', setPlaybackRate);
-    }
-    if (video2) {
-      video2.addEventListener('loadedmetadata', setPlaybackRate);
-      video2.addEventListener('canplay', setPlaybackRate);
-    }
-
-    return () => {
-      if (video1) {
-        video1.removeEventListener('loadedmetadata', setPlaybackRate);
-        video1.removeEventListener('canplay', setPlaybackRate);
-      }
-      if (video2) {
-        video2.removeEventListener('loadedmetadata', setPlaybackRate);
-        video2.removeEventListener('canplay', setPlaybackRate);
-      }
-    };
-  }, []);
-
-  // Canvas ripple effect (identical to Section 12)
+  // Canvas ripple effect (for unique section - removed, keeping for potential future use)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -618,162 +585,12 @@ export default function Home() {
       <section 
         id="unique"
         className="unique-section relative z-10 overflow-hidden"
-          style={{
-           background: `linear-gradient(
-             135deg,
-             #0A1F2A 0%,     /* deeper navy base */
-             #004D5C 20%,    /* rich teal */
-             #007A8A 40%,    /* vibrant turquoise */
-             #00B4D8 60%,    /* bright cyan */
-             #FFD700 80%,    /* pure gold */
-             #FFE55C 100%    /* bright golden yellow */
-           )`
-          }}
        >
-        {/* Animated Particle Background - Smooth Loop Transition */}
-        <div className="video-bg-wrapper absolute inset-0 z-0">
-          <video
-            id="video1"
-            className="bg-video absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            playsInline
-            style={{ 
-              mixBlendMode: 'normal',
-              opacity: 1,
-              transition: 'opacity 4s ease-in-out',
-              filter: 'blur(0.5px) brightness(1.1) contrast(1.05)'
-            }}
-            onLoadedMetadata={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // 50% speed
-            }}
-            onPlay={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // Ensure 50% speed is maintained
-            }}
-            onTimeUpdate={(e) => {
-              const video = e.target as HTMLVideoElement;
-              const duration = video.duration;
-              const currentTime = video.currentTime;
-              
-              // Start crossfade 3 seconds before the end for smoother transition
-              if (duration > 0 && currentTime >= duration - 3) {
-                const video2 = document.getElementById('video2') as HTMLVideoElement;
-                if (video2) {
-                  // Calculate crossfade progress (0 to 1 over last 3 seconds)
-                  const fadeProgress = (currentTime - (duration - 3)) / 3;
-                  video.style.opacity = (1 - fadeProgress).toString();
-                  video2.style.opacity = fadeProgress.toString();
-                  
-                  // Start video2 when we're 2 seconds from the end
-                  if (currentTime >= duration - 2 && video2.paused) {
-                    video2.currentTime = 0;
-                    video2.playbackRate = 0.5; // Set 50% speed
-                    video2.play();
-                  }
-                }
-              }
-            }}
-            onEnded={() => {
-              const video1 = document.getElementById('video1') as HTMLVideoElement;
-              const video2 = document.getElementById('video2') as HTMLVideoElement;
-              if (video1 && video2) {
-                video1.style.opacity = '0';
-                video2.style.opacity = '1';
-                video1.currentTime = 0;
-                video1.playbackRate = 0.5; // Maintain 50% speed
-              }
-            }}
-          >
-            <source src="https://maximages.s3.us-west-1.amazonaws.com/Unique+Section+v4.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          
-          <video
-            id="video2"
-            className="bg-video absolute inset-0 w-full h-full object-cover"
-            muted
-            playsInline
-            style={{ 
-              mixBlendMode: 'normal',
-              opacity: 0,
-              transition: 'opacity 4s ease-in-out',
-              filter: 'blur(0.5px) brightness(1.1) contrast(1.05)'
-            }}
-            onLoadedMetadata={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // 50% speed
-            }}
-            onPlay={(e) => {
-              const video = e.target as HTMLVideoElement;
-              video.playbackRate = 0.5; // Ensure 50% speed is maintained
-            }}
-            onTimeUpdate={(e) => {
-              const video = e.target as HTMLVideoElement;
-              const duration = video.duration;
-              const currentTime = video.currentTime;
-              
-              // Start crossfade 3 seconds before the end for smoother transition
-              if (duration > 0 && currentTime >= duration - 3) {
-                const video1 = document.getElementById('video1') as HTMLVideoElement;
-                if (video1) {
-                  // Calculate crossfade progress (0 to 1 over last 3 seconds)
-                  const fadeProgress = (currentTime - (duration - 3)) / 3;
-                  video.style.opacity = (1 - fadeProgress).toString();
-                  video1.style.opacity = fadeProgress.toString();
-                  
-                  // Start video1 when we're 2 seconds from the end
-                  if (currentTime >= duration - 2 && video1.paused) {
-                    video1.currentTime = 0;
-                    video1.playbackRate = 0.5; // Set 50% speed
-                    video1.play();
-                  }
-                }
-              }
-            }}
-            onEnded={() => {
-              const video1 = document.getElementById('video1') as HTMLVideoElement;
-              const video2 = document.getElementById('video2') as HTMLVideoElement;
-              if (video1 && video2) {
-                video2.style.opacity = '0';
-                video1.style.opacity = '1';
-                video2.currentTime = 0;
-                video2.playbackRate = 0.5; // Maintain 50% speed
-              }
-            }}
-          >
-            <source src="https://maximages.s3.us-west-1.amazonaws.com/Unique+Section+v4.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-                  </div>
-        
-        {/* Gradient Overlay */}
-        <div className="gradient-overlay absolute inset-0 z-1" />
-        
-        {/* Mouse Ripple Canvas (matching Section 12) */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none z-20"
-          style={{
-            mixBlendMode: 'screen',
-            opacity: 0.4
-          }}
-        />
-            
-        {/* Seamless Digital Aurora Focal Area */}
-        <div 
-          className="absolute inset-0 z-5"
-          style={{
-            background: `radial-gradient(
-              circle at center,
-              rgba(255,255,255,0.4) 0%,
-              rgba(227,200,90,0.15) 30%,
-              rgba(143,166,138,0.1) 60%,
-              rgba(0,110,128,0.08) 100%
-            )`,
-            filter: 'blur(0.5px)'
-          }}
+        {/* Cinematic animated background */}
+        <ImmersiveBackground 
+          variant="teal"
+          overlayOpacity={0.35}
+          className="unique-bg-teal-gold"
         />
             
         <div className="unique-proto">
@@ -1287,157 +1104,8 @@ export default function Home() {
 
 
 {/* The Challenge Section - Redesigned */}
-      <section id="phases" className="py-20 bg-white relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              The Challenge
-            </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-              The Challenge is divided into three phases, with a rigorous evaluation by a neutral, expert jury at the end of each phase to identify the most promising solutions that will move forward and receive recognition.
-            </p>
-          </div>
-          
-          {/* Phase Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {[
-              {
-                icon: Calendar,
-                phase: "Phase 1",
-                title: "Proposal",
-                description: "Submit your idea — policy + tech solutions to build trust.",
-                benefits: [
-                  "Expert feedback",
-                  "~10 teams advance",
-                  "Recognition & mentorship"
-                ]
-              },
-              {
-                icon: Users,
-                phase: "Phase 2", 
-                title: "Prototype",
-                description: "Build it with support.",
-                benefits: [
-                  "$50K funding per team",
-                  "Mentorship + sandbox",
-                  "Submit working prototype"
-                ]
-              },
-              {
-                icon: CheckCircle,
-                phase: "Phase 3",
-                title: "Pilot",
-                description: "Test in real-world settings.",
-                benefits: [
-                  "$250K per finalist team",
-                  "Partner-led pilots",
-                  "Impact measured"
-                ]
-              }
-            ].map((item, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-lg shadow-md text-center relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                    {item.phase}
-                  </div>
-                </div>
-                <item.icon className="w-16 h-16 text-indigo-600 mx-auto mb-6 mt-4" />
-                <h3 className="text-2xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 mb-6">{item.description}</p>
-                <ul className="space-y-2">
-                  {item.benefits.map((benefit, idx) => (
-                    <li key={idx} className="flex items-center justify-center text-sm text-gray-700">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Final Awards Section */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-8 text-center text-white">
-            <Trophy className="w-16 h-16 mx-auto mb-6" />
-            <h3 className="text-2xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
-              Final Awards
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-              <div className="flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                <span>Cash prize for winning teams</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                <span>Present at major events</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-                <span>Spotlight in global reports</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-        {/* How Ideas Are Selected Section */}
-      <section className="py-10 bg-gray-50" style={{paddingTop:'5px'}}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-            How Ideas Are Selected
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto py-5">
-            Submissions will be reviewed by an independent panel of global experts — spanning AI, law, digital policy, civil society, and ethics. Ideas will be assessed based on:
-          
-          </p>
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {[
-              {
-                icon: Target,
-                title: "Relevance",
-                description: "Does it meaningfully tackle AI-driven mistrust?"
-              },
-              {
-                icon: Lightbulb,
-                title: "Originality",
-                description: "Is the idea novel or visionary?"
-              },
-              {
-                icon: BookCheck,
-                title: "Feasibility",
-                description: "Could it be implemented or piloted?"
-              },
-              {
-                icon: Scaling,
-                title: "Scalability",
-                description: "Can it grow or inform larger systems?"
-              },
-              {
-                icon: PersonStanding,
-                title: "Values",
-                description: "Does it promote transparency, equity, and accountability?"
-              }
-              
-            ].map((step, index) => (
-              <div key={index} className="relative">
-                <div className="bg-white p-6 rounded-lg shadow-lg text-center h-full">
-                  <step.icon className="w-12 h-12 text-indigo-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                  <p className="text-gray-600">{step.description}</p>
-                </div>
-                
-              </div>
-            ))}
-
-          </div>
-
-          
-        </div>
-
-        
-      </section>
+      <JourneyCTA />
+      <SelectionCriteria />
       {/* Call to Action Section */}
       <PreRegisterCTA />
 
