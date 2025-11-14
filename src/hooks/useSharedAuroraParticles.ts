@@ -16,7 +16,7 @@ type Listener = {
 };
 
 const MAX_DEVICE_PIXEL_RATIO = 2;
-const PARTICLE_COUNT = 60;
+const BASE_PARTICLE_COUNT = 60;
 const PARTICLE_SIZE_RANGE: [number, number] = [0.9, 2.1];
 const PARTICLE_VELOCITY_RANGE: [number, number] = [-0.02, 0.02];
 const PARTICLE_OPACITY_RANGE: [number, number] = [0.25, 0.65];
@@ -34,10 +34,10 @@ const state = {
 
 const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
-const createParticles = () => {
+const createParticles = (particleCount: number = BASE_PARTICLE_COUNT) => {
   if (state.particles.length > 0) return;
   const particles: Particle[] = [];
-  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+  for (let i = 0; i < particleCount; i += 1) {
     particles.push({
       u: Math.random(),
       v: Math.random(),
@@ -52,21 +52,43 @@ const createParticles = () => {
 };
 
 const resizeCanvas = ({ canvas, ctx }: Listener) => {
-  const dpr = Math.min(window.devicePixelRatio || 1, MAX_DEVICE_PIXEL_RATIO);
+  // Optimize devicePixelRatio based on device capabilities
+  const baseDpr = window.devicePixelRatio || 1;
+  const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+  const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+  
+  // Limit DPR on mobile/low-end devices
+  let optimizedDpr = baseDpr;
+  if (isMobile) {
+    optimizedDpr = Math.min(baseDpr, 1.5); // Cap at 1.5x on mobile
+  } else if (isTablet) {
+    optimizedDpr = Math.min(baseDpr, 2); // Cap at 2x on tablets
+  } else {
+    optimizedDpr = Math.min(baseDpr, MAX_DEVICE_PIXEL_RATIO); // Cap at 2x on desktop
+  }
+  
   const { offsetWidth, offsetHeight } = canvas;
-  const width = Math.floor(offsetWidth * dpr);
-  const height = Math.floor(offsetHeight * dpr);
+  const width = Math.floor(offsetWidth * optimizedDpr);
+  const height = Math.floor(offsetHeight * optimizedDpr);
 
   if (canvas.width !== width || canvas.height !== height) {
     canvas.width = width;
     canvas.height = height;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(dpr, dpr);
+    ctx.scale(optimizedDpr, optimizedDpr);
   }
 };
 
+// Debounce resize handler for better performance
+let resizeTimeout: number | null = null;
 const resizeAll = () => {
-  state.listeners.forEach((listener) => resizeCanvas(listener));
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout);
+  }
+  resizeTimeout = window.setTimeout(() => {
+    state.listeners.forEach((listener) => resizeCanvas(listener));
+    resizeTimeout = null;
+  }, 150);
 };
 
 const wrapCoordinate = (value: number) => {
@@ -80,25 +102,41 @@ const renderFrame = (timestamp: number) => {
   const deltaSeconds = Math.min((timestamp - state.lastTime) / 1000, 0.08); // clamp to avoid jumps
   state.lastTime = timestamp;
 
+  // Update all particles first (no DOM operations)
   state.particles.forEach((particle) => {
     particle.u = wrapCoordinate(particle.u + particle.velocityU * deltaSeconds);
     particle.v = wrapCoordinate(particle.v + particle.velocityV * deltaSeconds);
   });
 
+  // Render to all canvases
   state.listeners.forEach(({ canvas, ctx }) => {
     const width = canvas.offsetWidth;
     const height = canvas.offsetHeight;
 
-    ctx.clearRect(0, 0, width, height);
+    // Clear canvas efficiently
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    state.particles.forEach((particle) => {
-      const x = particle.u * width;
-      const y = particle.v * height;
-      const size = particle.size;
+    // Group particles by color to reduce fillStyle changes
+    const particlesByColor = new Map<string, typeof state.particles>();
+    state.particles.forEach(particle => {
+      const color = `hsla(${particle.hue}, 75%, 70%, ${particle.alpha})`;
+      if (!particlesByColor.has(color)) {
+        particlesByColor.set(color, []);
+      }
+      particlesByColor.get(color)!.push(particle);
+    });
 
+    // Render particles grouped by color (reduces fillStyle changes)
+    particlesByColor.forEach((colorParticles, color) => {
       ctx.beginPath();
-      ctx.fillStyle = `hsla(${particle.hue}, 75%, 70%, ${particle.alpha})`;
-      ctx.arc(x, y, size, 0, Math.PI * 2);
+      colorParticles.forEach(particle => {
+        const x = particle.u * width;
+        const y = particle.v * height;
+        const size = particle.size;
+        ctx.moveTo(x + size, y);
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+      });
+      ctx.fillStyle = color;
       ctx.fill();
     });
   });
@@ -122,7 +160,7 @@ const addListener = (listener: Listener) => {
   state.listeners.add(listener);
   resizeCanvas(listener);
   if (!state.resizeHandlerAttached) {
-    window.addEventListener('resize', resizeAll);
+    window.addEventListener('resize', resizeAll, { passive: true });
     state.resizeHandlerAttached = true;
   }
   createParticles();
@@ -136,6 +174,10 @@ const removeListener = (listener: Listener) => {
     if (state.resizeHandlerAttached) {
       window.removeEventListener('resize', resizeAll);
       state.resizeHandlerAttached = false;
+    }
+    if (resizeTimeout) {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = null;
     }
   }
 };
@@ -154,11 +196,44 @@ export const useSharedAuroraParticles = (
     if (!ctx) return;
 
     const listener: Listener = { canvas, ctx };
-    addListener(listener);
+    let isVisible = true;
 
-    return () => {
-      removeListener(listener);
-    };
+    // IntersectionObserver to pause animations when off-screen
+    const section = canvas.closest('section') || canvas.parentElement;
+    if (section) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isVisible = entry.isIntersecting && entry.intersectionRatio > 0.1;
+            
+            // Pause/resume the shared animation based on visibility
+            // Only pause if ALL sections using this hook are off-screen
+            // For now, we'll pause when this specific section is off-screen
+            if (!isVisible) {
+              // Remove listener temporarily (will be re-added when visible)
+              removeListener(listener);
+            } else {
+              // Re-add listener when visible
+              addListener(listener);
+            }
+          });
+        },
+        { threshold: [0, 0.1, 0.5, 1] }
+      );
+      
+      observer.observe(section);
+      addListener(listener);
+
+      return () => {
+        observer.disconnect();
+        removeListener(listener);
+      };
+    } else {
+      addListener(listener);
+      return () => {
+        removeListener(listener);
+      };
+    }
   }, [canvasRef]);
 };
 

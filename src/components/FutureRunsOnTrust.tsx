@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import ScrollArrow from './ScrollArrow';
+import { getOptimizedParticleCount, getOptimizedCanvasResolution, shouldDisableCanvasEffects, getPerformanceConfig } from '../utils/performance';
 
-const PARTICLE_COUNT = 90;
+const BASE_PARTICLE_COUNT = 90;
 const PARTICLE_COLORS = [
   'rgba(0,174,239,0.55)',
   'rgba(255,217,120,0.5)',
@@ -56,12 +57,11 @@ const createParticle = (width: number, height: number): Particle => {
   };
 };
 
-const FutureRunsOnTrust = () => {
-  const rippleCanvasRef = useRef<HTMLCanvasElement>(null);
-  const rippleStateRef = useRef<Array<{ x: number; y: number; radius: number; alpha: number; velocity: number; lastX: number; lastY: number }>>([]);
-  const rippleLastMouseRef = useRef({ x: 0, y: 0 });
+const FutureRunsOnTrust = memo(() => {
   const particleCanvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
@@ -96,171 +96,249 @@ const FutureRunsOnTrust = () => {
   };
 
   useEffect(() => {
+    let rafId: number | null = null;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    
     const handleMouseMove = (e: MouseEvent) => {
-      const words = document.querySelectorAll('[data-highlight-word]');
-      const nextHighlighted = new Set<string>();
+      // Skip if mouse hasn't moved significantly (reduces unnecessary calculations)
+      const deltaX = Math.abs(e.clientX - lastMouseX);
+      const deltaY = Math.abs(e.clientY - lastMouseY);
+      if (deltaX < 5 && deltaY < 5) return;
+      
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+      
+      // Throttle using requestAnimationFrame
+      if (rafId) return;
+      
+      rafId = requestAnimationFrame(() => {
+        const words = document.querySelectorAll('[data-highlight-word]');
+        const nextHighlighted = new Set<string>();
 
-      words.forEach((word) => {
-        const rect = word.getBoundingClientRect();
-        const distance = Math.hypot(
-          e.clientX - (rect.left + rect.width / 2),
-          e.clientY - (rect.top + rect.height / 2)
-        );
-        if (distance < 100) {
-          const key = word.getAttribute('data-highlight-word');
-          if (key) nextHighlighted.add(key);
-        }
+        words.forEach((word) => {
+          const rect = word.getBoundingClientRect();
+          const distance = Math.hypot(
+            e.clientX - (rect.left + rect.width / 2),
+            e.clientY - (rect.top + rect.height / 2)
+          );
+          if (distance < 100) {
+            const key = word.getAttribute('data-highlight-word');
+            if (key) nextHighlighted.add(key);
+          }
+        });
+
+        setHighlightedWords(nextHighlighted);
+        rafId = null;
       });
-
-      setHighlightedWords(nextHighlighted);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
+  // IntersectionObserver to pause CSS animations when off-screen
   useEffect(() => {
-    const canvas = rippleCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
-    let animationId: number;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const visible = entry.isIntersecting && entry.intersectionRatio > 0.1;
+          setIsVisible(visible);
+          
+          // Pause/resume CSS animations by setting animation-play-state
+          const bgElement = section.querySelector('.trust-nebula-bg') as HTMLElement;
+          if (bgElement) {
+            bgElement.style.setProperty('animation-play-state', visible ? 'running' : 'paused');
+            // For pseudo-elements, we use CSS variable
+            bgElement.style.setProperty('--animation-state', visible ? 'running' : 'paused');
+          }
+          
+          const textContainer = section.querySelector('.trust-text-container') as HTMLElement;
+          if (textContainer) {
+            textContainer.style.setProperty('animation-play-state', visible ? 'running' : 'paused');
+          }
+        });
+      },
+      { threshold: [0, 0.1, 0.5, 1] }
+    );
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    };
-
-    const addRipple = (x: number, y: number, velocity: number) => {
-      rippleStateRef.current.push({
-        x,
-        y,
-        radius: 0,
-        alpha: Math.min(0.15, velocity * 0.05 + 0.08),
-        velocity,
-        lastX: x,
-        lastY: y,
-      });
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      rippleStateRef.current.forEach((ripple, index) => {
-        ripple.radius += 2 + ripple.velocity * 0.3;
-        ripple.alpha -= 0.003;
-
-        const horizontalStretch = 2.2 + ripple.velocity * 0.4;
-        const gradient = ctx.createLinearGradient(
-          ripple.x - ripple.radius * horizontalStretch,
-          ripple.y,
-          ripple.x + ripple.radius * horizontalStretch,
-          ripple.y
-        );
-        gradient.addColorStop(0, `rgba(0,174,239,${ripple.alpha * 0.8})`);
-        gradient.addColorStop(0.3, `rgba(0,174,239,${ripple.alpha * 0.6})`);
-        gradient.addColorStop(0.7, `rgba(255,217,120,${ripple.alpha * 0.5})`);
-        gradient.addColorStop(1, 'rgba(0,174,239,0)');
-
-        ctx.save();
-        ctx.translate(ripple.x, ripple.y);
-        ctx.scale(horizontalStretch, 1);
-        ctx.beginPath();
-        ctx.fillStyle = gradient;
-        ctx.arc(0, 0, ripple.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-
-        if (ripple.alpha <= 0) {
-          rippleStateRef.current.splice(index, 1);
-        }
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const dx = x - rippleLastMouseRef.current.x;
-      const dy = y - rippleLastMouseRef.current.y;
-      const velocity = Math.hypot(dx, dy) / 10;
-
-      if (velocity > 0.5) {
-        addRipple(x, y, velocity);
-      }
-
-      rippleLastMouseRef.current = { x, y };
-    };
-
-    resize();
-    animate();
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     const canvas = particleCanvasRef.current;
     if (!canvas) return;
+    
+    // Disable canvas on mobile and low-end devices
+    const config = getPerformanceConfig();
+    if (config.shouldDisableCanvas) {
+      canvas.style.display = 'none';
+      return;
+    }
+    
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationId: number;
+    let animationId: number | null = null;
+    let isVisible = true;
+
+    let canvasDpr = 1;
 
     const initParticles = () => {
       const rect = canvas.getBoundingClientRect();
-      particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () =>
-        createParticle(rect.width, rect.height)
+      const optimizedRes = getOptimizedCanvasResolution(rect.width, rect.height);
+      canvasDpr = optimizedRes.dpr;
+      
+      // Limit maximum particles for performance
+      const maxParticles = config.isMobile ? 30 : config.isTablet ? 60 : BASE_PARTICLE_COUNT;
+      const particleCount = Math.min(
+        getOptimizedParticleCount(BASE_PARTICLE_COUNT),
+        maxParticles
+      );
+      
+      particlesRef.current = Array.from({ length: particleCount }, () =>
+        createParticle(rect.width, rect.height) // Use display size, not canvas size
       );
     };
 
+    // Debounce resize handler for better performance
+    let resizeTimeout: number | null = null;
     const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      initParticles();
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = window.setTimeout(() => {
+        const rect = canvas.getBoundingClientRect();
+        const optimizedRes = getOptimizedCanvasResolution(rect.width, rect.height);
+        canvasDpr = optimizedRes.dpr;
+        
+        // Set canvas internal resolution (for high-DPI)
+        canvas.width = optimizedRes.width;
+        canvas.height = optimizedRes.height;
+        
+        // Set canvas display size (CSS pixels)
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+        
+        // Scale context to match devicePixelRatio
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(canvasDpr, canvasDpr);
+        
+        initParticles();
+        resizeTimeout = null;
+      }, 150);
     };
 
     const animate = () => {
-      const { width, height } = canvas;
-      ctx.clearRect(0, 0, width, height);
+      if (!isVisible) {
+        animationId = null;
+        return;
+      }
+      
+      // Use display size for calculations (already scaled by DPR in resize)
+      const displayWidth = canvas.offsetWidth;
+      const displayHeight = canvas.offsetHeight;
+      
+      // Clear entire canvas efficiently
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particlesRef.current.forEach((particle) => {
+      // Batch particle updates for better performance
+      const particles = particlesRef.current;
+      const particleCount = particles.length;
+      
+      // Group particles by color to reduce fillStyle changes (major performance win)
+      const particlesByColor = new Map<string, typeof particles>();
+      particles.forEach(particle => {
+        if (!particlesByColor.has(particle.color)) {
+          particlesByColor.set(particle.color, []);
+        }
+        particlesByColor.get(particle.color)!.push(particle);
+      });
+      
+      // Update positions first (no DOM/context operations)
+      particles.forEach(particle => {
         particle.x += particle.speedX;
         particle.y += particle.speedY;
 
-        if (particle.x < -80) particle.x = width + 80;
-        if (particle.x > width + 80) particle.x = -80;
-        if (particle.y < -80) particle.y = height + 80;
-        if (particle.y > height + 80) particle.y = -80;
-
+        // Wrap around edges (using display dimensions)
+        if (particle.x < -80) particle.x = displayWidth + 80;
+        if (particle.x > displayWidth + 80) particle.x = -80;
+        if (particle.y < -80) particle.y = displayHeight + 80;
+        if (particle.y > displayHeight + 80) particle.y = -80;
+      });
+      
+      // Render particles grouped by color (reduces fillStyle changes)
+      particlesByColor.forEach((colorParticles, color) => {
         ctx.beginPath();
-        ctx.fillStyle = particle.color;
+        colorParticles.forEach(particle => {
+          ctx.moveTo(particle.x + particle.radius, particle.y);
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        });
+        ctx.fillStyle = color;
         ctx.globalAlpha = 1;
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
         ctx.fill();
       });
 
       animationId = requestAnimationFrame(animate);
     };
 
-    resize();
-    animate();
-    window.addEventListener('resize', resize);
+    // IntersectionObserver to pause animations when off-screen
+    const section = canvas.closest('section') || canvas.parentElement;
+    if (section) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isVisible = entry.isIntersecting && entry.intersectionRatio > 0.1;
+            if (isVisible && !animationId) {
+              animate();
+            } else if (!isVisible && animationId) {
+              cancelAnimationFrame(animationId);
+              animationId = null;
+            }
+          });
+        },
+        { threshold: [0, 0.1, 0.5, 1] }
+      );
+      observer.observe(section);
 
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-    };
+      resize();
+      if (isVisible) {
+        animate();
+      }
+      window.addEventListener('resize', resize, { passive: true });
+
+      return () => {
+        observer.disconnect();
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+        if (resizeTimeout) {
+          clearTimeout(resizeTimeout);
+        }
+        window.removeEventListener('resize', resize);
+      };
+    } else {
+      resize();
+      animate();
+      window.addEventListener('resize', resize, { passive: true });
+
+      return () => {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+        if (resizeTimeout) {
+          clearTimeout(resizeTimeout);
+        }
+        window.removeEventListener('resize', resize);
+      };
+    }
   }, []);
 
   return (
@@ -292,6 +370,7 @@ const FutureRunsOnTrust = () => {
             );
           background-size: 100% 200%;
           animation: auroraShift 25s ease-in-out infinite alternate;
+          animation-play-state: running;
         }
 
         /* Glowing orbs using ::before */
@@ -304,6 +383,7 @@ const FutureRunsOnTrust = () => {
             radial-gradient(circle at 80% 50%, rgba(46, 216, 243, 0.35) 0%, transparent 50%),
             radial-gradient(circle at 50% 70%, rgba(245, 195, 109, 0.3) 0%, transparent 50%);
           animation: orbDrift 30s ease-in-out infinite alternate;
+          animation-play-state: var(--animation-state, running);
           pointer-events: none;
         }
 
@@ -322,6 +402,7 @@ const FutureRunsOnTrust = () => {
           background-size: 100% 100%, 120% 120%, 110% 110%, 130% 130%, 115% 115%, 125% 125%;
           background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
           animation: particleShimmer 40s linear infinite;
+          animation-play-state: var(--animation-state, running);
           opacity: 0.7;
           pointer-events: none;
         }
@@ -408,6 +489,7 @@ const FutureRunsOnTrust = () => {
         }
         .trust-text-container {
           animation: trustPulse 12s ease-in-out infinite;
+          animation-play-state: running;
           transition: box-shadow 0.3s ease;
           backdrop-filter: blur(6px);
           border: 1px solid rgba(255,255,255,0.08);
@@ -416,6 +498,7 @@ const FutureRunsOnTrust = () => {
         }
       `}</style>
       <section
+        ref={sectionRef}
         id="trust"
         className="relative z-10 min-h-[90vh] overflow-hidden flex items-center justify-center"
       >
@@ -438,13 +521,6 @@ const FutureRunsOnTrust = () => {
           />
         </div>
 
-        <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-          <canvas
-            ref={rippleCanvasRef}
-            className="h-full w-full"
-            style={{ mixBlendMode: 'screen', opacity: 0.35 }}
-          />
-        </div>
 
         <motion.div
           className="trust-text-container relative z-30 mx-auto max-w-3xl px-8 py-12"
@@ -546,6 +622,6 @@ const FutureRunsOnTrust = () => {
       </section>
     </>
   );
-};
+});
 
 export default FutureRunsOnTrust;
