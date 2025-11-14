@@ -1,18 +1,28 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CinematicCrossfade from '../components/CinematicCrossfade';
-// import PartnersScroll from '../components/PartnersScroll';
-import { ArrowRight, Target, Users, Shield, Lightbulb, Calendar, Cog, Stamp, Rocket, MapPin } from 'lucide-react';
-import NewsHighlights from '../components/NewsHighlights';
-import PreRegisterCTA from '../components/PreRegisterCTA';
-import SponsorsCTA from '../components/SponsorsCTA';
-//import parse from 'html-react-parser';
+import { 
+  ArrowRight, 
+  Target, 
+  Users, 
+  Shield, 
+  Lightbulb, 
+  Calendar, 
+  MapPin, 
+  Cog, 
+  Stamp, 
+  Rocket 
+} from 'lucide-react';
 import HeroSectionV3 from '../components/HeroSectionV3';
 import FutureRunsOnTrust from '../components/FutureRunsOnTrust';
-// import CinematicScroll from '../components/CinematicScroll';
-// import '../styles/cinematic-scroll.css';
+
+// Lazy load below-the-fold components for better initial load performance
+const NewsHighlights = lazy(() => import('../components/NewsHighlights'));
+const PreRegisterCTA = lazy(() => import('../components/PreRegisterCTA'));
+const SponsorsCTA = lazy(() => import('../components/SponsorsCTA'));
+const JourneyCTA = lazy(() => import('../components/JourneyCTA'));
 import '../styles/card-glow-effect.css';
 import { motion } from 'framer-motion';
 import '../styles/unique-section-refined.css';
@@ -21,13 +31,7 @@ import '../styles/prototype-unique.css';
 import '../styles/floating-cards-3d.css';
 import '../styles/is-this-for-you.css';
 import WarpSectionTransition from '../components/WarpSectionTransition';
-// import CardCarousel from '../components/CardCarousel';
-// import CarouselSkeleton from '../components/CarouselSkeleton';
-// import LayeredCarousel from '../components/LayeredCarousel';
-// import '../styles/carousel-custom.css';
-// import GlowingCardWrapper from '../components/GlowingCardWrapper';
 import ScrollArrow from '../components/ScrollArrow';
-import JourneyCTA from '../components/JourneyCTA';
 import SelectionCriteria from '../components/SelectionCriteria';
 import ImmersiveBackground from '../components/ImmersiveBackground';
 
@@ -155,19 +159,6 @@ export default function Home() {
     message: string;
   }>({ type: null, message: '' });
 
-  // Word highlight state for Is This for You section
-  const [highlightedWords, setHighlightedWords] = useState<Set<string>>(new Set());
-
-  // Mouse ripple effect for Unique section
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const ripplesRef = useRef<Array<{ x: number; y: number; radius: number; alpha: number; velocity: number; lastX: number; lastY: number }>>([]);
-  const lastMouseRef = useRef({ x: 0, y: 0 });
-  
-  // Mouse ripple effect for Is This for You section (violet-indigo)
-  const isThisForYouCanvasRef = useRef<HTMLCanvasElement>(null);
-  const isThisForYouRipplesRef = useRef<Array<{ x: number; y: number; radius: number; alpha: number; velocity: number; lastX: number; lastY: number }>>([]);
-  const isThisForYouLastMouseRef = useRef({ x: 0, y: 0 });
-  
   // GSAP refs removed - using Swiper carousel instead
   
   // Register GSAP plugins
@@ -180,268 +171,6 @@ export default function Home() {
   // Simple setup - no complex GSAP configuration
 
   // No complex animations - let CSS handle everything
-
-  // Canvas ripple effect (for unique section - removed, keeping for potential future use)
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationId: number;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    };
-
-    const addRipple = (x: number, y: number, velocity: number) => {
-      ripplesRef.current.push({
-        x,
-        y,
-        radius: 0,
-        alpha: Math.min(0.15, velocity * 0.05 + 0.08),
-        velocity,
-        lastX: x,
-        lastY: y,
-      });
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ripplesRef.current.forEach((ripple, i) => {
-        // Expand ripple with gentle, flowy movement
-        ripple.radius += 2 + ripple.velocity * 0.3;
-        ripple.alpha -= 0.003;
-
-        // Horizontal gradient that matches Section 12 palette
-        const horizontalStretch = 2.2 + ripple.velocity * 0.4;
-        const gradient = ctx.createLinearGradient(
-          ripple.x - ripple.radius * horizontalStretch,
-          ripple.y,
-          ripple.x + ripple.radius * horizontalStretch,
-          ripple.y
-        );
-        gradient.addColorStop(0, `rgba(0,174,239,${ripple.alpha * 0.8})`);
-        gradient.addColorStop(0.3, `rgba(0,174,239,${ripple.alpha * 0.6})`);
-        gradient.addColorStop(0.7, `rgba(255,217,120,${ripple.alpha * 0.5})`);
-        gradient.addColorStop(1, `rgba(0,174,239,0)`);
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = gradient;
-        ctx.translate(ripple.x, ripple.y);
-        ctx.scale(horizontalStretch, 1);
-        ctx.arc(0, 0, ripple.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-
-        if (ripple.alpha <= 0) {
-          ripplesRef.current.splice(i, 1);
-        }
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const dx = x - lastMouseRef.current.x;
-      const dy = y - lastMouseRef.current.y;
-      const velocity = Math.sqrt(dx * dx + dy * dy) / 10;
-
-      if (velocity > 0.5) {
-        addRipple(x, y, velocity);
-      }
-
-      lastMouseRef.current = { x, y };
-    };
-
-    // Initialize
-    resize();
-    animate();
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  // Canvas ripple effect for Is This for You section (violet-indigo)
-  useEffect(() => {
-    const canvas = isThisForYouCanvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationId: number;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    };
-
-    const addRipple = (x: number, y: number, velocity: number) => {
-      isThisForYouRipplesRef.current.push({
-        x,
-        y,
-        radius: 0,
-        alpha: Math.min(0.15, velocity * 0.05 + 0.08),
-        velocity,
-        lastX: x,
-        lastY: y,
-      });
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      isThisForYouRipplesRef.current.forEach((ripple, i) => {
-        // Expand ripple with gentle, flowy movement
-        ripple.radius += 2 + ripple.velocity * 0.3;
-        ripple.alpha -= 0.003;
-
-        // Horizontal gradient with vibrant violet-indigo palette
-        const horizontalStretch = 2.2 + ripple.velocity * 0.4;
-        const gradient = ctx.createLinearGradient(
-          ripple.x - ripple.radius * horizontalStretch,
-          ripple.y,
-          ripple.x + ripple.radius * horizontalStretch,
-          ripple.y
-        );
-        gradient.addColorStop(0, `rgba(147,51,234,${ripple.alpha * 1.0})`);  // Vibrant violet
-        gradient.addColorStop(0.3, `rgba(124,58,237,${ripple.alpha * 0.9})`); // Deep purple
-        gradient.addColorStop(0.7, `rgba(167,139,250,${ripple.alpha * 0.7})`); // Light violet
-        gradient.addColorStop(1, `rgba(147,51,234,0)`);
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = gradient;
-        ctx.translate(ripple.x, ripple.y);
-        ctx.scale(horizontalStretch, 1);
-        ctx.arc(0, 0, ripple.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-
-        if (ripple.alpha <= 0) {
-          isThisForYouRipplesRef.current.splice(i, 1);
-        }
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const section = document.getElementById('is-this-for-you');
-      if (!section) return;
-      
-      const rect = section.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      // Only create ripples when mouse is within the section
-      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
-
-      const dx = x - isThisForYouLastMouseRef.current.x;
-      const dy = y - isThisForYouLastMouseRef.current.y;
-      const velocity = Math.sqrt(dx * dx + dy * dy) / 10;
-
-      if (velocity > 0.5) {
-        addRipple(x, y, velocity);
-      }
-
-      isThisForYouLastMouseRef.current = { x, y };
-    };
-
-    // Initialize
-    resize();
-    animate();
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  // Interactive word highlighting for Is This for You section
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      // Find all highlightable words within the Is This for You section
-      const section = document.getElementById('is-this-for-you');
-      if (!section) return;
-
-      const words = section.querySelectorAll('[data-highlight-word]');
-      const newHighlightedWords = new Set<string>();
-
-      words.forEach((word) => {
-        const rect = word.getBoundingClientRect();
-        const wordCenterX = rect.left + rect.width / 2;
-        const wordCenterY = rect.top + rect.height / 2;
-
-        const distance = Math.sqrt(
-          Math.pow(e.clientX - wordCenterX, 2) + Math.pow(e.clientY - wordCenterY, 2)
-        );
-
-        // Highlight if within 100px
-        if (distance < 100) {
-          const wordText = word.getAttribute('data-highlight-word');
-          if (wordText) {
-            newHighlightedWords.add(wordText);
-          }
-        }
-      });
-
-      setHighlightedWords(newHighlightedWords);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Interactive word component for highlighting
-  const InteractiveWord = ({
-    children,
-    wordKey,
-    color = '#A78BFA',
-    className = ''
-  }: {
-    children: string;
-    wordKey: string;
-    color?: string;
-    className?: string;
-  }) => {
-    const isHighlighted = highlightedWords.has(wordKey);
-
-    return (
-      <span
-        data-highlight-word={wordKey}
-        className={`transition-all duration-500 ease-out ${className}`}
-        style={{
-          textShadow: isHighlighted
-            ? `0 0 12px ${color}50, 0 0 24px ${color}30`
-            : 'none',
-          color: isHighlighted ? color : 'inherit',
-          filter: isHighlighted ? 'brightness(1.2)' : 'brightness(1)',
-        }}
-      >
-        {children}
-      </span>
-    );
-  };
 
   // GSAP animations removed - using Swiper carousel instead
 
@@ -933,15 +662,6 @@ export default function Home() {
           );
         })()}
         
-        {/* Mouse Ripple Canvas (violet-indigo) */}
-        <canvas
-          ref={isThisForYouCanvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none z-20"
-          style={{
-            mixBlendMode: 'screen',
-            opacity: 0.4
-          }}
-        />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
@@ -954,12 +674,6 @@ export default function Home() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   minHeight: '400px'
-                }}
-                onMouseMove={(e) => {
-                  const t = e.currentTarget as HTMLDivElement;
-                  const r = t.getBoundingClientRect();
-                  t.style.setProperty('--header-mx', `${e.clientX - r.left}px`);
-                  t.style.setProperty('--header-my', `${e.clientY - r.top}px`);
                 }}
               >
                 {/* Light ray sweep effect */}
@@ -985,10 +699,10 @@ export default function Home() {
                     </h2>
                   </div>
                   <p className="text-xl text-white/90 mb-8">
-                    Anyone with a bold idea - <InteractiveWord wordKey="students" color="#A78BFA">students</InteractiveWord>, <InteractiveWord wordKey="startups" color="#A78BFA">startups</InteractiveWord>, <InteractiveWord wordKey="nonprofits" color="#A78BFA">nonprofits</InteractiveWord>, <InteractiveWord wordKey="researchers" color="#A78BFA">researchers</InteractiveWord>, <InteractiveWord wordKey="policymakers" color="#A78BFA">policymakers</InteractiveWord>, <InteractiveWord wordKey="designers" color="#A78BFA">designers</InteractiveWord> - if you have something to say or build, we want to hear it.
+                    Anyone with a bold idea - students, startups, nonprofits, researchers, policymakers, designers - if you have something to say or build, we want to hear it.
                   </p>
                   <p className="text-xl text-white/90 mb-8">
-                    Whether you're a <InteractiveWord wordKey="solo-thinker" color="#A78BFA">solo thinker</InteractiveWord> or part of a <InteractiveWord wordKey="global-team" color="#A78BFA">global team</InteractiveWord>, you're invited.
+                    Whether you're a solo thinker or part of a global team, you're invited.
                   </p>
                   <p className="text-xl text-white/90 mb-12">
                     Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online - through innovation, collaboration, and vision.
@@ -1039,12 +753,6 @@ export default function Home() {
                  <div
                    key={index}
                    className={`feature-card feature-${item.variant}`}
-                   onMouseMove={(e) => {
-                     const t = e.currentTarget as HTMLDivElement;
-                     const r = t.getBoundingClientRect();
-                     t.style.setProperty('--mx', `${e.clientX - r.left}px`);
-                     t.style.setProperty('--my', `${e.clientY - r.top}px`);
-                   }}
                  >
                    <div className="icon-badge">
                      <item.icon />
@@ -1063,12 +771,6 @@ export default function Home() {
              <div
                className="feature-card feature-violet"
                style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
-               onMouseMove={(e) => {
-                 const t = e.currentTarget as HTMLDivElement;
-                 const r = t.getBoundingClientRect();
-                 t.style.setProperty('--mx', `${e.clientX - r.left}px`);
-                 t.style.setProperty('--my', `${e.clientY - r.top}px`);
-               }}
              >
                <div className="who-can-participate-header-wrapper">
                  <h3 className="who-can-participate-header mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2rem'}}>
@@ -1104,10 +806,14 @@ export default function Home() {
 
 
 {/* The Challenge Section - Redesigned */}
-      <JourneyCTA />
+      <Suspense fallback={<div className="min-h-[200px]" />}>
+        <JourneyCTA />
+      </Suspense>
       <SelectionCriteria />
       {/* Call to Action Section */}
-      <PreRegisterCTA />
+      <Suspense fallback={<div className="min-h-[200px]" />}>
+        <PreRegisterCTA />
+      </Suspense>
 
      
 
@@ -1191,7 +897,9 @@ export default function Home() {
       </section>
 
       {/* News Highlights Section */}
-      <NewsHighlights />
+      <Suspense fallback={<div className="min-h-[200px]" />}>
+        <NewsHighlights />
+      </Suspense>
 
       {/* Challenge Mission */}
       {/* <section className="py-20 bg-gray-100 relative z-10">
@@ -1220,7 +928,9 @@ export default function Home() {
       </section> */}
 
       <section id="partners" className="relative z-10">
-      <SponsorsCTA />
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <SponsorsCTA />
+        </Suspense>
       </section>
 
       {/* Pre-registration Form */}
