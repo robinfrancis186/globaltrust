@@ -103,14 +103,15 @@ const FloatingParticles = () => {
   );
 };
 
-// Enhanced video background with cinematic pan/zoom
 const VideoBackground = () => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -100]);
   const scale = useTransform(scrollY, [0, 1000], [1, 1.05]);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Intersection Observer to pause video when off-screen
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+
+  // Lazy-load del video: solo asigna el src cuando el componente entra al viewport
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -119,11 +120,17 @@ const VideoBackground = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            video.play().catch(() => {
-              // Ignore autoplay errors
-            });
+
+            // Cargar el src SOLO cuando es visible
+            if (!videoSrc) {
+              setVideoSrc(
+                "https://maximages.s3.us-west-1.amazonaws.com/Globe+Animation.mp4"
+              );
+            }
+
+            video.play().catch(() => {});
           } else {
-            video.pause(); // Pause when not visible
+            video.pause();
           }
         });
       },
@@ -132,7 +139,7 @@ const VideoBackground = () => {
 
     observer.observe(video);
     return () => observer.disconnect();
-  }, []);
+  }, [videoSrc]);
 
   return (
     <motion.div
@@ -142,20 +149,22 @@ const VideoBackground = () => {
       <video
         ref={videoRef}
         className="bg-video absolute inset-0 w-full h-full object-cover"
-        style={{ transform: 'translateX(-50px)' }}
+        style={{ transform: "translateX(-50px)" }}
         autoPlay
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="none"
         aria-label="Animated globe background"
       >
-        <source src="https://maximages.s3.us-west-1.amazonaws.com/Globe+Animation.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
+        {videoSrc && (
+          <source src={videoSrc} type="video/mp4" />
+        )}
       </video>
     </motion.div>
   );
 };
+
 
 // Multi-layered overlay with vibrant video visibility
 const OverlayLayers = () => {
@@ -405,6 +414,7 @@ const Content = () => {
                 filter: 'brightness(1.1) contrast(1.1)',
                 willChange: 'auto',
               }}
+              loading="lazy"
             />
           ))}
         </div>
