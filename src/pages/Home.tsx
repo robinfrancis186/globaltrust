@@ -1107,8 +1107,8 @@ export default function Home() {
       </section>
 
       {/* News Highlights Section */}
-      {/*<NewsHighlights />*/}
-      <BCMSNewsHighlights/>
+      <NewsHighlights />
+      {/*<BCMSNewsHighlights/>*/}
 
       {/* Challenge Mission */}
       {/* <section className="py-20 bg-gray-100 relative z-10">
