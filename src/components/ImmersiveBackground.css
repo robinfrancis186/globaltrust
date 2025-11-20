@@ -1,0 +1,127 @@
+/* Slow, gentle animations (30-60s) with low amplitude to avoid dizziness */
+@keyframes ibg-pan {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-1.5%, 0.8%, 0) scale(1.01);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes ibg-float {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 0.75;
+    transform: translate3d(0.5%, -0.5%, 0);
+  }
+}
+
+.ibg-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ibg-gradient {
+  position: absolute;
+  inset: 0;
+  /* Two layered radial gradients + one linear gradient */
+  background: 
+    radial-gradient(60% 60% at 20% 20%, var(--g2) 0%, transparent 60%),
+    radial-gradient(80% 80% at 80% 80%, var(--g3) 0%, transparent 70%),
+    linear-gradient(180deg, var(--g1) 0%, #000000 100%);
+  /* Very slow keyframes (30-60s) with low amplitude transforms */
+  animation: ibg-pan 45s ease-in-out infinite;
+  will-change: transform;
+  z-index: 0;
+}
+
+.ibg-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.04), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.03), transparent 35%);
+  filter: blur(10px);
+  /* Slow, gentle animation */
+  animation: ibg-float 55s ease-in-out infinite;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.ibg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, var(--overlay-opacity, 0.35));
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ibg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.92;
+  z-index: 1;
+}
+
+.ibg--violet {
+  --g1: #0e1a3d;
+  --g2: #6a4c93;
+  --g3: #c4a5ff;
+}
+
+.ibg--teal {
+  --g1: #0e1a3d;
+  --g2: #2ed8f3;
+  --g3: #6fe7c1;
+}
+
+.ibg--gold {
+  --g1: #1b2235;
+  --g2: #b79891;
+  --g3: #f5c36d;
+}
+
+.ibg--midnight {
+  --g1: #0b132b;
+  --g2: #1c2541;
+  --g3: #3a506b;
+}
+
+/* Custom green/teal variant for unique section */
+.unique-bg-teal-gold {
+  --g1: #0a1f2a;  /* Deep dark teal base */
+  --g2: #2ed8f3;  /* Bright teal accent */
+  --g3: #6fe7c1;  /* Green-teal accent */
+}
+
+.unique-bg-teal-gold .ibg-gradient::after {
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(46, 216, 243, 0.15), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(111, 231, 193, 0.12), transparent 35%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ibg-gradient,
+  .ibg-gradient::after {
+    animation: none !important;
+  }
+}
+
+
+
+
+
+

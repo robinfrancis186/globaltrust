@@ -1,94 +1,91 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import ScrollArrow from './ScrollArrow';
+import { getOptimizedParticleCount, getOptimizedCanvasResolution, shouldDisableCanvasEffects, getPerformanceConfig } from '../utils/performance';
 
-const FutureRunsOnTrust = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const ripplesRef = useRef<Array<{ x: number; y: number; radius: number; alpha: number; velocity: number; lastX: number; lastY: number }>>([]);
-  const lastMouseRef = useRef({ x: 0, y: 0 });
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [highlightedWords, setHighlightedWords] = useState<Set<string>>(new Set());
-  
-  // Parallax scroll effect
+const BASE_PARTICLE_COUNT = 90;
+const PARTICLE_COLORS = [
+  'rgba(0,174,239,0.55)',
+  'rgba(255,217,120,0.5)',
+  'rgba(200,225,255,0.45)'
+];
+
+const paragraphs = [
+  "AI is reshaping how we learn, heal, and innovate. This transformation holds extraordinary promise — but it depends on one essential ingredient: trust.",
+  "That's what the Global Trust Challenge (GTC) was created to enable. Born from a G7 call to action, it serves as a global rallying cry to preserve trust in the digital age. The GTC is led by a coalition of changemakers - including IEEE SA, OECD, and AI Commons - united by a shared commitment to transparency, accountability, and human-centered innovation.",
+  "We're inviting technologists, policymakers, and innovators worldwide to co-create solutions that make digital environments more transparent, reliable, and empowering for everyone. Together, we're laying the foundations of digital trust - for future generations, for industry, and for society at large."
+];
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.3, duration: 0.8, ease: 'easeOut' },
+  }),
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+type Particle = {
+  x: number;
+  y: number;
+  radius: number;
+  speedX: number;
+  speedY: number;
+  color: string;
+};
+
+const createParticle = (width: number, height: number): Particle => {
+  const speedMultiplier = 0.28;
+  return {
+    x: Math.random() * width,
+    y: Math.random() * height,
+    radius: 1.5 + Math.random() * 3.5,
+    speedX: (Math.random() - 0.5) * speedMultiplier,
+    speedY: (Math.random() - 0.5) * speedMultiplier,
+    color: PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)],
+  };
+};
+
+const FutureRunsOnTrust = memo(() => {
+  const particleCanvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
+
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const [highlightedWords, setHighlightedWords] = useState<Set<string>>(new Set());
 
-  // Paragraph content for animation
-  const paragraphs = [
-    "AI is reshaping how we learn, heal, and innovate. This transformation holds extraordinary promise — but it depends on one essential ingredient: trust.",
-    "That's what the Global Trust Challenge (GTC) was created to enable. Born from a G7 call to action, it serves as a global rallying cry to preserve trust in the digital age. The GTC is led by a coalition of changemakers - including IEEE, OECD, and AI Commons - united by a shared commitment to transparency, accountability, and human-centered innovation.",
-    "We're inviting technologists, policymakers, and innovators worldwide to co-create solutions that make digital environments more transparent, reliable, and empowering for everyone. Together, we're laying the foundations of digital trust - for future generations, for industry, and for society at large."
-  ];
-
-  // Animation variants
-  const fadeIn = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.3, duration: 0.8, ease: "easeOut" },
-    }),
-  };
-
-  // Floating glow node animation
-  useEffect(() => {
-    const node = document.querySelector('.floating-node') as HTMLElement;
-    if (!node) return;
-
-    const animation = node.animate(
-      [
-        { transform: "translateX(-10%)", opacity: 0.3 },
-        { transform: "translateX(110%)", opacity: 0.6 },
-      ],
-      { 
-        duration: 15000, 
-        iterations: Infinity, 
-        direction: "alternate", 
-        easing: "ease-in-out" 
-      }
-    );
-
-    return () => {
-      animation.cancel();
-    };
-  }, []);
-
-  // Particle interaction with cursor movement
-  useEffect(() => {
-    const video = document.querySelector('#backgroundVideo') as HTMLVideoElement;
-    if (!video) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 10;
-      const y = (e.clientY / window.innerHeight - 0.5) * 10;
-      video.style.transform = `translate(${x}px, ${y}px) scale(1.03)`;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Interactive word component with proximity-based highlighting
-  const InteractiveWord = ({ 
-    children, 
-    wordKey, 
-    color = '#00AEEF', 
-    className = '' 
-  }: { 
-    children: string; 
-    wordKey: string; 
-    color?: string; 
-    className?: string; 
+  const InteractiveWord = ({
+    children,
+    wordKey,
+    color = '#00AEEF',
+    className = '',
+  }: {
+    children: string;
+    wordKey: string;
+    color?: string;
+    className?: string;
   }) => {
     const isHighlighted = highlightedWords.has(wordKey);
-    
+
     return (
       <span
         data-highlight-word={wordKey}
         className={`transition-all duration-500 ease-out ${className}`}
         style={{
-          textShadow: isHighlighted 
-            ? `0 0 12px ${color}30, 0 0 24px ${color}15` 
-            : 'none',
+          textShadow: isHighlighted ? `0 0 12px ${color}30, 0 0 24px ${color}15` : 'none',
           color: isHighlighted ? color : 'inherit',
           filter: isHighlighted ? 'brightness(1.1)' : 'brightness(1)',
         }}
@@ -98,417 +95,533 @@ const FutureRunsOnTrust = () => {
     );
   };
 
-  // Interactive text highlighting based on cursor proximity
   useEffect(() => {
+    let rafId: number | null = null;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Skip if mouse hasn't moved significantly (reduces unnecessary calculations)
+      const deltaX = Math.abs(e.clientX - lastMouseX);
+      const deltaY = Math.abs(e.clientY - lastMouseY);
+      if (deltaX < 5 && deltaY < 5) return;
       
-      // Find all highlightable words and check proximity
-      const words = document.querySelectorAll('[data-highlight-word]');
-      const newHighlightedWords = new Set<string>();
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
       
-      words.forEach((word) => {
-        const rect = word.getBoundingClientRect();
-        const wordCenterX = rect.left + rect.width / 2;
-        const wordCenterY = rect.top + rect.height / 2;
-        
-        const distance = Math.sqrt(
-          Math.pow(e.clientX - wordCenterX, 2) + Math.pow(e.clientY - wordCenterY, 2)
-        );
-        
-        // Highlight if within 100px
-        if (distance < 100) {
-          const wordText = word.getAttribute('data-highlight-word');
-          if (wordText) {
-            newHighlightedWords.add(wordText);
+      // Throttle using requestAnimationFrame
+      if (rafId) return;
+      
+      rafId = requestAnimationFrame(() => {
+        const words = document.querySelectorAll('[data-highlight-word]');
+        const nextHighlighted = new Set<string>();
+
+        words.forEach((word) => {
+          const rect = word.getBoundingClientRect();
+          const distance = Math.hypot(
+            e.clientX - (rect.left + rect.width / 2),
+            e.clientY - (rect.top + rect.height / 2)
+          );
+          if (distance < 100) {
+            const key = word.getAttribute('data-highlight-word');
+            if (key) nextHighlighted.add(key);
           }
-        }
+        });
+
+        setHighlightedWords(nextHighlighted);
+        rafId = null;
       });
-      
-      setHighlightedWords(newHighlightedWords);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
-  // Canvas ripple effect with horizontal flow alignment
+  // IntersectionObserver to pause CSS animations when off-screen
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const visible = entry.isIntersecting && entry.intersectionRatio > 0.1;
+          setIsVisible(visible);
+          
+          // Pause/resume CSS animations by setting animation-play-state
+          const bgElement = section.querySelector('.trust-nebula-bg') as HTMLElement;
+          if (bgElement) {
+            bgElement.style.setProperty('animation-play-state', visible ? 'running' : 'paused');
+            // For pseudo-elements, we use CSS variable
+            bgElement.style.setProperty('--animation-state', visible ? 'running' : 'paused');
+          }
+          
+          const textContainer = section.querySelector('.trust-text-container') as HTMLElement;
+          if (textContainer) {
+            textContainer.style.setProperty('animation-play-state', visible ? 'running' : 'paused');
+          }
+        });
+      },
+      { threshold: [0, 0.1, 0.5, 1] }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const canvas = particleCanvasRef.current;
+    if (!canvas) return;
+    
+    // Disable canvas on mobile and low-end devices
+    const config = getPerformanceConfig();
+    if (config.shouldDisableCanvas) {
+      canvas.style.display = 'none';
+      return;
+    }
+    
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationId: number;
+    let animationId: number | null = null;
+    let isVisible = true;
 
-    const resize = () => {
+    let canvasDpr = 1;
+
+    const initParticles = () => {
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const optimizedRes = getOptimizedCanvasResolution(rect.width, rect.height);
+      canvasDpr = optimizedRes.dpr;
+      
+      // Limit maximum particles for performance
+      const maxParticles = config.isMobile ? 30 : config.isTablet ? 60 : BASE_PARTICLE_COUNT;
+      const particleCount = Math.min(
+        getOptimizedParticleCount(BASE_PARTICLE_COUNT),
+        maxParticles
+      );
+      
+      particlesRef.current = Array.from({ length: particleCount }, () =>
+        createParticle(rect.width, rect.height) // Use display size, not canvas size
+      );
     };
 
-    const addRipple = (x: number, y: number, velocity: number) => {
-      ripplesRef.current.push({
-        x,
-        y,
-        radius: 0,
-        alpha: Math.min(0.15, velocity * 0.05 + 0.08),
-        velocity,
-        lastX: x,
-        lastY: y,
-      });
+    // Debounce resize handler for better performance
+    let resizeTimeout: number | null = null;
+    const resize = () => {
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = window.setTimeout(() => {
+        const rect = canvas.getBoundingClientRect();
+        const optimizedRes = getOptimizedCanvasResolution(rect.width, rect.height);
+        canvasDpr = optimizedRes.dpr;
+        
+        // Set canvas internal resolution (for high-DPI)
+        canvas.width = optimizedRes.width;
+        canvas.height = optimizedRes.height;
+        
+        // Set canvas display size (CSS pixels)
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+        
+        // Scale context to match devicePixelRatio
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(canvasDpr, canvasDpr);
+        
+        initParticles();
+        resizeTimeout = null;
+      }, 150);
     };
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (!isVisible) {
+        animationId = null;
+        return;
+      }
       
-      ripplesRef.current.forEach((ripple, i) => {
-        // Expand ripple with more gentle, flowy movement
-        ripple.radius += 2 + ripple.velocity * 0.3;
-        ripple.alpha -= 0.003;
+      // Use display size for calculations (already scaled by DPR in resize)
+      const displayWidth = canvas.offsetWidth;
+      const displayHeight = canvas.offsetHeight;
+      
+      // Clear entire canvas efficiently
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Create horizontal gradient that follows particle flow
-        const horizontalStretch = 2.2 + ripple.velocity * 0.4;
-        const gradient = ctx.createLinearGradient(
-          ripple.x - ripple.radius * horizontalStretch,
-          ripple.y,
-          ripple.x + ripple.radius * horizontalStretch,
-          ripple.y
-        );
-
-        // Background-matching gradient: cosmic slate to golden veil hues
-        const slateIntensity = Math.min(1, ripple.velocity * 0.1 + 0.3);
-        gradient.addColorStop(0, `rgba(0,174,239,${ripple.alpha * 0.8})`); // Turquoise
-        gradient.addColorStop(0.3, `rgba(0,174,239,${ripple.alpha * 0.6})`); // Turquoise fade
-        gradient.addColorStop(0.7, `rgba(255,217,120,${ripple.alpha * 0.5})`); // Gold
-        gradient.addColorStop(1, `rgba(0,174,239,0)`); // Transparent
-
-        // Draw elongated ellipse following horizontal flow
-        ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = gradient;
-        
-        // Create horizontal ellipse
-        ctx.translate(ripple.x, ripple.y);
-        ctx.scale(horizontalStretch, 1);
-        ctx.arc(0, 0, ripple.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-
-        // Remove expired ripples
-        if (ripple.alpha <= 0) {
-          ripplesRef.current.splice(i, 1);
+      // Batch particle updates for better performance
+      const particles = particlesRef.current;
+      const particleCount = particles.length;
+      
+      // Group particles by color to reduce fillStyle changes (major performance win)
+      const particlesByColor = new Map<string, typeof particles>();
+      particles.forEach(particle => {
+        if (!particlesByColor.has(particle.color)) {
+          particlesByColor.set(particle.color, []);
         }
+        particlesByColor.get(particle.color)!.push(particle);
+      });
+      
+      // Update positions first (no DOM/context operations)
+      particles.forEach(particle => {
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+
+        // Wrap around edges (using display dimensions)
+        if (particle.x < -80) particle.x = displayWidth + 80;
+        if (particle.x > displayWidth + 80) particle.x = -80;
+        if (particle.y < -80) particle.y = displayHeight + 80;
+        if (particle.y > displayHeight + 80) particle.y = -80;
+      });
+      
+      // Render particles grouped by color (reduces fillStyle changes)
+      particlesByColor.forEach((colorParticles, color) => {
+        ctx.beginPath();
+        colorParticles.forEach(particle => {
+          ctx.moveTo(particle.x + particle.radius, particle.y);
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        });
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 1;
+        ctx.fill();
       });
 
       animationId = requestAnimationFrame(animate);
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Calculate velocity for dynamic ripple behavior
-      const dx = x - lastMouseRef.current.x;
-      const dy = y - lastMouseRef.current.y;
-      const velocity = Math.sqrt(dx * dx + dy * dy) / 10; // Scale down for reasonable values
-      
-      // Only add ripple if mouse moved significantly
-      if (velocity > 0.5) {
-        addRipple(x, y, velocity);
+    // IntersectionObserver to pause animations when off-screen
+    const section = canvas.closest('section') || canvas.parentElement;
+    if (section) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isVisible = entry.isIntersecting && entry.intersectionRatio > 0.1;
+            if (isVisible && !animationId) {
+              animate();
+            } else if (!isVisible && animationId) {
+              cancelAnimationFrame(animationId);
+              animationId = null;
+            }
+          });
+        },
+        { threshold: [0, 0.1, 0.5, 1] }
+      );
+      observer.observe(section);
+
+      resize();
+      if (isVisible) {
+        animate();
       }
-      
-      lastMouseRef.current = { x, y };
-    };
+      window.addEventListener('resize', resize, { passive: true });
 
-    // Initialize
-    resize();
-    animate();
+      return () => {
+        observer.disconnect();
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+        if (resizeTimeout) {
+          clearTimeout(resizeTimeout);
+        }
+        window.removeEventListener('resize', resize);
+      };
+    } else {
+      resize();
+      animate();
+      window.addEventListener('resize', resize, { passive: true });
 
-    // Event listeners
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    // Cleanup
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+      return () => {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+        }
+        if (resizeTimeout) {
+          clearTimeout(resizeTimeout);
+        }
+        window.removeEventListener('resize', resize);
+      };
+    }
   }, []);
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const imageVariants = {
-    hidden: { scale: 1, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 1.2,
-        ease: "easeOut",
-      },
-    },
-    animate: {
-      scale: [1, 1.05, 1],
-      transition: {
-        duration: 8,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
 
   return (
     <>
-      <style jsx>{`
-        :root {
-          --turquoise-glow: #00AEEF;
-          --gold-glow: #FFD97A;
-          --pulse-opacity: 0.15;
-        }
-        
-        @keyframes ambientPulse {
-          0%, 100% { opacity: 0.08; }
-          50% { opacity: 0.12; }
-        }
-        
-        .ambient-pulse {
-          animation: ambientPulse 10s ease-in-out infinite;
-        }
-        
-        .floating-node {
+      <style>{`
+        /* Aurora/Sky-like dynamic gradient background - teal, violet, gold palette */
+        .trust-nebula-bg {
           position: absolute;
-          bottom: 20%;
-          left: -10%;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(255,217,120,0.6) 0%, rgba(255,217,120,0) 70%);
-          filter: blur(12px);
+          inset: 0;
+          overflow: hidden;
+          /* Base gradient - static fallback */
+          background: linear-gradient(180deg, 
+            #0a1f3d 0%,      /* Deep violet-blue */
+            #1a2f4a 20%,     /* Dark teal-violet */
+            #2a4d5a 40%,     /* Medium teal */
+            #4a6d5a 60%,     /* Teal-gold blend */
+            #6a5d3a 80%,     /* Warm gold */
+            #5a4d2a 100%     /* Deep gold */
+          );
+          /* Dynamic aurora gradient animation */
+          background-image: 
+            linear-gradient(180deg, 
+              #0a1f3d 0%,
+              #1a2f4a 20%,
+              #2a4d5a 40%,
+              #4a6d5a 60%,
+              #6a5d3a 80%,
+              #5a4d2a 100%
+            );
+          background-size: 100% 200%;
+          animation: auroraShift 25s ease-in-out infinite alternate;
+          animation-play-state: running;
+        }
+
+        /* Glowing orbs using ::before */
+        .trust-nebula-bg::before {
+          content: '';
+          position: absolute;
+          inset: -20%;
+          background: 
+            radial-gradient(circle at 20% 30%, rgba(129, 140, 248, 0.4) 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(46, 216, 243, 0.35) 0%, transparent 50%),
+            radial-gradient(circle at 50% 70%, rgba(245, 195, 109, 0.3) 0%, transparent 50%);
+          animation: orbDrift 30s ease-in-out infinite alternate;
+          animation-play-state: var(--animation-state, running);
           pointer-events: none;
         }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+
+        /* Drifting light particles using ::after */
+        .trust-nebula-bg::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: 
+            radial-gradient(2px 2px at 15% 25%, rgba(255, 255, 255, 0.6), transparent),
+            radial-gradient(1.5px 1.5px at 35% 40%, rgba(46, 216, 243, 0.7), transparent),
+            radial-gradient(2px 2px at 65% 60%, rgba(245, 195, 109, 0.6), transparent),
+            radial-gradient(1.5px 1.5px at 85% 75%, rgba(129, 140, 248, 0.5), transparent),
+            radial-gradient(2px 2px at 25% 80%, rgba(111, 231, 193, 0.5), transparent),
+            radial-gradient(1.5px 1.5px at 75% 20%, rgba(255, 217, 120, 0.6), transparent);
+          background-size: 100% 100%, 120% 120%, 110% 110%, 130% 130%, 115% 115%, 125% 125%;
+          background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+          animation: particleShimmer 40s linear infinite;
+          animation-play-state: var(--animation-state, running);
+          opacity: 0.7;
+          pointer-events: none;
         }
-        
-        .animate-fadeIn {
-          animation: fadeIn 2s ease-in-out infinite alternate;
+
+        /* Aurora gradient shift animation */
+        @keyframes auroraShift {
+          0% {
+            background-position: 0% 0%;
+            filter: hue-rotate(0deg);
+          }
+          33% {
+            background-position: 0% 25%;
+            filter: hue-rotate(5deg);
+          }
+          66% {
+            background-position: 0% 50%;
+            filter: hue-rotate(-3deg);
+          }
+          100% {
+            background-position: 0% 0%;
+            filter: hue-rotate(0deg);
+          }
         }
-        
+
+        /* Orb drift animation */
+        @keyframes orbDrift {
+          0% {
+            transform: translate3d(0, 0, 0) scale(1);
+            opacity: 0.8;
+          }
+          50% {
+            transform: translate3d(2%, -1%, 0) scale(1.05);
+            opacity: 1;
+          }
+          100% {
+            transform: translate3d(-1%, 1%, 0) scale(0.95);
+            opacity: 0.85;
+          }
+        }
+
+        /* Particle shimmer animation */
+        @keyframes particleShimmer {
+          0% {
+            background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            opacity: 0.7;
+          }
+          50% {
+            background-position: 5% 10%, -3% 8%, 4% -5%, -2% 12%, 3% 7%, -4% 9%;
+            opacity: 0.9;
+          }
+          100% {
+            background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            opacity: 0.7;
+          }
+        }
+
+        /* Reduced motion - static gradient fallback */
+        @media (prefers-reduced-motion: reduce) {
+          .trust-nebula-bg {
+            animation: none !important;
+            background-size: 100% 100% !important;
+          }
+          .trust-nebula-bg::before,
+          .trust-nebula-bg::after {
+            animation: none !important;
+            opacity: 0.5;
+          }
+        }
+
+        /* Low-power device fallback - disable animations */
+        @media (prefers-reduced-motion: reduce), (max-width: 768px) {
+          .trust-nebula-bg {
+            background-size: 100% 100%;
+          }
+        }
+
         @keyframes trustPulse {
-          0%, 100% { 
-            box-shadow: 0 0 20px rgba(0,174,239,0.1), 0 0 40px rgba(0,174,239,0.05); 
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(0,174,239,0.1), 0 0 40px rgba(0,174,239,0.05);
           }
-          50% { 
-            box-shadow: 0 0 60px rgba(255,217,120,0.25), 0 0 80px rgba(255,217,120,0.15); 
-          }
-        }
-        
-        @keyframes ambientPulse {
-          0%, 100% { 
-            opacity: 0.3;
-            background: radial-gradient(circle, rgba(0,174,239,0.08) 0%, rgba(0,174,239,0.02) 50%, transparent 70%);
-          }
-          50% { 
-            opacity: 0.6;
-            background: radial-gradient(circle, rgba(255,217,120,0.12) 0%, rgba(255,217,120,0.04) 50%, transparent 70%);
+          50% {
+            box-shadow: 0 0 60px rgba(255,217,120,0.25), 0 0 80px rgba(255,217,120,0.15);
           }
         }
-        
-        .textContainer {
+        .trust-text-container {
           animation: trustPulse 12s ease-in-out infinite;
+          animation-play-state: running;
           transition: box-shadow 0.3s ease;
-          backdrop-filter: blur(8px);
+          backdrop-filter: blur(6px);
           border: 1px solid rgba(255,255,255,0.08);
           border-radius: 18px;
-        }
-        
-        .ambientPulse {
-          animation: ambientPulse 10s ease-in-out infinite;
-        }
-        
-        @keyframes progressGlow {
-          0% { width: 0%; }
-          100% { width: 100%; }
-        }
-        
-        .progressGlow {
-          animation: progressGlow 2s ease-out forwards;
+          background: rgba(12, 22, 38, 0.55);
         }
       `}</style>
-      <section id="trust" className="min-h-[90vh] bg-gradient-to-b from-[#2C3E50] via-[#4A6741] to-[#F4E4BC] relative z-10 overflow-hidden flex items-center justify-center">
-      {/* Ambient Background Video */}
-      <div className="video-bg-wrapper absolute inset-0 z-0">
-        <video
-          id="backgroundVideo"
-          className="bg-video absolute inset-0 w-full h-full object-cover"
-          src="https://maximages.s3.us-west-1.amazonaws.com/Intro+Background.mp4"
-          autoPlay
-          muted
-          playsInline
-          loop
-          style={{
-            mixBlendMode: 'screen',
-            filter: 'blur(0.5px)',
-          }}
-          aria-label="Ambient background animation"
-        >
-          <source src="https://maximages.s3.us-west-1.amazonaws.com/Intro+Background.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      
-      {/* Gradient Overlay */}
-      <div className="gradient-overlay absolute inset-0 z-1 bg-gradient-to-b from-[#2C3E50]/20 via-[#4A6741]/10 to-[#F4E4BC]/30" />
-      
-      {/* Ambient breathing pulse overlay */}
-      <div 
-        className="absolute inset-0 ambient-pulse z-1"
-        style={{
-          background: 'radial-gradient(circle at 50% 50%, rgba(0,174,239,0.04) 0%, rgba(255,217,122,0.02) 50%, transparent 70%)',
-          mixBlendMode: 'screen'
-        }}
-      />
-      
-      {/* Depth Fog - Atmospheric Perspective */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#10222E]/40 to-[#EBD89A]/60 mix-blend-soft-light pointer-events-none z-1" />
-      
-      {/* Digital Haze - Middle Section Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00AEEF]/5 to-transparent mix-blend-overlay pointer-events-none z-1" />
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FFD97A]/3 to-transparent mix-blend-overlay pointer-events-none z-1" />
-
-      {/* Canvas Ripple Overlay */}
-      <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-        <canvas
-          ref={canvasRef}
-          className="w-full h-full"
-          style={{
-            mixBlendMode: 'screen',
-            opacity: 0.4,
-          }}
-        />
-      </div>
-
-      {/* Floating Glow Node */}
-      <div className="floating-node" />
-
-
-      <motion.div
-        className="max-w-3xl mx-auto px-8 py-12 relative z-30 textContainer"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        style={{
-          y, // Apply parallax drift
-          transform: 'translateZ(0)', // Enable hardware acceleration for parallax
-        }}
+      <section
+        ref={sectionRef}
+        id="trust"
+        className="relative z-10 min-h-[90vh] overflow-hidden flex items-center justify-center"
       >
-        {/* Enhanced Header with Scroll Progress Glow */}
-        <motion.h2 
-          className="text-4xl md:text-5xl font-bold text-white tracking-tight drop-shadow-lg text-center mb-12"
-          style={{
-            fontFamily: '"Space Grotesk", sans-serif',
-            textShadow: '0 4px 8px rgba(0,0,0,0.9), 0 0 30px rgba(0,174,239,0.4)',
-          }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <span className="relative inline-block">
-            The Future Runs on Trust
-            {/* Scroll Progress Glow Line */}
-            <motion.div
-              className="h-[3px] bg-gradient-to-r from-[#00AEEF] via-[#FFD97A] to-[#00AEEF] mx-auto mt-4 rounded-full progressGlow"
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-              viewport={{ once: true }}
-            />
-            {/* Soft Golden Ambient Ring */}
-            <motion.div
-              className="absolute inset-0 -z-10 rounded-full"
-              style={{
-                background: 'radial-gradient(circle, rgba(255,217,120,0.1) 0%, transparent 70%)',
-                filter: 'blur(20px)',
-              }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut", delay: 0.8 }}
-              viewport={{ once: true }}
-            />
-          </span>
-        </motion.h2>
+        {/* Custom nebula/haze background */}
+        <div className="absolute inset-0 trust-nebula-bg" aria-hidden="true" />
+        {/* Dark overlay for text legibility */}
+        <div 
+          className="absolute inset-0 bg-black/35"
+          aria-hidden="true"
+        />
 
-        {/* Enhanced Paragraphs with Staggered Animation */}
-        <div className="space-y-8 text-center max-w-3xl mx-auto px-6">
-          {paragraphs.map((text, i) => (
-            <motion.p
-              key={i}
-              custom={i}
-              variants={fadeIn}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              className="text-lg md:text-xl text-gray-100 leading-relaxed"
-              style={{
-                transform: 'translateZ(0)', // Parallax effect
-                fontFamily: '"Inter", sans-serif',
-                fontWeight: '500',
-              }}
-            >
-              {i === 0 && (
-                <>
-                  AI is reshaping how we learn, heal, and <InteractiveWord wordKey="innovation" color="#00AEEF" className="font-semibold">innovate</InteractiveWord>. This transformation holds extraordinary promise — but it depends on one essential ingredient: <InteractiveWord wordKey="trust" color="#00AEEF" className="font-semibold">trust</InteractiveWord>.
-                </>
-              )}
-              {i === 1 && (
-                <>
-                  That's what the <InteractiveWord wordKey="gtc" color="#00AEEF" className="font-semibold">Global Trust Challenge (GTC)</InteractiveWord> was created to enable. Born from a G7 call to action, it serves as a global rallying cry to preserve trust in the digital age. The GTC is led by a <InteractiveWord wordKey="coalition" color="#FFD97A" className="font-semibold">coalition of changemakers</InteractiveWord> - including IEEE, OECD, and AI Commons - united by a shared commitment to transparency, accountability, and human-centered innovation.
-                </>
-              )}
-              {i === 2 && (
-                <>
-                  We're inviting <InteractiveWord wordKey="technologists" color="#FFD97A" className="font-semibold">technologists</InteractiveWord>, <InteractiveWord wordKey="policymakers" color="#FFD97A" className="font-semibold">policymakers</InteractiveWord>, and <InteractiveWord wordKey="innovators" color="#FFD97A" className="font-semibold">innovators</InteractiveWord> worldwide to co-create solutions that make digital environments more transparent, reliable, and empowering for everyone. Together, we're laying the foundations of <InteractiveWord wordKey="digital-trust" color="#00AEEF" className="font-semibold">digital trust</InteractiveWord> - for future generations, for industry, and for society at large.
-                </>
-              )}
-            </motion.p>
-          ))}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#10222E]/40 to-[#EBD89A]/45 mix-blend-soft-light pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00AEEF]/12 to-transparent mix-blend-screen pointer-events-none" />
+
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          <canvas
+            ref={particleCanvasRef}
+            className="h-full w-full"
+            style={{ opacity: 0.6 }}
+          />
         </div>
 
-      </motion.div>
 
-      {/* Soft Motion Transition at Bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#F5E2A1]/40 to-transparent animate-fadeIn pointer-events-none" />
-    </section>
+        <motion.div
+          className="trust-text-container relative z-30 mx-auto max-w-3xl px-8 py-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          style={{ y, transform: 'translateZ(0)' }}
+        >
+          <motion.h2
+            className="mb-12 text-center text-4xl font-bold tracking-tight text-white drop-shadow-lg md:text-5xl"
+            style={{
+              fontFamily: '"Space Grotesk", sans-serif',
+              textShadow: '0 4px 8px rgba(0,0,0,0.9), 0 0 30px rgba(0,174,239,0.4)',
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true }}
+          >
+            <span className="relative inline-block">
+              The Future Runs on Trust
+              <motion.div
+                className="mx-auto mt-3 h-[3px] w-[150px] rounded-full bg-gradient-to-r from-[#00AEEF]/90 via-[#FFD97A]/70 to-transparent shadow-[0_0_15px_rgba(0,174,239,0.5)]"
+                initial={{ opacity: 0, scaleX: 0 }}
+                whileInView={{ opacity: 0.9, scaleX: 1 }}
+                transition={{ duration: 1.2, ease: 'easeOut', delay: 1 }}
+                viewport={{ once: true }}
+              />
+            </span>
+          </motion.h2>
+
+          <div className="space-y-8 px-6 text-center text-gray-100">
+            {paragraphs.map((_, i) => (
+              <motion.p
+                key={i}
+                custom={i}
+                variants={fadeIn}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                className="text-lg md:text-xl"
+                style={{ fontFamily: '"Inter", sans-serif', fontWeight: 500 }}
+              >
+                {i === 0 && (
+                  <>
+                    AI is reshaping how we learn, heal, and{' '}
+                    <InteractiveWord wordKey="innovation" color="#00AEEF" className="font-semibold">
+                      innovate
+                    </InteractiveWord>
+                    . This transformation holds extraordinary promise — but it depends on one essential ingredient:{' '}
+                    <InteractiveWord wordKey="trust" color="#00AEEF" className="font-semibold">
+                      trust
+                    </InteractiveWord>
+                    .
+                  </>
+                )}
+                {i === 1 && (
+                  <>
+                    That's what the{' '}
+                    <InteractiveWord wordKey="gtc" color="#00AEEF" className="font-semibold">
+                      Global Trust Challenge (GTC)
+                    </InteractiveWord>{' '}
+                    was created to enable. Born from a G7 call to action, it serves as a global rallying cry to preserve trust in the digital age. The GTC is led by a{' '}
+                    <InteractiveWord wordKey="coalition" color="#FFD97A" className="font-semibold">
+                      coalition of changemakers
+                    </InteractiveWord>{' '}
+                    - including IEEE SA, OECD, and AI Commons - united by a shared commitment to transparency, accountability, and human-centered innovation.
+                  </>
+                )}
+                {i === 2 && (
+                  <>
+                    We're inviting{' '}
+                    <InteractiveWord wordKey="technologists" color="#FFD97A" className="font-semibold">
+                      technologists
+                    </InteractiveWord>
+                    ,{' '}
+                    <InteractiveWord wordKey="policymakers" color="#FFD97A" className="font-semibold">
+                      policymakers
+                    </InteractiveWord>
+                    , and{' '}
+                    <InteractiveWord wordKey="innovators" color="#FFD97A" className="font-semibold">
+                      innovators
+                    </InteractiveWord>{' '}
+                    worldwide to co-create solutions that make digital environments more transparent, reliable, and empowering for everyone. Together, we're laying the foundations of{' '}
+                    <InteractiveWord wordKey="digital-trust" color="#00AEEF" className="font-semibold">
+                      digital trust
+                    </InteractiveWord>{' '}
+                    - for future generations, for industry, and for society at large.
+                  </>
+                )}
+              </motion.p>
+            ))}
+          </div>
+        </motion.div>
+
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#F5E2A1]/35 to-transparent" />
+        <ScrollArrow targetId="#unique" />
+      </section>
     </>
   );
-};
+});
 
 export default FutureRunsOnTrust;

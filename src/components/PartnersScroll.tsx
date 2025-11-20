@@ -38,7 +38,6 @@ const partners: Partner[] = [
     image: "https://maximages.s3.us-west-1.amazonaws.com/sebastian.jpg",
     url: "https://oecd.ai/en/community/sebastian-hallensleben"
   },
-
   {
     name: "David Satola",
     role: "World Bank",
@@ -46,16 +45,16 @@ const partners: Partner[] = [
     url: "https://live.worldbank.org/en/experts/d/david-satola"
   },
   {
-    name: "Elham Tabassi",
-    role: "NIST",
-    image: "https://maximages.s3.us-west-1.amazonaws.com/Elham-Tabassi.jpg",
-    url: "https://en.wikipedia.org/wiki/Elham_Tabassi"
+    name: "Edward Teather",
+    role: "Amazon Web Services (AWS)",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/teather.jpg",
+    url: "https://x.com/ed_teather"
   },
   {
-    name: "Benoît Bergeret",
-    role: "Metalab, Essec Business School",
-    image: "https://maximages.s3.us-west-1.amazonaws.com/benoit-bergeret-1.jpeg",
-    url: "https://www.linkedin.com/in/benbergeret/"
+    name: "Dominic Wilhelm",
+    role: "The Global Trust Project",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/dominicwilhelm.png",
+    url: "https://www.theglobaltrustproject.com/"
   },
   {
     name: "Nikita Lukianets",
@@ -111,17 +110,17 @@ const partners: Partner[] = [
     image: "https://maximages.s3.us-west-1.amazonaws.com/jere.jpg",
     url: "https://www.linkedin.com/in/towelajere/"
   },
-{
+  {
     name: "David Marti",
     role: "Pour Demain",
     image: "https://maximages.s3.us-west-1.amazonaws.com/marti.jpg",
     url: "https://www.linkedin.com/in/david-b-marti/"
   },
 {
-    name: "Edward Teather",
-    role: "Amazon Web Services (AWS)",
-    image: "https://maximages.s3.us-west-1.amazonaws.com/teather.jpg",
-    url: "https://x.com/ed_teather"
+    name: "Elham Tabassi",
+    role: "NIST",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/Elham-Tabassi.jpg",
+    url: "https://en.wikipedia.org/wiki/Elham_Tabassi"
   },
 {
     name: "Alexandra Ebert",
@@ -196,10 +195,10 @@ const partners: Partner[] = [
     url: "https://www.concordia.ca/faculty/fenwick-mckelvey.html"
   },
 {
-    name: "Dominic Wilhelm",
-    role: "The Global Trust Project",
-    image: "https://maximages.s3.us-west-1.amazonaws.com/dominicwilhelm.png",
-    url: "https://www.theglobaltrustproject.com/"
+    name: "Benoît Bergeret",
+    role: "Metalab, Essec Business School",
+    image: "https://maximages.s3.us-west-1.amazonaws.com/benoit-bergeret-1.jpeg",
+    url: "https://www.linkedin.com/in/benbergeret/"
   },
 {
     name: "Laura Ellis",
@@ -240,12 +239,12 @@ const partners: Partner[] = [
   // Add more partners as needed
 ];
 
-export default function PartnersScroll() {
+const PartnersScroll = React.memo(function PartnersScroll() {
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {partners.map((partner, index) => (
-          <a href={partner.url} key={"A" + index} target="new"><div
+          <a href={partner.url} key={"A" + index} target="new" rel="noopener noreferrer"><div
             key={index}
             className="bg-white rounded-lg shadow-lg p-4 transition-transform hover:scale-105"
           >
@@ -255,6 +254,7 @@ export default function PartnersScroll() {
                 alt={partner.name}
                 className="w-full h-48 object-cover rounded-lg"
                 style={{objectFit: 'scale-down'}}
+                loading="lazy"
               />
             </div>
             <h3 className="text-lg font-semibold text-center">{partner.name}</h3>
@@ -265,4 +265,6 @@ export default function PartnersScroll() {
       </div>
     </div>
   );
-}
+});
+
+export default PartnersScroll;

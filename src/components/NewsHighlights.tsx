@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, ArrowRight, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -90,7 +89,7 @@ const parseEventDate = (dateString: string | undefined): Date => {
 
 export default function NewsHighlights() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-3xl font-bold" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>

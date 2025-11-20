@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/partners-gradient.css';
 
 interface Sponsor {
   name: string;
@@ -7,7 +8,7 @@ interface Sponsor {
 
 const sponsors = [
     {
-    name: "IEEE",
+    name: "IEEE SA",
     logo: "https://maximages.s3.us-west-1.amazonaws.com/IEEE+SA+Logo.webp",
   },
    {
@@ -21,10 +22,6 @@ const sponsors = [
   {
     name: "UNESCO",
     logo: "https://upload.wikimedia.org/wikipedia/wikimania/thumb/5/56/UNESCO_logo.png/320px-UNESCO_logo.png",
-  },
-  {
-    name: "World Bank",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/The_World_Bank_logo.svg/320px-The_World_Bank_logo.svg.png",
   },
   {
     name: "IDB",
@@ -50,6 +47,10 @@ const supportingSponsors = [
     logo: "https://adobe-cai-contentauthenticity-backend-prod.s3.us-east-1.amazonaws.com/CAI_Logo_322a6a374f.svg",
   },
   {
+    name: "Ceimia",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/Ceimia+Logo.png",
+  },
+  {
     name: "Fondation Abeona",
     logo: "https://maximages.s3.us-west-1.amazonaws.com/Fondation+Albeona.png",
   },
@@ -65,8 +66,8 @@ const supportingSponsors = [
 
 export default function Sponsors() {
   return (
-    <div className="w-full bg-white">
-      <section className="py-16 bg-gray-50">
+    <div className="w-full partners-section">
+      <section className="py-16 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
             Founding Partners
@@ -77,7 +78,7 @@ export default function Sponsors() {
                 key={index}
                 className="relative group"
               >
-                <div className="bg-white rounded-lg p-4 transition-all duration-300 hover:shadow-lg flex items-center justify-center h-24">
+                <div className="partner-card bg-white rounded-lg p-4 transition-all duration-300 hover:shadow-lg flex items-center justify-center h-24">
                   <img
                     src={sponsor.logo}
                     alt={sponsor.name}
@@ -89,14 +90,14 @@ export default function Sponsors() {
                     {sponsor.name}
                   </div>
                 </div>
-                <div className=" flex items-center justify-center" style={{color: 'grey', fontSize: '0.8rem'}}>{sponsor.name}</div>
+                <div className=" flex items-center justify-center" style={{color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.8rem'}}>{sponsor.name}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
             Supporting Partners
@@ -107,11 +108,13 @@ export default function Sponsors() {
                 key={index}
                 className="relative group"
               >
-                <div className="bg-white rounded-lg p-4 transition-all duration-300 hover:shadow-lg flex items-center justify-center h-24">
+                <div className="partner-card bg-white rounded-lg p-4 transition-all duration-300 hover:shadow-lg flex items-center justify-center h-24">
                   <img
                     src={sponsor.logo}
                     alt={sponsor.name}
-                    className="max-h-16 w-auto object-contain filter hover:brightness-110 transition-all duration-300"
+                    className={`w-auto object-contain filter hover:brightness-110 transition-all duration-300 ${
+                      sponsor.name === 'C2PA' ? 'max-h-24' : 'max-h-16'
+                    }`}
                   />
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -119,7 +122,7 @@ export default function Sponsors() {
                     {sponsor.name}
                   </div>
                 </div>
-                <div className=" flex items-center justify-center" style={{color: 'grey', fontSize: '0.8rem'}}>{sponsor.name}</div>
+                <div className=" flex items-center justify-center" style={{color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.8rem'}}>{sponsor.name}</div>
               </div>
             ))}
           </div>

@@ -42,3 +42,12 @@ const Parallax3DPage: React.FC = () => {
 
 export default Parallax3DPage;
 
+
+
+
+
+
+
+
+
+
