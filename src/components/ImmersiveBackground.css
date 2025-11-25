@@ -100,17 +100,17 @@
   --g3: #3a506b;
 }
 
-/* Custom green/teal variant for unique section */
+/* Custom blue/violet/turquoise variant for unique section */
 .unique-bg-teal-gold {
-  --g1: #0a1f2a;  /* Deep dark teal base */
-  --g2: #2ed8f3;  /* Bright teal accent */
-  --g3: #6fe7c1;  /* Green-teal accent */
+  --g1: #1e3a5f;  /* Lighter blue base */
+  --g2: #554c96;  /* Brighter violet accent */
+  --g3: #a78bfa;  /* Vibrant light violet accent */
 }
 
 .unique-bg-teal-gold .ibg-gradient::after {
   background: 
-    radial-gradient(circle at 30% 40%, rgba(46, 216, 243, 0.15), transparent 30%),
-    radial-gradient(circle at 70% 60%, rgba(111, 231, 193, 0.12), transparent 35%);
+    radial-gradient(circle at 30% 40%, rgba(0, 174, 239, 0.25), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(139, 126, 200, 0.22), transparent 35%);
 }
 
 @media (prefers-reduced-motion: reduce) {

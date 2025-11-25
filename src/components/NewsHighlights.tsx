@@ -13,6 +13,33 @@ interface NewsItem {
 
 const recentNews: NewsItem[] = [
   {
+    id: 'Digital-Trust-Convention-Montreal',
+    title: 'Digital Trust Convention – Montreal',
+    date: 'November 6, 2025',
+    location: 'Montreal, Canada',
+    excerpt: 'Join the Global Trust Challenge at the Digital Trust Convention in Montreal for a forward-looking session on how we can build resilient information ecosystems in the age of AI. The GTC will spotlight how trustworthy digital environments can unlock new opportunities for future generations, drive innovation across industries, and strengthen public trust in sectors such as healthcare and education.',
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+2025.webp',
+    category: 'Event'
+  },
+  {
+    id: 'AI-For-Good',
+    title: 'AI for Good Global Summit 2025',
+    date: 'July 9, 2025',
+    location: 'Geneva, Switzerland',
+    excerpt: "It started with a simple, unsettling question at the AI for Good Global Summit: If we can no longer tell what's real online, how do we keep societies from unravelling? On stage, at the International Telecommunication Union's (ITU) AI for Good, the Global Trust Challenge offered an answer — not in theory, but in action. This global initiative, born from a G7 call to safeguard truth in the digital age, is rallying technologists, policymakers, and innovators to build solutions that blend policy with technology.",
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/AI+for+Good+Event+Photo.jpeg',
+    category: 'Event'
+  },
+  {
+    id: 'Lyceum-Project-Event',
+    title: "Empowering Tomorrow's Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI",
+    date: 'June 20, 2025',
+    location: 'Athens, Greece',
+    excerpt: "On June 20, 2025, an electric gathering took place in Athens. The Lyceum Project 2025 – 'Children in the Age of AI' – was explicitly 'a day of reflection and dialogue' on how to empower children to flourish in a world guided by algorithms. Leading thinkers, educators, policymakers, and citizens gathered at the historic Athens Conservatoire (next to Aristotle's Lyceum) to ask: what does it really mean to be a child in the age of AI?",
+    image: 'https://maximages.s3.us-west-1.amazonaws.com/Screenshot+2025-08-29+210641.png',
+    category: 'Event'
+  },
+  {
     id: 'ENS-AI-Action-Summit-Event',
     title: 'ENS - AI Action Summit Official Side Event',
     date: 'February 11, 2025',
@@ -29,7 +56,6 @@ const recentNews: NewsItem[] = [
     excerpt: "In a world where synthetic content can be produced at the click of a button, trust has never been more fragile — or more essential. That urgency set the tone at the Japan Cultural Centre in Paris, where global leaders gathered to confront the risks of generative AI and chart pathways toward a more reliable digital future.",
     image: 'https://maximages.s3.us-west-1.amazonaws.com/GTCEvent1.png',
     category: 'Event'
-    
   },
   {
     id: 'Digital-Trust-Convention',
@@ -39,29 +65,7 @@ const recentNews: NewsItem[] = [
     excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
     image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg',
     category: 'Event'
-  
-  },
-  {
-    id: 'AI-For-Good',
-    title: 'AI for Good Global Summit 2025',
-    date: 'July 9, 2025',
-    location: 'Geneva, Switzerland',
-    excerpt: 'It started with a simple, unsettling question at the AI for Good Global Summit: If we can no longer tell what’s real online, how do we keep societies from unravelling? On stage, at the International Telecommunication Union’s (ITU) AI for Good, the Global Trust Challenge offered an answer — not in theory, but in action. This global initiative, born from a G7 call to safeguard truth in the digital age, is rallying technologists, policymakers, and innovators to build solutions that blend policy with technology.',
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/AI+for+Good+Event+Photo.jpeg',
-    category: 'Event'
-  },
-  {
-    id: 'Lyceum-Project-Event',
-    title: 'Empowering Tomorrow’s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI',
-    date: 'June 20, 2025',
-    location: 'Athens, Greece',
-    excerpt: 'On June 20, 2025, an electric gathering took place in Athens. The Lyceum Project 2025 – “Children in the Age of AI” – was explicitly “a day of reflection and dialogue” on how to empower children to flourish in a world guided by algorithms. Leading thinkers, educators, policymakers, and citizens gathered at the historic Athens Conservatoire (next to Aristotle’s Lyceum) to ask: what does it really mean to be a child in the age of AI?',
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/Screenshot+2025-08-29+210641.png',
-    category: 'Event'
   }
-
-
-
 ];
 
 // Helper function to parse different date formats
@@ -89,15 +93,19 @@ const parseEventDate = (dateString: string | undefined): Date => {
 
 export default function NewsHighlights() {
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-8 pb-16 relative z-10 overflow-hidden" style={{
+      background: `linear-gradient(135deg, #8b7ec8 0%, #6b5aab 20%, #554c96 40%, #3b3a7a 60%, #2d4f6f 80%, #1e3a5f 100%)`
+    }}>
+      {/* Smooth transition overlay at top */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#8b7ec8] via-[#8b7ec8]/50 to-transparent pointer-events-none z-0" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex justify-between items-center mb-10">
-          <h2 className="text-3xl font-bold" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+          <h2 className="text-3xl font-bold text-white" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
             Latest Updates
           </h2>
           <Link 
             to="/events" 
-            className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
+            className="flex items-center text-[#00AEEF] hover:text-[#8b7ec8] transition-colors duration-200"
           >
             View all updates
             <ArrowRight className="ml-2 h-5 w-5" />
@@ -123,7 +131,7 @@ export default function NewsHighlights() {
               </div>
               <div className="p-6">
                 <div className="flex items-center mb-3">
-                  <span className="inline-block px-3 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">
+                  <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full" style={{ backgroundColor: 'rgba(0, 174, 239, 0.15)', color: '#00AEEF' }}>
                     {item.category}
                   </span>
                   <div className="flex items-center text-gray-500 text-sm ml-3">
@@ -131,8 +139,8 @@ export default function NewsHighlights() {
                     {item.date}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-2 hover:text-indigo-600 transition-colors duration-200">
-                  <Link to={`/events/${item.id}`}>{item.title}</Link>
+                <h3 className="text-xl font-bold mb-2 transition-colors duration-200">
+                  <Link to={`/events/${item.id}`} className="text-gray-900 hover:text-[#00AEEF]">{item.title}</Link>
                 </h3>
                 {item.category === 'Event' && item.location && (
                 <div className="flex items-center text-gray-600 text-sm mb-2">
@@ -143,7 +151,7 @@ export default function NewsHighlights() {
                 <p className="text-gray-600 mb-4">{item.excerpt}</p>
                 <Link 
                   to={`/events/${item.id}`}
-                  className="text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200 flex items-center"
+                  className="text-[#00AEEF] font-medium hover:text-[#8b7ec8] transition-colors duration-200 flex items-center"
                 >
                   Read more
                   <ArrowRight className="ml-1 h-4 w-4" />
