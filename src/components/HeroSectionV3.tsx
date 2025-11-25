@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, memo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import ImmersiveBackground from './ImmersiveBackground';
 import { throttle } from '../utils/throttle';
 import { getOptimizedParticleCount, getPerformanceConfig } from '../utils/performance';
@@ -451,52 +451,6 @@ const Content = () => {
   );
 };
 
-// Enhanced scroll indicator with CSS animations (more performant)
-const ScrollIndicator = () => {
-  const handleScrollDown = () => {
-    const nextSection = document.querySelector('section:nth-of-type(2)');
-    nextSection?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  return (
-    <>
-      <style>{`
-        @keyframes bounceDown {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(10px);
-          }
-        }
-        .scroll-indicator-button {
-          animation: bounceDown 2s ease-in-out infinite;
-        }
-        .scroll-indicator-button:hover {
-          transform: scale(1.2);
-        }
-        .scroll-indicator-button:active {
-          transform: scale(0.9);
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .scroll-indicator-button {
-            animation: none;
-          }
-        }
-      `}</style>
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
-        <button
-          onClick={handleScrollDown}
-          className="scroll-indicator-button text-[#FFD97A] hover:text-white transition-colors duration-300"
-          aria-label="Scroll to next section"
-        >
-          <ChevronDown size={32} />
-        </button>
-      </div>
-    </>
-  );
-};
-
 // Main HeroSectionV3 component (memoized for performance)
 const HeroSectionV3 = memo(() => {
   const [isReducedMotion, setIsReducedMotion] = useState(false);
@@ -665,9 +619,6 @@ const HeroSectionV3 = memo(() => {
         
         {/* Content */}
         <Content />
-        
-        {/* Scroll Indicator */}
-        <ScrollIndicator />
       </section>
       </>
     );

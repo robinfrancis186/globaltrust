@@ -267,28 +267,10 @@ const JourneyCTA = () => {
           }
           .journey-card {
             position: relative;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
-          }
-          .journey-card::after {
-            content: '';
-            position: absolute;
-            inset: 1px;
-            border-radius: inherit;
-            background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
-            transform: translateX(-120%);
-            opacity: 0;
-            transition: transform 0.7s ease, opacity 0.7s ease;
-            pointer-events: none;
-          }
-          .journey-card:hover,
-          .journey-card:focus-within {
-            transform: translateY(-12px);
             box-shadow: 0 35px 90px -40px rgba(59, 197, 255, 0.55);
           }
-          .journey-card:hover::after,
-          .journey-card:focus-within::after {
-            transform: translateX(120%);
-            opacity: 1;
+          .journey-card::after {
+            display: none;
           }
           .journey-icon-wrap {
             position: relative;
@@ -435,9 +417,8 @@ const JourneyCTA = () => {
             border-radius: 1.4rem;
             background: linear-gradient(150deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
             border: 1px solid rgba(255,255,255,0.28);
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 25px 60px -40px rgba(15, 23, 42, 0.6);
+            box-shadow: 0 35px 80px -45px rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(8px);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
           }
           .award-tile::after {
             content: "";
@@ -445,16 +426,6 @@ const JourneyCTA = () => {
             inset: 1px;
             border-radius: inherit;
             background: linear-gradient(125deg, rgba(255,255,255,0.14), rgba(255,255,255,0));
-            opacity: 0;
-            transition: opacity 0.5s ease;
-          }
-          .award-tile:hover,
-          .award-tile:focus-within {
-            transform: translateY(-8px);
-            box-shadow: 0 35px 80px -45px rgba(15, 23, 42, 0.75);
-          }
-          .award-tile:hover::after,
-          .award-tile:focus-within::after {
             opacity: 1;
           }
           .tile-icon {
@@ -532,10 +503,6 @@ const JourneyCTA = () => {
             .journey-heading-underline::after,
             .awards-capstone::after {
               animation: none;
-            }
-            .journey-card:hover,
-            .journey-card:focus-within {
-              transform: translateY(-6px);
             }
           }
         `}

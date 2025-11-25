@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 
 import useSharedAuroraParticles from '../hooks/useSharedAuroraParticles';
-import ScrollArrow from './ScrollArrow';
 
 const CRITERIA = [
   {
@@ -170,9 +169,8 @@ const SelectionCriteria: React.FC = () => {
             border-radius: 1.9rem;
             background: linear-gradient(150deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
             border: 1px solid rgba(255,255,255,0.18);
-            box-shadow: 0 28px 70px -45px rgba(15, 23, 42, 0.75);
+            box-shadow: 0 38px 90px -42px rgba(59, 197, 255, 0.65);
             backdrop-filter: blur(18px);
-            transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.55s ease;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -185,8 +183,7 @@ const SelectionCriteria: React.FC = () => {
             inset: 1px;
             border-radius: inherit;
             background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
-            opacity: 0;
-            transition: opacity 0.6s ease;
+            opacity: 1;
           }
           .criteria-card::after {
             content: "";
@@ -194,20 +191,6 @@ const SelectionCriteria: React.FC = () => {
             inset: -30% -40% auto;
             height: 60%;
             background: radial-gradient(ellipse at top, rgba(59, 197, 255, 0.28), transparent 65%);
-            opacity: 0;
-            transition: opacity 0.6s ease;
-          }
-          .criteria-card:hover,
-          .criteria-card:focus-within {
-            transform: translateY(-12px);
-            box-shadow: 0 38px 90px -42px rgba(59, 197, 255, 0.65);
-          }
-          .criteria-card:hover::before,
-          .criteria-card:focus-within::before {
-            opacity: 1;
-          }
-          .criteria-card:hover::after,
-          .criteria-card:focus-within::after {
             opacity: 1;
           }
           .criteria-icon-wrap {
@@ -335,7 +318,6 @@ const SelectionCriteria: React.FC = () => {
           ))}
         </div>
       </div>
-      <ScrollArrow targetId="#pre-registration" />
     </section>
   );
 };

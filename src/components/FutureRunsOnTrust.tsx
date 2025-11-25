@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, memo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import ScrollArrow from './ScrollArrow';
 import { getOptimizedParticleCount, getOptimizedCanvasResolution, shouldDisableCanvasEffects, getPerformanceConfig } from '../utils/performance';
 
 const BASE_PARTICLE_COUNT = 90;
@@ -499,6 +498,65 @@ const FutureRunsOnTrust = memo(() => {
           border-radius: 18px;
           background: rgba(30, 58, 95, 0.65);
         }
+
+        /* Animated underline for "The Future Runs on Trust" */
+        @keyframes gradientShiftTrust {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
+        @keyframes underlineExpandTrust {
+          0% {
+            width: 0%;
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            width: 100%;
+            opacity: 1;
+          }
+        }
+
+        .trust-underline {
+          position: relative;
+          display: block;
+          height: 3px;
+          width: 150px;
+          margin: 0.75rem auto 0;
+          border-radius: 9999px;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(0, 174, 239, 0.9) 20%,
+            rgba(139, 126, 200, 0.9) 40%,
+            rgba(167, 139, 250, 1) 50%,
+            rgba(139, 126, 200, 0.9) 60%,
+            rgba(0, 174, 239, 0.9) 80%,
+            transparent 100%
+          );
+          background-size: 200% 100%;
+          box-shadow: 
+            0 0 10px rgba(0, 174, 239, 0.8),
+            0 0 20px rgba(139, 126, 200, 0.6),
+            0 0 30px rgba(167, 139, 250, 0.4);
+          animation: 
+            underlineExpandTrust 2s ease-out forwards,
+            gradientShiftTrust 3s ease-in-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .trust-underline {
+            animation: none !important;
+            width: 100%;
+            opacity: 1;
+          }
+        }
       `}</style>
       <section
         ref={sectionRef}
@@ -546,13 +604,7 @@ const FutureRunsOnTrust = memo(() => {
           >
             <span className="relative inline-block">
               The Future Runs on Trust
-              <motion.div
-                className="mx-auto mt-3 h-[3px] w-[150px] rounded-full bg-gradient-to-r from-[#00AEEF]/90 via-[#8b7ec8]/70 to-transparent shadow-[0_0_15px_rgba(0,174,239,0.5)]"
-                initial={{ opacity: 0, scaleX: 0 }}
-                whileInView={{ opacity: 0.9, scaleX: 1 }}
-                transition={{ duration: 1.2, ease: 'easeOut', delay: 1 }}
-                viewport={{ once: true }}
-              />
+              <div className="trust-underline" />
             </span>
           </motion.h2>
 
@@ -621,7 +673,6 @@ const FutureRunsOnTrust = memo(() => {
         </motion.div>
 
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#8b7ec8]/30 to-transparent" />
-        <ScrollArrow targetId="#unique" />
       </section>
     </>
   );

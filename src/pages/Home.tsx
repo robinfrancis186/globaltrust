@@ -37,7 +37,6 @@ import '../styles/prototype-unique.css';
 import '../styles/floating-cards-3d.css';
 import '../styles/is-this-for-you.css';
 import WarpSectionTransition from '../components/WarpSectionTransition';
-import ScrollArrow from '../components/ScrollArrow';
 import SelectionCriteria from '../components/SelectionCriteria';
 import ImmersiveBackground from '../components/ImmersiveBackground';
 import LazySection from '../components/LazySection';
@@ -452,10 +451,6 @@ export default function Home() {
         </div>
         </div>
 
-        {/* Scroll arrows - positioned lower to avoid overlapping text boxes */}
-        <div className="relative" style={{ marginTop: '8rem', paddingBottom: '4rem' }}>
-          <ScrollArrow targetId="#is-this-for-you" />
-        </div>
       </section>
       
 
@@ -842,10 +837,6 @@ export default function Home() {
            </div>
         </div>
 
-        {/* Scroll arrow after "Is This for You" section */}
-        <div className="relative" style={{ marginTop: '8rem', paddingBottom: '4rem' }}>
-          <ScrollArrow targetId="#phases" />
-        </div>
       </section>
 
 
