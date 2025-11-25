@@ -2,7 +2,7 @@ import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import CinematicCrossfade from '../components/CinematicCrossfade';
+//import CinematicCrossfade from '../components/CinematicCrossfade';
 import { 
   ArrowRight, 
   Target, 
@@ -15,10 +15,16 @@ import {
   Stamp, 
   Rocket 
 } from 'lucide-react';
-import HeroSectionV3 from '../components/HeroSectionV3';
-import FutureRunsOnTrust from '../components/FutureRunsOnTrust';
+//import HeroSectionV3 from '../components/HeroSectionV3';
+//import FutureRunsOnTrust from '../components/FutureRunsOnTrust';
+
+
+
 
 // Lazy load below-the-fold components for better initial load performance
+const CinematicCrossfade = lazy(() => import('../components/CinematicCrossfade'));
+const HeroSectionV3 = lazy(() => import('../components/HeroSectionV3'));
+const FutureRunsOnTrust = lazy(() => import('../components/FutureRunsOnTrust'));
 const NewsHighlights = lazy(() => import('../components/NewsHighlights'));
 const PreRegisterCTA = lazy(() => import('../components/PreRegisterCTA'));
 const SponsorsCTA = lazy(() => import('../components/SponsorsCTA'));
@@ -34,6 +40,7 @@ import WarpSectionTransition from '../components/WarpSectionTransition';
 import ScrollArrow from '../components/ScrollArrow';
 import SelectionCriteria from '../components/SelectionCriteria';
 import ImmersiveBackground from '../components/ImmersiveBackground';
+import LazySection from '../components/LazySection';
 
 
 interface FormData {
@@ -296,7 +303,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen relative">
+    <div className="flex flex-col min-h-screen relative section-smooth">
       {/* Cinematic Crossfade Depth Push */}
       <CinematicCrossfade sectionIds={['hero', 'partners']} />
       
@@ -305,9 +312,12 @@ export default function Home() {
 
       {/* Hero Section V3 */}
       <HeroSectionV3 />
+      
 
       {/* The Future Runs on Trust Section */}
+      
       <FutureRunsOnTrust />
+    
       
 
       {/* What Makes This Challenge Unique & What We Provide Section */}
@@ -717,6 +727,7 @@ export default function Home() {
                 src="https://maximages.s3.us-west-1.amazonaws.com/Isthisforyousection.jpg"
                 alt="Innovation collaboration"
                 className="rounded-lg shadow-xl w-full h-64 lg:h-80 object-cover"
+                loading="lazy"
               />
             </div>
           </div>
@@ -852,6 +863,7 @@ export default function Home() {
                         src={item.image} 
                         alt={item.title} 
                         className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+                        loading="lazy"
                       />
                     </div>
                     <div className="p-6">
