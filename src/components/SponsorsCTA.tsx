@@ -81,6 +81,7 @@ export default function SponsorsCTA() {
             filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 16px rgba(139, 92, 246, 0.4));
           }
           .sponsors-flat__title {
+            position: relative;
             margin: -0.6rem 0 0 0;
             font-family: "Barlow Condensed", "Inter", sans-serif;
             font-weight: 600;
@@ -98,6 +99,19 @@ export default function SponsorsCTA() {
               0 2px 8px rgba(0, 0, 0, 0.5),
               0 4px 16px rgba(0, 0, 0, 0.3);
             filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+          }
+          .sponsors-flat__title::before {
+            content: "";
+            position: absolute;
+            inset: -30% -18%;
+            border-radius: 999px;
+            background:
+              radial-gradient(55% 60% at 50% 32%, rgba(125, 211, 252, 0.3), transparent 72%),
+              radial-gradient(80% 82% at 50% 72%, rgba(192, 132, 252, 0.24), transparent 88%);
+            filter: blur(12px);
+            opacity: 0.9;
+            z-index: -1;
+            pointer-events: none;
           }
           .sponsors-flat__title span {
             font-size: clamp(2.4rem, 7vw, 3.2rem);
@@ -153,6 +167,7 @@ export default function SponsorsCTA() {
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7), 0 4px 16px rgba(0, 0, 0, 0.5);
           }
           .sponsors-flat__button {
+            position: relative;
             margin-top: clamp(0.5rem, 1.8vw, 1.1rem);
             display: inline-flex;
             align-items: center;
@@ -167,13 +182,41 @@ export default function SponsorsCTA() {
             background: #ffffff;
             border: 1px solid #0c2a4f;
             box-shadow: 0 16px 32px rgba(9, 16, 35, 0.35);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
             text-decoration: none;
+            z-index: 1;
+          }
+          .sponsors-flat__button::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 999px;
+            background: radial-gradient(
+              ellipse at center,
+              rgba(59, 130, 246, 0.4) 0%,
+              rgba(139, 92, 246, 0.3) 40%,
+              rgba(99, 102, 241, 0.2) 70%,
+              transparent 100%
+            );
+            filter: blur(12px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            pointer-events: none;
           }
           .sponsors-flat__button:hover,
           .sponsors-flat__button:focus-visible {
             transform: translateY(-4px);
-            box-shadow: 0 22px 40px rgba(9, 16, 35, 0.42);
+            box-shadow: 
+              0 22px 40px rgba(9, 16, 35, 0.42),
+              0 0 30px rgba(59, 130, 246, 0.6),
+              0 0 50px rgba(139, 92, 246, 0.4),
+              0 0 70px rgba(99, 102, 241, 0.3);
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+          }
+          .sponsors-flat__button:hover::before,
+          .sponsors-flat__button:focus-visible::before {
+            opacity: 1;
           }
           .sponsors-flat__buttonIcon {
             transition: transform 0.3s ease;
