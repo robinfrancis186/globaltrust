@@ -6,8 +6,9 @@ import { getOptimizedParticleCount, getOptimizedCanvasResolution, shouldDisableC
 const BASE_PARTICLE_COUNT = 90;
 const PARTICLE_COLORS = [
   'rgba(0,174,239,0.55)',
-  'rgba(255,217,120,0.5)',
-  'rgba(200,225,255,0.45)'
+  'rgba(139,126,200,0.5)',
+  'rgba(107,90,171,0.45)',
+  'rgba(46,216,243,0.4)'
 ];
 
 const paragraphs = [
@@ -344,29 +345,31 @@ const FutureRunsOnTrust = memo(() => {
   return (
     <>
       <style>{`
-        /* Aurora/Sky-like dynamic gradient background - teal, violet, gold palette */
+        /* Aurora/Sky-like dynamic gradient background - blue/violet/turquoise palette */
         .trust-nebula-bg {
           position: absolute;
           inset: 0;
           overflow: hidden;
           /* Base gradient - static fallback */
           background: linear-gradient(180deg, 
-            #0a1f3d 0%,      /* Deep violet-blue */
-            #1a2f4a 20%,     /* Dark teal-violet */
-            #2a4d5a 40%,     /* Medium teal */
-            #4a6d5a 60%,     /* Teal-gold blend */
-            #6a5d3a 80%,     /* Warm gold */
-            #5a4d2a 100%     /* Deep gold */
+            #0a1f2a 0%,      /* Deep blue */
+            #1e3a5f 15%,     /* Dark blue */
+            #2d4f6f 30%,     /* Medium blue */
+            #3b3a7a 50%,     /* Violet-blue */
+            #554c96 70%,     /* Medium violet */
+            #6b5aab 85%,     /* Light violet */
+            #8b7ec8 100%     /* Pale violet */
           );
           /* Dynamic aurora gradient animation */
           background-image: 
             linear-gradient(180deg, 
-              #0a1f3d 0%,
-              #1a2f4a 20%,
-              #2a4d5a 40%,
-              #4a6d5a 60%,
-              #6a5d3a 80%,
-              #5a4d2a 100%
+              #0a1f2a 0%,
+              #1e3a5f 15%,
+              #2d4f6f 30%,
+              #3b3a7a 50%,
+              #554c96 70%,
+              #6b5aab 85%,
+              #8b7ec8 100%
             );
           background-size: 100% 200%;
           animation: auroraShift 25s ease-in-out infinite alternate;
@@ -379,9 +382,9 @@ const FutureRunsOnTrust = memo(() => {
           position: absolute;
           inset: -20%;
           background: 
-            radial-gradient(circle at 20% 30%, rgba(129, 140, 248, 0.4) 0%, transparent 50%),
-            radial-gradient(circle at 80% 50%, rgba(46, 216, 243, 0.35) 0%, transparent 50%),
-            radial-gradient(circle at 50% 70%, rgba(245, 195, 109, 0.3) 0%, transparent 50%);
+            radial-gradient(circle at 20% 30%, rgba(139, 126, 200, 0.4) 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(0, 174, 239, 0.35) 0%, transparent 50%),
+            radial-gradient(circle at 50% 70%, rgba(107, 90, 171, 0.3) 0%, transparent 50%);
           animation: orbDrift 30s ease-in-out infinite alternate;
           animation-play-state: var(--animation-state, running);
           pointer-events: none;
@@ -394,11 +397,11 @@ const FutureRunsOnTrust = memo(() => {
           inset: 0;
           background-image: 
             radial-gradient(2px 2px at 15% 25%, rgba(255, 255, 255, 0.6), transparent),
-            radial-gradient(1.5px 1.5px at 35% 40%, rgba(46, 216, 243, 0.7), transparent),
-            radial-gradient(2px 2px at 65% 60%, rgba(245, 195, 109, 0.6), transparent),
-            radial-gradient(1.5px 1.5px at 85% 75%, rgba(129, 140, 248, 0.5), transparent),
-            radial-gradient(2px 2px at 25% 80%, rgba(111, 231, 193, 0.5), transparent),
-            radial-gradient(1.5px 1.5px at 75% 20%, rgba(255, 217, 120, 0.6), transparent);
+            radial-gradient(1.5px 1.5px at 35% 40%, rgba(0, 174, 239, 0.7), transparent),
+            radial-gradient(2px 2px at 65% 60%, rgba(139, 126, 200, 0.6), transparent),
+            radial-gradient(1.5px 1.5px at 85% 75%, rgba(107, 90, 171, 0.5), transparent),
+            radial-gradient(2px 2px at 25% 80%, rgba(46, 216, 243, 0.5), transparent),
+            radial-gradient(1.5px 1.5px at 75% 20%, rgba(167, 139, 250, 0.6), transparent);
           background-size: 100% 100%, 120% 120%, 110% 110%, 130% 130%, 115% 115%, 125% 125%;
           background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
           animation: particleShimmer 40s linear infinite;
@@ -481,10 +484,10 @@ const FutureRunsOnTrust = memo(() => {
 
         @keyframes trustPulse {
           0%, 100% {
-            box-shadow: 0 0 20px rgba(0,174,239,0.1), 0 0 40px rgba(0,174,239,0.05);
+            box-shadow: 0 0 20px rgba(0,174,239,0.15), 0 0 40px rgba(0,174,239,0.08);
           }
           50% {
-            box-shadow: 0 0 60px rgba(255,217,120,0.25), 0 0 80px rgba(255,217,120,0.15);
+            box-shadow: 0 0 60px rgba(139,126,200,0.25), 0 0 80px rgba(107,90,171,0.15);
           }
         }
         .trust-text-container {
@@ -492,9 +495,9 @@ const FutureRunsOnTrust = memo(() => {
           animation-play-state: running;
           transition: box-shadow 0.3s ease;
           backdrop-filter: blur(6px);
-          border: 1px solid rgba(255,255,255,0.08);
+          border: 1px solid rgba(139,126,200,0.2);
           border-radius: 18px;
-          background: rgba(12, 22, 38, 0.55);
+          background: rgba(30, 58, 95, 0.65);
         }
       `}</style>
       <section
@@ -506,12 +509,12 @@ const FutureRunsOnTrust = memo(() => {
         <div className="absolute inset-0 trust-nebula-bg" aria-hidden="true" />
         {/* Dark overlay for text legibility */}
         <div 
-          className="absolute inset-0 bg-black/35"
+          className="absolute inset-0 bg-black/30"
           aria-hidden="true"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#10222E]/40 to-[#EBD89A]/45 mix-blend-soft-light pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00AEEF]/12 to-transparent mix-blend-screen pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#3b3a7a]/30 to-[#8b7ec8]/25 mix-blend-soft-light pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00AEEF]/15 to-transparent mix-blend-screen pointer-events-none" />
 
         <div className="absolute inset-0 z-10 pointer-events-none">
           <canvas
@@ -544,7 +547,7 @@ const FutureRunsOnTrust = memo(() => {
             <span className="relative inline-block">
               The Future Runs on Trust
               <motion.div
-                className="mx-auto mt-3 h-[3px] w-[150px] rounded-full bg-gradient-to-r from-[#00AEEF]/90 via-[#FFD97A]/70 to-transparent shadow-[0_0_15px_rgba(0,174,239,0.5)]"
+                className="mx-auto mt-3 h-[3px] w-[150px] rounded-full bg-gradient-to-r from-[#00AEEF]/90 via-[#8b7ec8]/70 to-transparent shadow-[0_0_15px_rgba(0,174,239,0.5)]"
                 initial={{ opacity: 0, scaleX: 0 }}
                 whileInView={{ opacity: 0.9, scaleX: 1 }}
                 transition={{ duration: 1.2, ease: 'easeOut', delay: 1 }}
@@ -585,7 +588,7 @@ const FutureRunsOnTrust = memo(() => {
                       Global Trust Challenge (GTC)
                     </InteractiveWord>{' '}
                     was created to enable. Born from a G7 call to action, it serves as a global rallying cry to preserve trust in the digital age. The GTC is led by a{' '}
-                    <InteractiveWord wordKey="coalition" color="#FFD97A" className="font-semibold">
+                    <InteractiveWord wordKey="coalition" color="#8b7ec8" className="font-semibold">
                       coalition of changemakers
                     </InteractiveWord>{' '}
                     - including IEEE SA, OECD, and AI Commons - united by a shared commitment to transparency, accountability, and human-centered innovation.
@@ -594,15 +597,15 @@ const FutureRunsOnTrust = memo(() => {
                 {i === 2 && (
                   <>
                     We're inviting{' '}
-                    <InteractiveWord wordKey="technologists" color="#FFD97A" className="font-semibold">
+                    <InteractiveWord wordKey="technologists" color="#8b7ec8" className="font-semibold">
                       technologists
                     </InteractiveWord>
                     ,{' '}
-                    <InteractiveWord wordKey="policymakers" color="#FFD97A" className="font-semibold">
+                    <InteractiveWord wordKey="policymakers" color="#8b7ec8" className="font-semibold">
                       policymakers
                     </InteractiveWord>
                     , and{' '}
-                    <InteractiveWord wordKey="innovators" color="#FFD97A" className="font-semibold">
+                    <InteractiveWord wordKey="innovators" color="#8b7ec8" className="font-semibold">
                       innovators
                     </InteractiveWord>{' '}
                     worldwide to co-create solutions that make digital environments more transparent, reliable, and empowering for everyone. Together, we're laying the foundations of{' '}
@@ -617,7 +620,7 @@ const FutureRunsOnTrust = memo(() => {
           </div>
         </motion.div>
 
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#F5E2A1]/35 to-transparent" />
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#8b7ec8]/30 to-transparent" />
         <ScrollArrow targetId="#unique" />
       </section>
     </>

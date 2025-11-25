@@ -19,12 +19,40 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const smoothScrollTo = (targetElement: HTMLElement, duration: number = 600) => {
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+      
+      window.scrollTo(0, startPosition + distance * ease);
+      
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
+
   const handleApplyClick = () => {
     if (location.pathname !== '/') {
       navigate('/?scroll=pre-registration');
     } else {
       const element = document.getElementById('pre-registration');
-      element?.scrollIntoView({ behavior: 'smooth' });
+      if (element) {
+        smoothScrollTo(element, 600);
+      }
     }
     setIsOpen(false);
   };

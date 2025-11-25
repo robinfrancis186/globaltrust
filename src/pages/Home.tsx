@@ -222,11 +222,42 @@ export default function Home() {
 
   // Section 3 uses immediate visibility (no container fade)
 
+  const smoothScrollTo = (targetElement: HTMLElement, duration: number = 600) => {
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+      
+      window.scrollTo(0, startPosition + distance * ease);
+      
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
+
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     if (searchParams.get('scroll') === 'pre-registration') {
       const element = document.getElementById('pre-registration');
-      element?.scrollIntoView({ behavior: 'smooth' });
+      if (element) {
+        // Small delay to ensure page is loaded
+        setTimeout(() => {
+          smoothScrollTo(element, 600);
+        }, 100);
+      }
       window.history.replaceState({}, document.title, location.pathname);
     }
   }, [location]);
@@ -234,7 +265,9 @@ export default function Home() {
   const handlePreRegisterClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const element = document.getElementById('pre-registration');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    if (element) {
+      smoothScrollTo(element, 600);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -298,10 +331,10 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Cinematic Crossfade Depth Push */}
-      <CinematicCrossfade sectionIds={['hero', 'partners']} />
+      <CinematicCrossfade sectionIds={['hero']} />
       
       {/* Warp Section Transition Effect */}
-      <WarpSectionTransition sectionIds={['hero', 'partners']} />
+      <WarpSectionTransition sectionIds={['hero']} />
 
       {/* Hero Section V3 */}
       <HeroSectionV3 />
@@ -318,7 +351,7 @@ export default function Home() {
         {/* Cinematic animated background */}
         <ImmersiveBackground 
           variant="teal"
-          overlayOpacity={0.35}
+          overlayOpacity={0.2}
           className="unique-bg-teal-gold"
         />
             
@@ -383,10 +416,10 @@ export default function Home() {
           </div>
           <div className="provide-cards" aria-label="What we provide cards grid">
             {[
-              { ...bottomCardsData[0], accent: '#22d3ee', variant: 'dark' },
-              { ...bottomCardsData[1], accent: '#facc15', variant: 'gold' },
-              { ...bottomCardsData[2], accent: '#22d3ee', variant: 'dark' },
-              { ...bottomCardsData[3], accent: '#facc15', variant: 'gold' },
+              { ...bottomCardsData[0], accent: '#00AEEF', variant: 'dark' },
+              { ...bottomCardsData[1], accent: '#8b7ec8', variant: 'gold' },
+              { ...bottomCardsData[2], accent: '#00AEEF', variant: 'dark' },
+              { ...bottomCardsData[3], accent: '#8b7ec8', variant: 'gold' },
             ].map((item, index) => (
               <div
                 key={index}
@@ -817,33 +850,40 @@ export default function Home() {
 
      
 
-      {/* Upcoming Events Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-10">
-            <h2 className="text-3xl font-bold" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              Upcoming Events
-            </h2>
-            <Link 
-              to="/events" 
-              className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
-            >
-              View all events
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
-          
-          {/* Display upcoming events or message if none */}
-          {(() => {
-            const upcomingEvents = allEvents
-              .sort((a, b) => {
-                const dateA = parseEventDate(a.date);
-                const dateB = parseEventDate(b.date);
-                return dateB.getTime() - dateA.getTime();
-              })
-              .filter(event => !isPastEvent(event.date));
-            
-            return upcomingEvents.length > 0 ? (
+      {/* Upcoming Events Section - Only show if there are upcoming events */}
+      {(() => {
+        const upcomingEvents = allEvents
+          .sort((a, b) => {
+            const dateA = parseEventDate(a.date);
+            const dateB = parseEventDate(b.date);
+            return dateB.getTime() - dateA.getTime();
+          })
+          .filter(event => !isPastEvent(event.date));
+        
+        if (upcomingEvents.length === 0) {
+          return null;
+        }
+        
+        return (
+          <section className="py-16 pb-8 relative z-10 overflow-hidden" style={{
+            background: `linear-gradient(135deg, #1e3a5f 0%, #2d4f6f 12%, #3b3a7a 28%, #554c96 48%, #6b5aab 68%, #8b7ec8 100%)`
+          }}>
+            {/* Smooth transition overlay at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent via-[#8b7ec8]/50 to-[#8b7ec8] pointer-events-none z-0" />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="flex justify-between items-center mb-10">
+                <h2 className="text-3xl font-bold text-white" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
+                  Upcoming Events
+                </h2>
+                <Link 
+                  to="/events" 
+                  className="flex items-center text-[#00AEEF] hover:text-[#8b7ec8] transition-colors duration-200"
+                >
+                  View all events
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </div>
+              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {upcomingEvents.slice(0, 3).map((item) => (
                   <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
@@ -856,7 +896,7 @@ export default function Home() {
                     </div>
                     <div className="p-6">
                       <div className="flex items-center mb-3">
-                        <span className="inline-block px-3 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">
+                        <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full" style={{ backgroundColor: 'rgba(0, 174, 239, 0.15)', color: '#00AEEF' }}>
                           {item.category}
                         </span>
                         <div className="flex items-center text-gray-500 text-sm ml-3">
@@ -864,8 +904,8 @@ export default function Home() {
                           {item.date}
                         </div>
                       </div>
-                      <h3 className="text-xl font-bold mb-2 hover:text-indigo-600 transition-colors duration-200">
-                        <Link to={`/events/${item.id}`}>{item.title}</Link>
+                      <h3 className="text-xl font-bold mb-2 transition-colors duration-200">
+                        <Link to={`/events/${item.id}`} className="text-gray-900 hover:text-[#00AEEF]">{item.title}</Link>
                       </h3>
                       {item.category === 'Event' && item.location && (
                         <div className="flex items-center text-gray-600 text-sm mb-2">
@@ -876,7 +916,7 @@ export default function Home() {
                       <p className="text-gray-600 mb-4">{item.excerpt}</p>
                       <Link 
                         to={`/events/${item.id}`}
-                        className="text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200 flex items-center"
+                        className="text-[#00AEEF] font-medium hover:text-[#8b7ec8] transition-colors duration-200 flex items-center"
                       >
                         Read more
                         <ArrowRight className="ml-1 h-4 w-4" />
@@ -885,16 +925,10 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="text-center py-12 bg-gray-50 rounded-lg">
-                <p className="text-xl text-gray-600">
-                  No upcoming events at this time. Check back soon!
-                </p>
-              </div>
-            );
-          })()}
-        </div>
-      </section>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* News Highlights Section */}
       <Suspense fallback={<div className="min-h-[200px]" />}>
