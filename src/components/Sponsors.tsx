@@ -17,7 +17,7 @@ const sponsors = [
   },
   {
     name: "AI Commons",
-    logo: "https://ai-commons.org/wp-content/themes/aicommons/assets/img/logo.svg",
+    logo: "https://maximages.s3.us-west-1.amazonaws.com/aicommonlogo.svg",
   },
   {
     name: "UNESCO",
@@ -58,6 +58,10 @@ const supportingSponsors = [
     name: "ITU",
     logo: "https://www.un.org/sites/un2.un.org/files/field/image/ituv2-01.jpg",
   },
+  {
+    name: "AWS",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
+  }
 ];
 
 export default function Sponsors() {

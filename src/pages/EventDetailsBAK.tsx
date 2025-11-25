@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Clock, MapPin, Tag, ArrowLeft, ExternalLink, Share2 } from 'lucide-react';
 import PreRegisterCTA from '../components/PreRegisterCTA';
@@ -22,22 +21,10 @@ interface NewsItem {
 
 // Sample data - in a real app, this would come from an API or database
 const allItems: NewsItem[] = [
-  {
-    id: 'Digital-Trust-Convention-Montreal',
-    title: 'Digital Trust Convention – Montreal',
-    date: 'November 6, 2025',
-    location: 'Montreal, Canada',
-    excerpt: 'Join us at the Digital Trust Convention in Montreal for an insightful presentation by the Global Trust Consortium (GTC) — a global movement convened by IEEE SA, OECD, UNESCO, GPAI, and AI Commons to restore integrity in the age of AI.',
-    content: `<h1>Digital Trust Convention – Montreal</h1><p><b>Montreal, Canada — November 6-7, 2025</b></p><p>Join us at the Digital Trust Convention in Montreal for an insightful presentation by the Global Trust Consortium (GTC) — a global movement convened by IEEE SA, OECD, UNESCO, GPAI, and AI Commons to restore integrity in the age of AI. The GTC empowers innovators, policymakers, and organizations worldwide to design solutions that strengthen trust in digital ecosystems. This session will explore how resilient, transparent, and user-centric information environments can empower future generations, industry, innovation, and healthcare alike. Discover how the GTC's three-phase challenge model is mobilizing global talent to turn this moment into an opportunity to build a more reliable and human-centered digital future.</p>`,
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+2025.webp',
-    category: 'Event',
-    type: 'event',
-    tags: ['Event', 'Upcoming', 'important']
-  },
-  {
+    {
     id: 'ENS-AI-Action-Summit-Event',
     title: 'Trust on the Line: Global Trust Challenge Side Event at the AI Action Summit',
-    date: 'February 11, 2025',
+    date: 'February, 2025',
     location: 'École normale supérieure, Paris',
     excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
     content: `<h1>Trust on the Line: Global Trust Challenge Side Event at the AI Action Summit</h1>
@@ -74,7 +61,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Global-Trust-Challenge-Side-Event',
     title: 'Trust in Focus: Global Trust Challenge at the Japan Cultural Centre',
-    date: 'February 10, 2025',
+    date: '10 February 2025',
     location: 'Japan Cultural Centre, Paris',
     excerpt: "In a world where synthetic content can be produced at the click of a button, trust has never been more fragile — or more essential. That urgency set the tone at the Japan Cultural Centre in Paris, where global leaders gathered to confront the risks of generative AI and chart pathways toward a more reliable digital future.",
     content: `<h2 style='font-size: 1.5rem;font-weight: bold;'>A Global Coalition on Stage</h2>
@@ -112,10 +99,10 @@ const allItems: NewsItem[] = [
   {
     id: 'Digital-Trust-Convention',
     title: 'The Digital Trust Convention',
-    date: 'November 15, 2024',
+    date: 'November 2025',
     location: 'OECD Headquarters, Paris, France',
     excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
-    content: `<h1>Building the Foundations of Digital Trust at the Digital Trust Convention</h1><p><b>Paris, November 15, 2024</b></p><p>Trust is the invisible infrastructure of democracy and markets. Without it, discourse fractures, economies falter, and communities lose cohesion. At the Digital Trust Convention, leaders from across sectors gathered to ask how this fragile asset can be safeguarded in an era when generative AI is testing the limits of what we can believe.</p><h2>A Global Gathering</h2><p>The event was co-hosted by a formidable alliance: the Atlantic Council, Bertelsmann Stiftung, KI Park, the Mila Quebec AI Institute, the OECD, the Partnership on AI (PAI), the Association of Electrical, Electronic and Information Technologies (VDE), and the World Privacy Forum. Their shared presence underscored the urgent, global nature of the challenge.</p><h2>Foundations for a Vision of Digital Trust</h2><p>In the session titled <i>"Foundations for a Vision of Digital Trust,"</i> Amir Banifatemi (Co-Founder and Director of AI Commons, and Founder/Curator of the AI for Good Global Summit) introduced the Global Trust Challenge to the Convention audience.</p><p>He emphasized that disinformation powered by scalable synthetic content cannot be tackled by any one actor in isolation. Instead, the Challenge promotes collective resilience by equipping governments, organizations, and individuals with practical tools to discern truth from manipulation. The GTC's unique design — combining technical innovation with governance and policy frameworks — resonated strongly with the Convention's theme of resilience and integrity.</p><h2>Why This Session Mattered</h2><p>This event reaffirmed that digital trust is not optional; it is the backbone of both democratic legitimacy and economic vitality. Presenting the Global Trust Challenge within this context highlighted the initiative's potential to serve as a global mechanism for action, where multilateral organizations, private sector innovators, and civil society converge.</p><h2>Key Highlights:</h2><ul><li>Digital trust framed as a pillar of democracy and markets in the AI age.</li><li>Introduction of the Global Trust Challenge as a mechanism to build resilience against disinformation.</li><li>Strong endorsement of cross-sector collaboration as the only path forward.</li></ul>
+    content: `<h1>Building the Foundations of Digital Trust at the Digital Trust Convention</h1><p><b>Paris, 2025</b></p><p>Trust is the invisible infrastructure of democracy and markets. Without it, discourse fractures, economies falter, and communities lose cohesion. At the Digital Trust Convention, leaders from across sectors gathered to ask how this fragile asset can be safeguarded in an era when generative AI is testing the limits of what we can believe.</p><h2>A Global Gathering</h2><p>The event was co-hosted by a formidable alliance: the Atlantic Council, Bertelsmann Stiftung, KI Park, the Mila Quebec AI Institute, the OECD, the Partnership on AI (PAI), the Association of Electrical, Electronic and Information Technologies (VDE), and the World Privacy Forum. Their shared presence underscored the urgent, global nature of the challenge.</p><h2>Foundations for a Vision of Digital Trust</h2><p>In the session titled <i>“Foundations for a Vision of Digital Trust,”</i> Amir Banifatemi (Co-Founder and Director of AI Commons, and Founder/Curator of the AI for Good Global Summit) introduced the Global Trust Challenge to the Convention audience.</p><p>He emphasized that disinformation powered by scalable synthetic content cannot be tackled by any one actor in isolation. Instead, the Challenge promotes collective resilience by equipping governments, organizations, and individuals with practical tools to discern truth from manipulation. The GTC’s unique design — combining technical innovation with governance and policy frameworks — resonated strongly with the Convention’s theme of resilience and integrity.</p><h2>Why This Session Mattered</h2><p>This event reaffirmed that digital trust is not optional; it is the backbone of both democratic legitimacy and economic vitality. Presenting the Global Trust Challenge within this context highlighted the initiative’s potential to serve as a global mechanism for action, where multilateral organizations, private sector innovators, and civil society converge.</p><h2>Key Highlights:</h2><ul><li>Digital trust framed as a pillar of democracy and markets in the AI age.</li><li>Introduction of the Global Trust Challenge as a mechanism to build resilience against disinformation.</li><li>Strong endorsement of cross-sector collaboration as the only path forward.</li></ul>
 `,
     image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg',
     category: 'Event',
@@ -131,7 +118,7 @@ const allItems: NewsItem[] = [
     content: `<h1>From Geneva to the World: Global Trust Challenge Sparks Action at AI for Good 2025</h1>
 <p><b>Geneva, Switzerland – July 9, 2025</b></p>
 <p>It started with a simple, unsettling question at the AI for Good Global Summit: If we can no longer tell what’s real online, how do we keep societies from unravelling?</p>
-<p>On stage, at the International Telecommunication Union’s (ITU) AI for Good, the Global Trust Challenge offered an answer — not in theory, but in action. This global initiative, born from a G7 call to safeguard truth in the digital age, is rallying technologists, policymakers, and innovators to build solutions that blend policy with technology.</p>
+<p>On stage the Global Trust Challenge offered an answer — not in theory, but in action. This global initiative, born from a G7 call to safeguard truth in the digital age, is rallying technologists, policymakers, and innovators to build solutions that blend policy with technology.</p>
 <p>Backed by a formidable coalition — OECD.AI, IEEE Standards Association, UNESCO, AI Commons — the Challenge was introduced to an audience of global changemakers. They heard about its mission, its three-phase pathway from proposal to prototype to pilot, and most importantly, its open invitation: bring us your boldest ideas for restoring trust.</p>
 <p>The conversations didn’t stop when the panel ended. The session sparked engaged discussion in the room and beyond, as attendees reflected on the urgent need for tools and policies that can keep pace with rapidly evolving AI-generated misinformation. Many expressed interest in learning more about the Challenge, signalling early momentum as it reaches a global audience.</p>
 <p>This was the Challenge doing exactly what it was designed to do: connect brilliant minds across borders to solve one of the toughest problems of our time.</p>
@@ -151,7 +138,7 @@ const allItems: NewsItem[] = [
   {
     id: 'Lyceum-Project-Event',
     title: 'Empowering Tomorrow’s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI',
-    date: 'June 20, 2025',
+    date: 'June 20th, 2025',
     location: 'Athens, Greece',
     excerpt: 'On June 20, 2025, an electric gathering took place in Athens. The Lyceum Project 2025 - “Children in the Age of AI” - was explicitly “a day of reflection and dialogue” on how to empower children to flourish in a world guided by algorithms.',
     content: `<h1>Empowering Tomorrow’s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI</h1>
@@ -183,57 +170,15 @@ const allItems: NewsItem[] = [
 
 export default function EventDetail() {
   const { id } = useParams<{ id: string }>();
-  const [item, setItem] = useState<NewsItem | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const item = allItems.find(item => item.id === id);
 
-  useEffect(() => {
-    const fetchEvent = async () => {
-      if (!id) {
-        setError('No event ID provided');
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const eventData = await BCMSService.getEventBySlug(id);
-        if (eventData) {
-          setItem(eventData);
-        } else {
-          setError('Event not found');
-        }
-      } catch (err) {
-        console.error('Error fetching event:', err);
-        setError('Failed to load event');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvent();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <section className="py-20 bg-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading event...</p>
-          </div>
-        </section>
-      </div>
-    );
-  }
-
-  if (error || !item) {
+  if (!item) {
     return (
       <div className="flex flex-col min-h-screen">
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl font-bold mb-4">Event Not Found</h1>
-            <p className="text-gray-600 mb-8">{error || 'The event you\'re looking for doesn\'t exist or has been removed.'}</p>
+            <p className="text-gray-600 mb-8">The event you're looking for doesn't exist or has been removed.</p>
             <Link 
               to="/events"
               className="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
@@ -338,7 +283,7 @@ export default function EventDetail() {
           </div>
 
           {/* Tags */}
-          {item.tags && Array.isArray(item.tags) && item.tags.length > 0 && (
+          {item.tags && item.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-8">
               {item.tags.map((tag, index) => (
                 <span key={index} className="inline-flex items-center text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
@@ -350,7 +295,7 @@ export default function EventDetail() {
           )}
 
           {/* Content */}
-         <div className="prose prose-lg prose-indigo max-w-none">
+          <div className="prose prose-lg prose-indigo max-w-none">
             {item.content ? (
               <div dangerouslySetInnerHTML={{ __html: item.content }} 
               className="
@@ -367,7 +312,6 @@ export default function EventDetail() {
               <p className="text-gray-600">{item.excerpt}</p>
             )}
           </div>
-
 
           {/* External Link */}
           {item.link && (
