@@ -1,46 +1,28 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-//import CinematicCrossfade from '../components/CinematicCrossfade';
-import { 
-  ArrowRight, 
-  Target, 
-  Users, 
-  Shield, 
-  Lightbulb, 
-  Calendar, 
-  MapPin, 
-  Cog, 
-  Stamp, 
-  Rocket 
+import {
+  Target,
+  Users,
+  Shield,
+  Lightbulb,
+  Award,
+  Rocket
 } from 'lucide-react';
-//import HeroSectionV3 from '../components/HeroSectionV3';
-//import FutureRunsOnTrust from '../components/FutureRunsOnTrust';
+import Hero from '../components/Hero';
+import GlassCard from '../components/GlassCard';
+import ShinyButton from '../components/ShinyButton';
+import { AuroraText } from '@/components/ui/aurora-text';
+import { BentoGrid, BentoCard } from '@/components/ui/bento-grid';
+import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
+import { TextHoverEffect } from '@/components/ui/text-hover-effect';
+import { BackgroundBeams } from '@/components/ui/background-beams';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
+import CardFlip from '@/components/ui/card-flip';
 
-
-
-
-// Lazy load below-the-fold components for better initial load performance
-const CinematicCrossfade = lazy(() => import('../components/CinematicCrossfade'));
-const HeroSectionV3 = lazy(() => import('../components/HeroSectionV3'));
+// Lazy load below-the-fold components
 const FutureRunsOnTrust = lazy(() => import('../components/FutureRunsOnTrust'));
-const NewsHighlights = lazy(() => import('../components/NewsHighlights'));
-const PreRegisterCTA = lazy(() => import('../components/PreRegisterCTA'));
-const SponsorsCTA = lazy(() => import('../components/SponsorsCTA'));
-const JourneyCTA = lazy(() => import('../components/JourneyCTA'));
-import '../styles/card-glow-effect.css';
-import { motion } from 'framer-motion';
-import '../styles/unique-section-refined.css';
-import '../styles/warp-transitions.css';
-import '../styles/prototype-unique.css';
-import '../styles/floating-cards-3d.css';
-import '../styles/is-this-for-you.css';
-import WarpSectionTransition from '../components/WarpSectionTransition';
-import SelectionCriteria from '../components/SelectionCriteria';
-import ImmersiveBackground from '../components/ImmersiveBackground';
-import LazySection from '../components/LazySection';
-
 
 interface FormData {
   fullName: string;
@@ -48,108 +30,6 @@ interface FormData {
   areaOfInterest: string;
   yourIdea: string;
 }
-
-
-// Events data (same as in Events.tsx)
-const allEvents = [
-  {
-    id: 'Digital-Trust-Convention-Montreal',
-    title: 'Digital Trust Convention – Montreal',
-    date: 'November 6, 2025',
-    location: 'Montreal, Canada',
-    excerpt: 'Join the Global Trust Challenge at the Digital Trust Convention in Montreal for a forward-looking session on how we can build resilient information ecosystems in the age of AI. The GTC will spotlight how trustworthy digital environments can unlock new opportunities for future generations, drive innovation across industries, and strengthen public trust in sectors such as healthcare and education.',
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+2025.webp',
-    category: 'Event',
-    type: 'event',
-    tags: ['Event', 'Upcoming', 'important']
-  },
-  {
-    id: 'ENS-AI-Action-Summit-Event',
-    title: 'ENS - AI Action Summit Official Side Event',
-    date: 'February 11, 2025',
-    location: 'École normale supérieure, Paris',
-    excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/ENS.jpg',
-    category: 'Event',
-    type: 'event',
-    tags: ['Event', 'Announcement', 'important']
-  },
-  {
-    id: 'Global-Trust-Challenge-Side-Event',
-    title: 'Trust in Focus: Global Trust Challenge at the Japan Cultural Centre',
-    date: 'February 10, 2025',
-    location: 'Japan Cultural Centre, Paris',
-    excerpt: "In a world where synthetic content can be produced at the click of a button, trust has never been more fragile — or more essential. That urgency set the tone at the Japan Cultural Centre in Paris, where global leaders gathered to confront the risks of generative AI and chart pathways toward a more reliable digital future.",
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/GTCEvent1.png',
-    category: 'Event',
-    type: 'event',
-    tags: ['Event', 'Announcement', 'important']
-  },
-  {
-    id: 'Digital-Trust-Convention',
-    title: 'The Digital Trust Convention',
-    date: 'November 15, 2024',
-    location: 'OECD Headquarters, Paris, France',
-    excerpt: 'The Digital Trust Convention brought together global stakeholders to examine what is needed to build a resilient digital space—one in which trust and integrity, as essential pillars of democratic discourse and effective markets, can be sustained in the era of generative AI.',
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg',
-    category: 'Event',
-    type: 'event',
-    tags: ['Event', 'Announcement', 'important']
-  },
-  {
-    id: 'AI-For-Good',
-    title: 'AI for Good Global Summit 2025',
-    date: 'July 9, 2025',
-    location: 'Geneva, Switzerland',
-    excerpt: 'It started with a simple, unsettling question at the AI for Good Global Summit: If we can no longer tell what\'s real online, how do we keep societies from unravelling? On stage, at the International Telecommunication Union\'s (ITU) AI for Good, the Global Trust Challenge offered an answer — not in theory, but in action. This global initiative, born from a G7 call to safeguard truth in the digital age, is rallying technologists, policymakers, and innovators to build solutions that blend policy with technology.',
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/AI+for+Good+Event+Photo.jpeg',
-    category: 'Event',
-    type: 'event',
-    tags: ['Event', 'Announcement', 'important']
-  },
-  {
-    id: 'Lyceum-Project-Event',
-    title: 'Empowering Tomorrow\'s Citizens: Highlights from The Lyceum Project 2025 - Children in the Age of AI',
-    date: 'June 20, 2025',
-    location: 'Athens, Greece',
-    excerpt: 'On June 20, 2025, an electric gathering took place in Athens. The Lyceum Project 2025 – "Children in the Age of AI" – was explicitly "a day of reflection and dialogue" on how to empower children to flourish in a world guided by algorithms. Leading thinkers, educators, policymakers, and citizens gathered at the historic Athens Conservatoire (next to Aristotle\'s Lyceum) to ask: what does it really mean to be a child in the age of AI?',
-    image: 'https://maximages.s3.us-west-1.amazonaws.com/Screenshot+2025-08-29+210641.png',
-    category: 'Event',
-    type: 'event',
-    tags: ['Event', 'Announcement', 'important']
-  }
-];
-
-// Helper function to parse different date formats
-const parseEventDate = (dateString: string | undefined): Date => {
-  if (!dateString || typeof dateString !== 'string') {
-    return new Date(0);
-  }
-  // Remove ordinal suffixes (st, nd, rd, th)
-  const cleanDate = dateString.replace(/(\d+)(st|nd|rd|th)/, '$1');
-  
-  // Try to parse the date
-  const parsed = new Date(cleanDate);
-  
-  // If parsing fails or we only have month/year, handle specially
-  if (isNaN(parsed.getTime())) {
-    // Handle "Month YYYY" format by setting to first of month
-    const parts = (cleanDate || '').split(' ');
-    if (parts.length === 2) {
-      return new Date(`${parts[0]} 1, ${parts[1]}`);
-    }
-  }
-  
-  return parsed;
-};
-
-// Helper function to determine if an event is past
-const isPastEvent = (dateString: string): boolean => {
-  const eventDate = parseEventDate(dateString);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Reset time to start of day
-  return eventDate < today;
-};
 
 export default function Home() {
   const location = useLocation();
@@ -165,68 +45,9 @@ export default function Home() {
     message: string;
   }>({ type: null, message: '' });
 
-  // GSAP refs removed - using Swiper carousel instead
-  
-  // Register GSAP plugins
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
   }, []);
-
-
-
-  // Simple setup - no complex GSAP configuration
-
-  // No complex animations - let CSS handle everything
-
-  // GSAP animations removed - using Swiper carousel instead
-
-  // Card data for carousels
-  // const topCardsData = [
-  //   {
-  //     icon: Users,
-  //     title: "Inclusive Contribution",
-  //     description: "Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI."
-  //   },
-  //   {
-  //     icon: Globe,
-  //     title: "Global Validation",
-  //     description: "Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots."
-  //   },
-  //   {
-  //     icon: Scale,
-  //     title: "Building Global Intelligence",
-  //     description: "Combining policy and technology solutions — integrated, actionable models. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age."
-  //   }
-  // ];
-
-  const bottomCardsData = [
-    {
-      icon: Lightbulb,
-      phase: "Phase 1",
-      title: "Context",
-      description: "Key insights from leading AI and misinformation researchers — grounding ideas in the latest thinking and real-world relevance."
-    },
-    {
-      icon: Cog,
-      phase: "Phase 2",
-      title: "Infrastructure",
-      description: "A platform to prototype, test, and showcase solutions — with tools and pathways to support development."
-    },
-    {
-      icon: Stamp,
-      phase: "Phase 3",
-      title: "Legitimacy",
-      description: "Backed by global institutions like IEEE, OECD, and more — reinforcing credibility and trust."
-    },
-    {
-      icon: Rocket,
-      phase: "Phase 3",
-      title: "Opportunity",
-      description: "Routes to real impact, policy dialogue, and funding — helping your solution grow beyond the challenge."
-    }
-  ];
-
-  // Section 3 uses immediate visibility (no container fade)
 
   const smoothScrollTo = (targetElement: HTMLElement, duration: number = 600) => {
     const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
@@ -243,9 +64,9 @@ export default function Home() {
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
       const ease = easeInOutCubic(progress);
-      
+
       window.scrollTo(0, startPosition + distance * ease);
-      
+
       if (timeElapsed < duration) {
         requestAnimationFrame(animation);
       }
@@ -259,7 +80,6 @@ export default function Home() {
     if (searchParams.get('scroll') === 'pre-registration') {
       const element = document.getElementById('pre-registration');
       if (element) {
-        // Small delay to ensure page is loaded
         setTimeout(() => {
           smoothScrollTo(element, 600);
         }, 100);
@@ -268,22 +88,7 @@ export default function Home() {
     }
   }, [location]);
 
-  const handlePreRegisterClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const element = document.getElementById('pre-registration');
-    if (element) {
-      smoothScrollTo(element, 600);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-   const handleInputChangetextArea = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -335,730 +140,424 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen relative section-smooth">
-      {/* Cinematic Crossfade Depth Push */}
-      <CinematicCrossfade sectionIds={['hero']} />
-      
-      {/* Warp Section Transition Effect */}
-      <WarpSectionTransition sectionIds={['hero']} />
+    <div className="flex flex-col min-h-screen bg-white text-slate-900 overflow-x-hidden">
 
-      {/* Hero Section V3 */}
-      <HeroSectionV3 />
-      
+      {/* Hero Section */}
+      <Hero />
 
-      {/* The Future Runs on Trust Section */}
-      
-      <FutureRunsOnTrust />
-    
-      
-
-      {/* What Makes This Challenge Unique & What We Provide Section */}
-      <section 
-        id="unique"
-        className="unique-section relative z-10 overflow-hidden"
-       >
-        {/* Cinematic animated background */}
-        <ImmersiveBackground 
-          variant="teal"
-          overlayOpacity={0.2}
-          className="unique-bg-teal-gold"
-        />
-            
-        <div className="unique-proto">
-        <div className="unique-wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Two-column layout: left headline, right stacked feature cards */}
-          <div className="unique-layout">
-            <div className="left-col">
-              <h2 className="section-title unique-heading">
-                What Makes This
-                <br />
-                Challenge <span className="text-gradient-unique">Unique</span>
-              </h2>
-              <div className="text-contrast-block">
-                <p className="section-description">
-                  A transformative platform where innovation meets opportunity, backed by world-class institutions and real-world impact.
-                </p>
-              </div>
-
-            </div>
-
-            <div className="right-col">
-              <div className="feature-card feature-cyan" onMouseMove={(e) => {
-                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
-                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
-                t.style.setProperty('--my', `${e.clientY - r.top}px`);
-              }}>
-                <div className="icon-badge">🏅</div>
-                <div>
-                  <h3 className="feature-title">Inclusive Contribution</h3>
-                  <p className="feature-sub">Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together to defend truth and reflect their cultures in the age of AI.</p>
-                </div>
-              </div>
-              <div className="feature-card feature-amber" onMouseMove={(e) => {
-                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
-                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
-                t.style.setProperty('--my', `${e.clientY - r.top}px`);
-              }}>
-                <div className="icon-badge">🌐</div>
-                <div>
-                  <h3 className="feature-title">Global Validation</h3>
-                  <p className="feature-sub">Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host, guide, and scale the winning ideas — validating innovation through pilots.</p>
-                </div>
-              </div>
-              <div className="feature-card feature-blue" onMouseMove={(e) => {
-                const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
-                t.style.setProperty('--mx', `${e.clientX - r.left}px`);
-                t.style.setProperty('--my', `${e.clientY - r.top}px`);
-              }}>
-                <div className="icon-badge">🏗️</div>
-                <div>
-                  <h3 className="feature-title">Building Global Intelligence</h3>
-                  <p className="feature-sub">Combining policy and technology solutions — integrated, actionable models. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration to defend truth in the digital age.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* What We Provide grid (bottom) - Vercel prototype styling */}
-          <div className="title text-center mt-16">
-            <h2 className="provide-title">What We Provide</h2>
-          </div>
-          <div className="provide-cards" aria-label="What we provide cards grid">
-            {[
-              { ...bottomCardsData[0], accent: '#00AEEF', variant: 'dark' },
-              { ...bottomCardsData[1], accent: '#8b7ec8', variant: 'gold' },
-              { ...bottomCardsData[2], accent: '#00AEEF', variant: 'dark' },
-              { ...bottomCardsData[3], accent: '#8b7ec8', variant: 'gold' },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className={`provide-card variant-${item.variant}`}
-                style={{ ['--accent' as any]: item.accent }}
-                onMouseMove={(e) => {
-                  const t = e.currentTarget as HTMLDivElement; const r = t.getBoundingClientRect();
-                  t.style.setProperty('--mx', `${e.clientX - r.left}px`);
-                  t.style.setProperty('--my', `${e.clientY - r.top}px`);
-                }}
-              >
-                <div className="provide-icon"><item.icon /></div>
-                <div className="provide-content">
-                  <h5 className="provide-heading">{item.title}</h5>
-                  <p className="provide-text">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        </div>
-
-      </section>
-      
-
-
-
-      {/* Is This for You Section */}
-       {/* <section className="py-20 bg-gray-50 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-              Is This for You?
+      {/* Unique Features Section */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-50">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-slate-900">
+              What Makes This <br />
+              <AuroraText>Challenge Unique</AuroraText>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Anyone with a bold idea - students, startups, nonprofits, researchers, policymakers, designer - if you have something to say or build, we want to hear it.
-              </p>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto py-5">
-              Whether you're a solo thinker or part of a global team, you're invited.
-                </p>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online - through innovation, collaboration, and vision.
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              A transformative platform where innovation meets opportunity, backed by world-class institutions and real-world impact.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              {[
-                {
-                    icon: Shield,
-                    title: "Impact-Driven",
-                    description: "Strengthen how we verify and trust AI-generated content - so people can rely on what they see and hear."
-                  },
-                  {
-                    icon: Lightbulb,
-                    title: "Ambitious & Visionary",
-                    description: "Go beyond today's standard approaches. We're seeking solutions that rethink how we uphold information integrity at global scale."
-                  },
-                  {
-                    icon: Target,
-                    title: "Tech + Policy Integration",
-                    description: "The best solutions combine technology and policy. Think tools plus rules - practical, holistic, and ready for the real world."
-                  },
-                  {
-                    icon: Users,
-                    title: "Feasible & Scalable",
-                    description: "Your solution doesn't have to be perfect - but it should be realistic, sustainable, and able to grow."
-                  }
-              ].map((item, index) => (
-                <div key={index} className="flex items-start bg-white p-6 rounded-lg shadow-md transform transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <div className="flex-shrink-0">
-                    <div className="p-3 bg-indigo-100 rounded-lg">
-                      <item.icon className="w-6 h-6 text-indigo-600" />
-                    </div>
-                  </div>
-                  <div className="ml-6">
-                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                    <p className="text-gray-600">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="lg:pl-8">
-              <div className="sticky top-24">
-                <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80"
-                  alt="Innovation collaboration"
-                  className="rounded-lg shadow-xl mb-8"
-                />
-                <div className="bg-white p-8 rounded-lg shadow-md">
-                  <h3 className="text-2xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
-                    Who Can Participate?
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    Anyone with a bold idea - from students and startups to researchers, nonprofits, or companies. Teams from around the globe are encouraged to join. Great ideas can come from anyone, anywhere
-                  </p>
-                  
-                  <div className="mt-8">
-                    <a
-                      href="#pre-registration"
-                      onClick={handlePreRegisterClick}
-                      className="inline-flex items-center justify-center w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
-                    >
-                      Register Your Team
-                      <ArrowRight className="ml-2" size={20} />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <BentoGrid className="lg:grid-rows-1 lg:grid-cols-3">
+            <BentoCard
+              name="Inclusive Contribution"
+              className="col-span-3 lg:col-span-1"
+              background={<div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-50" />}
+              Icon={Users}
+              description="Enables diversity, collaboration, and global scalability. We're crowdsourcing from a distributed braintrust: students, citizens, institutions, and innovators all working together."
+              href="#"
+              cta="Learn More"
+            />
+            <BentoCard
+              name="Global Validation"
+              className="col-span-3 lg:col-span-1"
+              background={<div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-transparent opacity-50" />}
+              Icon={Target}
+              description="Designed to create practical prototypes, test them in real-world environments, and measure impact. A growing network of cities and organizations will help host and scale."
+              href="#"
+              cta="Learn More"
+            />
+            <BentoCard
+              name="Building Global Intelligence"
+              className="col-span-3 lg:col-span-1"
+              background={<div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-transparent opacity-50" />}
+              Icon={Shield}
+              description="Combining policy and technology solutions. The Global Trust Challenge is a platform for collective insight, civic imagination, and cross-border collaboration."
+              href="#"
+              cta="Learn More"
+            />
+          </BentoGrid>
         </div>
-      </section> */}
+      </section>
 
-               {/* Is This for You Section - Redesigned */}
-       <section id="is-this-for-you" className="is-this-for-you-section py-20 relative z-10 overflow-hidden">
-        {/* Animated Gradient Background */}
-        <div className="animated-gradient-background absolute inset-0 z-0" style={{
-          background: `linear-gradient(
-            135deg,
-            #007A8A 0%,
-            #004D5C 10%,
-            #0A1F2A 20%,
-            #3B3A7A 35%,
-            #554C96 50%,
-            #6B5AAB 65%,
-            #8B7EC8 80%,
-            #A78BFA 100%
-          )`
-        }} />
-        
-        {/* Subtle Moving Fog Overlay */}
-        <div className="moving-fog-overlay absolute inset-0 z-[1]" style={{
-          background: `radial-gradient(
-            ellipse at 20% 30%,
-            rgba(139, 92, 246, 0.15) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            ellipse at 80% 70%,
-            rgba(99, 102, 241, 0.12) 0%,
-            transparent 50%
-          )`
-        }} />
-        
-        {/* Shimmer Overlay */}
-        <div className="shimmer-overlay absolute inset-0 z-[1]" style={{
-          background: `linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(167, 139, 250, 0.1) 50%,
-            transparent 100%
-          )`
-        }} />
-        
-        {/* Light Particles */}
-        {(() => {
-          const particleColors = [
+      {/* What We Provide Section - Replaced with Apple Cards Carousel */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-slate-900">What We Provide</h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Comprehensive support to turn your ideas into reality.
+            </p>
+          </div>
+
+          <Carousel items={[
             {
-              bg: 'radial-gradient(circle, rgba(139,92,246,1) 0%, rgba(99,102,241,0.8) 40%, rgba(167,139,250,0.4) 70%, transparent 100%)',
-              shadow: '0 0 30px rgba(139,92,246,1), 0 0 60px rgba(99,102,241,0.6)'
+              category: "Context",
+              title: "Expert Insights",
+              src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940&auto=format&fit=crop",
+              content: (
+                <div className="bg-slate-50 p-8 md:p-14 rounded-3xl mb-4">
+                  <p className="text-slate-600 text-base md:text-2xl font-sans max-w-3xl mx-auto">
+                    <span className="font-bold text-slate-900">Access key insights</span> from leading AI and misinformation researchers. We provide the context you need to build relevant solutions.
+                  </p>
+                </div>
+              ),
             },
             {
-              bg: 'radial-gradient(circle, rgba(236,72,153,1) 0%, rgba(219,39,119,0.8) 40%, rgba(244,114,182,0.4) 70%, transparent 100%)',
-              shadow: '0 0 30px rgba(236,72,153,1), 0 0 60px rgba(219,39,119,0.6)'
+              category: "Infrastructure",
+              title: "Prototyping Platform",
+              src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2940&auto=format&fit=crop",
+              content: (
+                <div className="bg-slate-50 p-8 md:p-14 rounded-3xl mb-4">
+                  <p className="text-slate-600 text-base md:text-2xl font-sans max-w-3xl mx-auto">
+                    <span className="font-bold text-slate-900">A robust platform</span> to prototype, test, and showcase your solutions. We handle the infrastructure so you can focus on innovation.
+                  </p>
+                </div>
+              ),
             },
             {
-              bg: 'radial-gradient(circle, rgba(59,130,246,1) 0%, rgba(37,99,235,0.8) 40%, rgba(96,165,250,0.4) 70%, transparent 100%)',
-              shadow: '0 0 30px rgba(59,130,246,1), 0 0 60px rgba(37,99,235,0.6)'
+              category: "Legitimacy",
+              title: "Global Backing",
+              src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2968&auto=format&fit=crop",
+              content: (
+                <div className="bg-slate-50 p-8 md:p-14 rounded-3xl mb-4">
+                  <p className="text-slate-600 text-base md:text-2xl font-sans max-w-3xl mx-auto">
+                    <span className="font-bold text-slate-900">Backed by global institutions</span> like IEEE, OECD, and more. Your participation carries weight and recognition.
+                  </p>
+                </div>
+              ),
             },
             {
-              bg: 'radial-gradient(circle, rgba(34,197,94,1) 0%, rgba(22,163,74,0.8) 40%, rgba(74,222,128,0.4) 70%, transparent 100%)',
-              shadow: '0 0 30px rgba(34,197,94,1), 0 0 60px rgba(22,163,74,0.6)'
+              category: "Opportunity",
+              title: "Real Impact",
+              src: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=2940&auto=format&fit=crop",
+              content: (
+                <div className="bg-slate-50 p-8 md:p-14 rounded-3xl mb-4">
+                  <p className="text-slate-600 text-base md:text-2xl font-sans max-w-3xl mx-auto">
+                    <span className="font-bold text-slate-900">Routes to real impact</span>, policy dialogue, and funding. We connect you with the people who can make things happen.
+                  </p>
+                </div>
+              ),
             }
-          ];
+          ].map((card, index) => (
+            <Card key={card.src} card={card} index={index} />
+          ))} />
+        </div>
+      </section>
 
-          const particles = Array.from({ length: 50 }, (_, i) => {
-            const colorSet = particleColors[i % particleColors.length];
-            return {
-              id: i,
-              x: Math.random() * 100,
-              y: Math.random() * 100,
-              size: Math.random() * 8 + 2,
-              delay: Math.random() * 20,
-              duration: Math.random() * 12 + 12,
-              opacity: Math.random() * 0.8 + 0.6,
-              bg: colorSet.bg,
-              shadow: colorSet.shadow,
-              xMovement: (Math.random() - 0.5) * 100,
-              yMovement: (Math.random() - 0.5) * 100,
-            };
-          });
+      {/* Text Hover Effect Section */}
+      <section className="py-20 bg-slate-900 flex items-center justify-center overflow-hidden">
+        <div className="h-[20rem] flex items-center justify-center w-full">
+          <TextHoverEffect text="TRUST" />
+        </div>
+      </section>
 
-          return (
-            <div className="absolute inset-0 z-[2] pointer-events-none">
-              {particles.map((particle) => (
-                <motion.div
-                  key={particle.id}
-                  className="absolute rounded-full"
-                  style={{
-                    left: `${particle.x}%`,
-                    top: `${particle.y}%`,
-                    width: `${particle.size}px`,
-                    height: `${particle.size}px`,
-                    background: particle.bg,
-                    boxShadow: particle.shadow,
-                    filter: 'blur(1px)',
-                  }}
-                  animate={{
-                    y: [0, particle.yMovement, 0],
-                    x: [0, particle.xMovement, 0],
-                    opacity: [particle.opacity, particle.opacity * 2, particle.opacity],
-                    scale: [1, 1.8, 1],
-                  }}
-                  transition={{
-                    duration: particle.duration,
-                    delay: particle.delay,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-            </div>
-          );
-        })()}
-        
-        {/* Light Rays */}
-        {(() => {
-          const rays = Array.from({ length: 12 }, (_, i) => ({
-            id: i,
-            x: Math.random() * 100,
-            angle: (Math.random() - 0.5) * 60,
-            height: Math.random() * 200 + 150,
-            delay: Math.random() * 20,
-            duration: Math.random() * 8 + 6,
-            opacity: Math.random() * 0.4 + 0.2,
-          }));
+      {/* Glowing Effect Features Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-slate-900">
+              Why Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">Challenge</span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Discover the unique opportunities and benefits that make this challenge transformative.
+            </p>
+          </div>
 
-          return (
-            <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-              {rays.map((ray) => (
-                <motion.div
-                  key={ray.id}
-                  className="absolute origin-bottom"
-                  style={{
-                    left: `${ray.x}%`,
-                    bottom: 0,
-                    width: '3px',
-                    height: `${ray.height}%`,
-                    background: 'linear-gradient(to top, rgba(139,92,246,0.6), rgba(99,102,241,0.3), transparent)',
-                    boxShadow: '0 0 15px rgba(139,92,246,0.8), 0 0 30px rgba(99,102,241,0.4)',
-                    transform: `rotate(${ray.angle}deg)`,
-                    filter: 'blur(1px)',
-                  }}
-                  animate={{
-                    opacity: [ray.opacity, ray.opacity * 1.8, ray.opacity],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: ray.duration,
-                    delay: ray.delay,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-            </div>
-          );
-        })()}
-        
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-            {/* Left Content - Frosted Glass Text Box with Image Background */}
-            <div className="lg:col-span-2 relative">
-              <div 
-                className="header-text-box w-full rounded-2xl overflow-hidden relative p-8 lg:p-10"
-                style={{
-                  backgroundImage: 'url(https://maximages.s3.us-west-1.amazonaws.com/Isthisforyousection.jpg)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  minHeight: '400px'
-                }}
-              >
-                {/* Light ray sweep effect */}
-                <div className="light-ray" />
-                
-                {/* Dark overlay for better text readability - enhanced */}
-                <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/65 to-black/55" />
-                
-                {/* Frosted Glass Effect */}
-                <div className="absolute inset-0 backdrop-blur-md" />
-                
-                {/* Light overlay for frosted glass effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent" />
-                
-                {/* Frame Border */}
-                <div className="frame-border absolute inset-0 rounded-2xl border-2 border-white/40 shadow-[0_0_40px_rgba(139,92,246,0.3)]" />
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  <div className="header-title-wrapper relative inline-block">
-                    <h2 className="mb-8" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
-                      Is This for You?
-                    </h2>
+          <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[34rem] xl:grid-rows-2">
+            <li className="min-h-[14rem] list-none md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]">
+              <div className="relative h-full rounded-2xl border border-slate-200 p-2 md:rounded-3xl md:p-3 bg-white">
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
+                <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-gradient-to-br from-slate-50 to-white">
+                  <div className="relative flex flex-1 flex-col justify-between gap-3">
+                    <div className="w-fit rounded-lg border border-slate-200 bg-white p-2 shadow-sm">
+                      <Lightbulb className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div className="space-y-3">
+                      <h3 className="-tracking-4 pt-0.5 font-sans text-xl/[1.375rem] font-semibold text-balance text-slate-900 md:text-2xl/[1.875rem]">
+                        Innovation & Trust
+                      </h3>
+                      <p className="font-sans text-sm/[1.125rem] text-slate-600 md:text-base/[1.375rem]">
+                        Building solutions that redefine digital trust in the AI age.
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-xl text-white/90 mb-8">
-                    Anyone with a bold idea - students, startups, nonprofits, researchers, policymakers, designers - if you have something to say or build, we want to hear it.
-                  </p>
-                  <p className="text-xl text-white/90 mb-8">
-                    Whether you're a solo thinker or part of a global team, you're invited.
-                  </p>
-                  <p className="text-xl text-white/90 mb-12">
-                    Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online - through innovation, collaboration, and vision.
-                  </p>
                 </div>
               </div>
-            </div>
+            </li>
 
-            {/* Right Image */}
-            <div className="lg:col-span-1">
-              <img
-                src="https://maximages.s3.us-west-1.amazonaws.com/Isthisforyousection.jpg"
-                alt="Innovation collaboration"
-                className="rounded-lg shadow-xl w-full h-64 lg:h-80 object-cover"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-                     {/* Criteria Cards - Full Width Below */}
-           <div className="mt-16">
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               {[
-                 {
-                   icon: Shield,
-                   title: "Impact-Driven",
-                   description: "Strengthen how we verify and trust AI-generated content - so people can rely on what they see and hear.",
-                   variant: "violet"
-                 },
-                 {
-                   icon: Lightbulb,
-                   title: "Ambitious & Visionary",
-                   description: "Go beyond today's standard approaches. We're seeking solutions that rethink how we uphold information integrity at global scale.",
-                   variant: "indigo"
-                 },
-                 {
-                   icon: Target,
-                   title: "Tech + Policy Integration",
-                   description: "The best solutions combine technology and policy. Think tools plus rules - practical, holistic, and ready for the real world.",
-                   variant: "purple"
-                 },
-                 {
-                   icon: Users,
-                   title: "Feasible & Scalable",
-                   description: "Your solution doesn't have to be perfect - but it should be realistic, sustainable, and able to grow.",
-                   variant: "pink"
-                 }
-               ].map((item, index) => (
-                 <div
-                   key={index}
-                   className={`feature-card feature-${item.variant}`}
-                 >
-                   <div className="icon-badge">
-                     <item.icon />
-                   </div>
-                   <div>
-                     <h3 className="feature-title">{item.title}</h3>
-                     <p className="feature-sub">{item.description}</p>
-                   </div>
-                 </div>
-               ))}
-             </div>
-           </div>
-
-                     {/* Call to Action */}
-           <div className="mt-12">
-             <div
-               className="feature-card feature-violet"
-               style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
-             >
-               <div className="who-can-participate-header-wrapper">
-                 <h3 className="who-can-participate-header mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2rem'}}>
-                   Who Can Participate?
-                 </h3>
-               </div>
-               <p className="feature-sub mb-6">
-                 Anyone with a bold idea - from students and startups to researchers, nonprofits, or companies. Teams from around the globe are encouraged to join. Great ideas can come from anyone, anywhere
-               </p>
-               <a
-                 href="#pre-registration"
-                 onClick={handlePreRegisterClick}
-                 className="register-team-btn group relative inline-flex items-center justify-center text-white px-8 py-3 rounded-full font-semibold overflow-hidden transition-all duration-300"
-               >
-                 <span className="relative z-10 flex items-center">
-                   Register Your Team
-                   <ArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" size={20} />
-                 </span>
-                 {/* Animated gradient background */}
-                 <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-                 {/* Shine effect */}
-                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-               </a>
-             </div>
-           </div>
-        </div>
-
-      </section>
-
-
-{/* The Challenge Section - Redesigned */}
-      <Suspense fallback={<div className="min-h-[200px]" />}>
-        <JourneyCTA />
-      </Suspense>
-      <SelectionCriteria />
-      {/* Call to Action Section */}
-      <Suspense fallback={<div className="min-h-[200px]" />}>
-        <PreRegisterCTA />
-      </Suspense>
-
-     
-
-      {/* Upcoming Events Section - Only show if there are upcoming events */}
-      {(() => {
-        const upcomingEvents = allEvents
-          .sort((a, b) => {
-            const dateA = parseEventDate(a.date);
-            const dateB = parseEventDate(b.date);
-            return dateB.getTime() - dateA.getTime();
-          })
-          .filter(event => !isPastEvent(event.date));
-        
-        if (upcomingEvents.length === 0) {
-          return null;
-        }
-        
-        return (
-          <section className="py-16 pb-8 relative z-10 overflow-hidden" style={{
-            background: `linear-gradient(135deg, #1e3a5f 0%, #2d4f6f 12%, #3b3a7a 28%, #554c96 48%, #6b5aab 68%, #8b7ec8 100%)`
-          }}>
-            {/* Smooth transition overlay at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent via-[#8b7ec8]/50 to-[#8b7ec8] pointer-events-none z-0" />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-              <div className="flex justify-between items-center mb-10">
-                <h2 className="text-3xl font-bold text-white" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '2.5rem'}}>
-                  Upcoming Events
-                </h2>
-                <Link 
-                  to="/events" 
-                  className="flex items-center text-[#00AEEF] hover:text-[#8b7ec8] transition-colors duration-200"
-                >
-                  View all events
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {upcomingEvents.slice(0, 3).map((item) => (
-                  <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
-                    <div className="h-48 overflow-hidden">
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
-                        loading="lazy"
-                      />
+            <li className="min-h-[14rem] list-none md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]">
+              <div className="relative h-full rounded-2xl border border-slate-200 p-2 md:rounded-3xl md:p-3 bg-white">
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
+                <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-gradient-to-br from-slate-50 to-white">
+                  <div className="relative flex flex-1 flex-col justify-between gap-3">
+                    <div className="w-fit rounded-lg border border-slate-200 bg-white p-2 shadow-sm">
+                      <Users className="h-4 w-4 text-purple-600" />
                     </div>
-                    <div className="p-6">
-                      <div className="flex items-center mb-3">
-                        <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full" style={{ backgroundColor: 'rgba(0, 174, 239, 0.15)', color: '#00AEEF' }}>
-                          {item.category}
-                        </span>
-                        <div className="flex items-center text-gray-500 text-sm ml-3">
-                          <Calendar className="h-4 w-4 mr-1" />
-                          {item.date}
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-bold mb-2 transition-colors duration-200">
-                        <Link to={`/events/${item.id}`} className="text-gray-900 hover:text-[#00AEEF]">{item.title}</Link>
+                    <div className="space-y-3">
+                      <h3 className="-tracking-4 pt-0.5 font-sans text-xl/[1.375rem] font-semibold text-balance text-slate-900 md:text-2xl/[1.875rem]">
+                        Global Collaboration
                       </h3>
-                      {item.category === 'Event' && item.location && (
-                        <div className="flex items-center text-gray-600 text-sm mb-2">
-                          <MapPin className="h-4 w-4 mr-1 text-gray-400" />
-                          {item.location}
-                        </div>
-                      )}
-                      <p className="text-gray-600 mb-4">{item.excerpt}</p>
-                      <Link 
-                        to={`/events/${item.id}`}
-                        className="text-[#00AEEF] font-medium hover:text-[#8b7ec8] transition-colors duration-200 flex items-center"
-                      >
-                        Read more
-                        <ArrowRight className="ml-1 h-4 w-4" />
-                      </Link>
+                      <p className="font-sans text-sm/[1.125rem] text-slate-600 md:text-base/[1.375rem]">
+                        Connect with innovative minds from around the world to create impact.
+                      </p>
                     </div>
                   </div>
-                ))}
+                </div>
+              </div>
+            </li>
+
+            <li className="min-h-[14rem] list-none md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]">
+              <div className="relative h-full rounded-2xl border border-slate-200 p-2 md:rounded-3xl md:p-3 bg-white">
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
+                <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-gradient-to-br from-slate-50 to-white">
+                  <div className="relative flex flex-1 flex-col justify-between gap-3">
+                    <div className="w-fit rounded-lg border border-slate-200 bg-white p-2 shadow-sm">
+                      <Target className="h-4 w-4 text-violet-600" />
+                    </div>
+                    <div className="space-y-3">
+                      <h3 className="-tracking-4 pt-0.5 font-sans text-xl/[1.375rem] font-semibold text-balance text-slate-900 md:text-2xl/[1.875rem]">
+                        Challenge the Status Quo
+                      </h3>
+                      <p className="font-sans text-sm/[1.125rem] text-slate-600 md:text-base/[1.375rem]">
+                        Tackle the growing risks of AI-generated content with bold ideas.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li className="min-h-[14rem] list-none md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]">
+              <div className="relative h-full rounded-2xl border border-slate-200 p-2 md:rounded-3xl md:p-3 bg-white">
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
+                <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-gradient-to-br from-slate-50 to-white">
+                  <div className="relative flex flex-1 flex-col justify-between gap-3">
+                    <div className="w-fit rounded-lg border border-slate-200 bg-white p-2 shadow-sm">
+                      <Award className="h-4 w-4 text-indigo-600" />
+                    </div>
+                    <div className="space-y-3">
+                      <h3 className="-tracking-4 pt-0.5 font-sans text-xl/[1.375rem] font-semibold text-balance text-slate-900 md:text-2xl/[1.875rem]">
+                        Recognition & Rewards
+                      </h3>
+                      <p className="font-sans text-sm/[1.125rem] text-slate-600 md:text-base/[1.375rem]">
+                        Get recognized for your contributions to building digital trust.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li className="min-h-[14rem] list-none md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]">
+              <div className="relative h-full rounded-2xl border border-slate-200 p-2 md:rounded-3xl md:p-3 bg-white">
+                <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} />
+                <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-gradient-to-br from-slate-50 to-white">
+                  <div className="relative flex flex-1 flex-col justify-between gap-3">
+                    <div className="w-fit rounded-lg border border-slate-200 bg-white p-2 shadow-sm">
+                      <Rocket className="h-4 w-4 text-blue-500" />
+                    </div>
+                    <div className="space-y-3">
+                      <h3 className="-tracking-4 pt-0.5 font-sans text-xl/[1.375rem] font-semibold text-balance text-slate-900 md:text-2xl/[1.875rem]">
+                        Launch Your Ideas
+                      </h3>
+                      <p className="font-sans text-sm/[1.125rem] text-slate-600 md:text-base/[1.375rem]">
+                        Turn your concepts into reality with expert support and resources.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Challenge Phases Section - Card Flip */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 text-slate-900">
+              Challenge <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Phases</span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Navigate through the key stages of the Global Trust Challenge.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            <CardFlip
+              title="Phase 1: Ideation"
+              subtitle="Concept Development"
+              description="Form teams and brainstorm innovative solutions to address trust deficits in the digital age."
+              features={["Team Formation", "Problem Statement", "Initial Proposal", "Mentorship"]}
+            />
+            <CardFlip
+              title="Phase 2: Prototyping"
+              subtitle="Build & Refine"
+              description="Develop your ideas into tangible prototypes. Test, iterate, and refine your solution."
+              features={["MVP Development", "User Testing", "Technical Workshop", "Mid-term Review"]}
+            />
+            <CardFlip
+              title="Phase 3: Showcase"
+              subtitle="Final Presentation"
+              description="Present your solution to a global panel of judges and industry leaders at the summit."
+              features={["Final Pitch", "Live Demo", "Networking", "Awards Ceremony"]}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Is This For You Section */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-50">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-8 text-slate-900">
+                Is This <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">For You?</span>
+              </h2>
+              <div className="space-y-6 text-lg text-slate-600">
+                <p>
+                  Anyone with a bold idea - students, startups, nonprofits, researchers, policymakers, designers - if you have something to say or build, we want to hear it.
+                </p>
+                <p>
+                  Whether you're a solo thinker or part of a global team, you're invited.
+                </p>
+                <p>
+                  Bold, practical ideas that tackle the growing risks of AI-generated content. This is your chance to help shape how we defend truth and rebuild trust online.
+                </p>
+              </div>
+              <div className="mt-10">
+                <ShinyButton onClick={() => {
+                  const element = document.getElementById('pre-registration');
+                  if (element) smoothScrollTo(element, 600);
+                }}>
+                  Register Your Team
+                </ShinyButton>
               </div>
             </div>
-          </section>
-        );
-      })()}
 
-      {/* News Highlights Section */}
-      <Suspense fallback={<div className="min-h-[200px]" />}>
-        <NewsHighlights />
-      </Suspense>
-
-      {/* Challenge Mission */}
-      {/* <section className="py-20 bg-gray-100 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem'}}>Challenge Mission</h2>
-          <div className="grid md:grid-cols-1 gap-12 items-start">
-            <div>
-              <p className="text-lg text-gray-600 mb-6">
-                The Global Trust Challenge seeks interdisciplinary solutions that integrate both technology and policy to address the challenges posed by generative AI. Participants are invited to propose novel, forward-thinking approaches that not only develop technology but also propose complementary policies. These solutions should ensure the verification and trustworthiness of AI-generated content, support trustworthy AI deployment, and enhance the resilience of information ecosystems. 
-              </p><p className="text-lg text-gray-600 mb-6" style={{marginBottom:'10px'}}>Key Goals include:</p>
-              <ul className="space-y-4 text-lg text-gray-600">
-                {[
-                  "Enhancing Trust: Ensuring that AI-generated content is reliable and verifiable. ",
-                  "Protecting Users: Promoting media literacy and providing tools to identify AI-generated content.",
-                  "Supporting Governance: Encouraging policy mechanisms for transparency and content flagging."   
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <CheckCircle className="text-indigo-600 mr-2" size={20} />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                { icon: Shield, title: "Impact-Driven", desc: "Strengthen how we verify and trust AI-generated content." },
+                { icon: Lightbulb, title: "Visionary", desc: "Go beyond today's standard approaches." },
+                { icon: Target, title: "Tech + Policy", desc: "The best solutions combine technology and policy." },
+                { icon: Users, title: "Scalable", desc: "Realistic, sustainable, and able to grow." }
+              ].map((item, index) => (
+                <GlassCard key={index} className="border-l-4 border-l-purple-500 bg-white shadow-md">
+                  <item.icon className="text-purple-500 mb-4" size={24} />
+                  <h3 className="font-bold text-lg mb-2 text-slate-900">{item.title}</h3>
+                  <p className="text-sm text-slate-600">{item.desc}</p>
+                </GlassCard>
+              ))}
             </div>
           </div>
         </div>
-      </section> */}
-
-      <section id="partners" className="relative z-10">
-        <Suspense fallback={<div className="min-h-[200px]" />}>
-          <SponsorsCTA />
-        </Suspense>
       </section>
 
-      {/* Pre-registration Form */}
-      <section id="pre-registration" className="py-20 relative z-10 bg-indigo-700">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12" style={{fontFamily: '"Barlow Condensed", serif',fontWeight: '800',textTransform: 'uppercase', fontSize:'2.5rem', color:'#ffffff'}}>Bring your idea to life. Join the Challenge.</h2>
-          <p className="text-xl text-indigo-100 max-w-3xl mx-auto">Please complete this form to register your interest in competing as part of the Global Challenge to Build Trust in the Age of Generative AI. We will be in touch when the official launch is approaching.</p>
-          <form onSubmit={handleSubmit} className="p-8 rounded-lg ">
-            {submitStatus.type && (
-              <div
-                className={`mb-6 p-4 rounded-md ${
-                  submitStatus.type === 'success'
-                    ? 'bg-green-50 text-green-800'
-                    : 'bg-red-50 text-red-800'
-                }`}
-              >
+      {/* Pre-Registration Form */}
+      <section id="pre-registration" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <GlassCard className="p-8 md:p-12 relative overflow-hidden bg-white shadow-2xl border-slate-100">
+            <BackgroundBeams className="opacity-30" />
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 z-10"></div>
+
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-slate-900">Pre-Register Now</h2>
+              <p className="text-slate-500">Be the first to know when the challenge launches.</p>
+            </div>
+
+            {submitStatus.message && (
+              <div className={`mb-8 p-4 rounded-lg ${submitStatus.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
                 {submitStatus.message}
               </div>
             )}
-            <div className="space-y-6">
-              <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-indigo-100 mb-1">
-                  Full Name
-                </label>
-                <input
-                  id="fullName"
-                  name="fullName"
-                  type="text"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                  required
-                />
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700">Full Name</label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-slate-900 placeholder-slate-400"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700">Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-slate-900 placeholder-slate-400"
+                    placeholder="john@example.com"
+                  />
+                </div>
               </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-indigo-100 mb-1">
-                  Email Address
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="areaOfInterest" className="block text-sm font-medium text-indigo-100 mb-1">
-                  What are you interested in?
-                </label>
-                <input
-                  id="areaOfInterest"
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Area of Interest</label>
+                <select
                   name="areaOfInterest"
-                  type="text"
                   value={formData.areaOfInterest}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                  required>
-                  
-                </input>
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-slate-900"
+                >
+                  <option value="" className="text-slate-400">Select an area...</option>
+                  <option value="AI Policy">AI Policy</option>
+                  <option value="Technology/Development">Technology/Development</option>
+                  <option value="Research">Research</option>
+                  <option value="Design">Design</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
-              <div>
-                <label htmlFor="yourIdea" className="block text-sm font-medium text-indigo-100 mb-1">
-                  Tell us a bit about your idea
-                </label>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Your Idea (Optional)</label>
                 <textarea
-                  id="yourIdea"
                   name="yourIdea"
-                  rows={4}
-                  placeholder="Share a short description or question about your idea"
                   value={formData.yourIdea}
-                  onChange={handleInputChangetextArea}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                  onChange={handleInputChange}
+                  rows={4}
+                  className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-slate-900 placeholder-slate-400"
+                  placeholder="Tell us briefly about your interest or idea..."
                 />
               </div>
+
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full bg-indigo-600 border-2 border-white text-white px-6 py-3 rounded-md font-semibold transition-colors duration-200 ${
-                  isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-indigo-700'
-                }`}
+                className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-bold text-white hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Submitting...' : 'Pre-register'}
+                {isSubmitting ? 'Submitting...' : 'Complete Pre-Registration'}
               </button>
-            </div>
-          </form>
+            </form>
+          </GlassCard>
         </div>
       </section>
+
+      {/* Lazy Loaded Components */}
+      <Suspense fallback={<div className="h-20"></div>}>
+        <FutureRunsOnTrust />
+      </Suspense>
+
     </div>
   );
 }

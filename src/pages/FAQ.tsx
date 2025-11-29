@@ -61,7 +61,7 @@ export default function FAQ() {
         }
       ]
     },
-     {
+    {
       category: "For Partners",
       questions: [
         {
@@ -72,7 +72,7 @@ export default function FAQ() {
           q: "What recognition do partners receive?",
           a: "We are thankful for any partnership in the Global Trust Challenge. Your visibility as a partner will depend on the type and level of contribution. Recognition may thus vary from acknowledgement in press and marketing materials to recognition as title sponsor. In all cases, partners will be acknowledged on the Challenge website."
         },
-         {
+        {
           q: "What do partners/sponsors do in this Challenge?",
           a: " Partner organizations support the Challenge in various ways – from funding the award pool to providing expertise, hosting pilot programs, or helping reach communities of solvers. In return, partners gain visibility, networking with global experts, and the chance to directly shape solutions. (Learn more on our Partners page.)"
         }
@@ -90,13 +90,13 @@ export default function FAQ() {
             backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/FAQ+Background.jpg")',
           }}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40" />
+        <div className="absolute inset-0 bg-slate-900/40" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="text-white max-w-3xl pt-16">
-            <h1 className="text-5xl font-bold mb-6" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '5.5rem'}}>
+            <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '5.5rem' }}>
               Frequently Asked Questions
             </h1>
-            <p className="text-xl mb-8">
+            <p className="text-xl mb-8 text-slate-100">
               Find answers to common questions about the Global Trust Challenge
             </p>
           </div>
@@ -104,36 +104,36 @@ export default function FAQ() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {faqs.map((category, categoryIndex) => (
             <div key={categoryIndex} className="mb-12">
-              <h2 className="text-2xl font-bold mb-8" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+              <h2 className="text-2xl font-bold mb-8 text-slate-900" style={{ fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase' }}>
                 {category.category}
               </h2>
               <div className="space-y-4">
                 {category.questions.map((faq, index) => {
                   const absoluteIndex = categoryIndex * 100 + index;
                   const isOpen = openIndex === absoluteIndex;
-                  
+
                   return (
-                    <div key={index} className="border border-gray-200 rounded-lg">
+                    <div key={index} className="border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
                       <button
-                        className="w-full px-6 py-4 flex items-center justify-between text-left"
+                        className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none"
                         onClick={() => setOpenIndex(isOpen ? null : absoluteIndex)}
                       >
-                        <span className="font-semibold text-lg">{faq.q}</span>
+                        <span className="font-semibold text-lg text-slate-900">{faq.q}</span>
                         {isOpen ? (
-                          <Minus className="h-5 w-5 text-indigo-600" />
+                          <Minus className="h-5 w-5 text-blue-600" />
                         ) : (
-                          <Plus className="h-5 w-5 text-indigo-600" />
+                          <Plus className="h-5 w-5 text-blue-600" />
                         )}
                       </button>
-                      {isOpen && (
-                        <div className="px-6 pb-4">
-                          <p className="text-gray-600">{faq.a}</p>
-                        </div>
-                      )}
+                      <div
+                        className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-4 opacity-100' : 'max-h-0 opacity-0'}`}
+                      >
+                        <p className="text-slate-600 leading-relaxed">{faq.a}</p>
+                      </div>
                     </div>
                   );
                 })}

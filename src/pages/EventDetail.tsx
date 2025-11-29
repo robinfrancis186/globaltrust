@@ -1,9 +1,7 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Clock, MapPin, Tag, ArrowLeft, ExternalLink, Share2 } from 'lucide-react';
-import PreRegisterCTA from '../components/PreRegisterCTA';
-
+import GlassCard from '../components/GlassCard';
 
 interface NewsItem {
   id: string;
@@ -41,13 +39,9 @@ const allItems: NewsItem[] = [
     location: 'École normale supérieure, Paris',
     excerpt: 'As part of the official programming of the AI Action Summit, this Global Trust Challenge side event convened a distinguished panel to explore how generative AI is reshaping the landscape of trust and online information.',
     content: `<h1>Trust on the Line: Global Trust Challenge Side Event at the AI Action Summit</h1>
-
   <p><strong>Paris, France — ENS, February 2025</strong></p>
-
   <p>In the heart of Paris, as part of the AI Action Summit's official program, the Global Trust Challenge brought together a remarkable panel to tackle one of the toughest questions of our time: how can we safeguard truth in an era of generative AI?</p>
-
   <p>Hosted at the École Normale Supérieure (ENS), the session quickly moved beyond abstract worries to collective strategies for countering AI-fueled mis- and disinformation. Moderated by Amir Banifatemi (AI Commons), the conversation showcased the breadth of expertise fueling this global initiative.</p>
-
   <h2>A Multistakeholder Conversation</h2>
   <p>The panel included:</p>
   <ul>
@@ -57,9 +51,7 @@ const allItems: NewsItem[] = [
     <li>Frauke Goll (AppliedAI Institute for Europe) — emphasizing Europe's role in responsible AI innovation</li>
     <li>Tanya Perelmuter (Fondation Abeona) — underlining the importance of citizen literacy and public trust</li>
   </ul>
-
   <p>Together, they painted a vivid picture: the fight against disinformation cannot be won by technology alone or by policy in isolation. It requires both — and it requires everyone at the table.</p>
-
   <h2>Key Outcomes</h2>
   <ul>
     <li>Paris marked the formal introduction of GTC to the AI Action Summit community.</li>
@@ -107,7 +99,7 @@ const allItems: NewsItem[] = [
     image: 'https://maximages.s3.us-west-1.amazonaws.com/GTCEvent1.png',
     category: 'Event',
     type: 'event',
-     tags: []
+    tags: []
   },
   {
     id: 'Digital-Trust-Convention',
@@ -120,7 +112,7 @@ const allItems: NewsItem[] = [
     image: 'https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg',
     category: 'Event',
     type: 'event',
-     tags: []
+    tags: []
   },
   {
     id: 'AI-For-Good',
@@ -146,7 +138,7 @@ const allItems: NewsItem[] = [
     image: 'https://maximages.s3.us-west-1.amazonaws.com/AI+for+Good+Event+Photo.jpeg',
     category: 'Event',
     type: 'event',
-     tags: ['Event', 'Announcement', 'important']
+    tags: ['Event', 'Announcement', 'important']
   },
   {
     id: 'Lyceum-Project-Event',
@@ -175,10 +167,10 @@ const allItems: NewsItem[] = [
     image: 'https://maximages.s3.us-west-1.amazonaws.com/Screenshot+2025-08-29+210641.png',
     category: 'Event',
     type: 'event',
-     tags: ['Event', 'Announcement', 'important']
+    tags: ['Event', 'Announcement', 'important']
   }
 
- 
+
 ];
 
 export default function EventDetail() {
@@ -197,9 +189,10 @@ export default function EventDetail() {
 
       try {
         setLoading(true);
-        const eventData = await BCMSService.getEventBySlug(id);
-        if (eventData) {
-          setItem(eventData);
+        // Simulate API call
+        const foundItem = allItems.find(i => i.id === id);
+        if (foundItem) {
+          setItem(foundItem);
         } else {
           setError('Event not found');
         }
@@ -216,11 +209,11 @@ export default function EventDetail() {
 
   if (loading) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <section className="py-20 bg-white">
+      <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 pt-20">
+        <section className="py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading event...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p className="text-slate-500">Loading event...</p>
           </div>
         </section>
       </div>
@@ -229,14 +222,14 @@ export default function EventDetail() {
 
   if (error || !item) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <section className="py-20 bg-white">
+      <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 pt-20">
+        <section className="py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl font-bold mb-4">Event Not Found</h1>
-            <p className="text-gray-600 mb-8">{error || 'The event you\'re looking for doesn\'t exist or has been removed.'}</p>
-            <Link 
+            <p className="text-slate-500 mb-8">{error || 'The event you\'re looking for doesn\'t exist or has been removed.'}</p>
+            <Link
               to="/events"
-              className="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
+              className="inline-flex items-center bg-white border border-slate-200 text-slate-700 px-6 py-3 rounded-lg font-semibold hover:bg-slate-50 transition-colors duration-200"
             >
               <ArrowLeft className="mr-2 h-5 w-5" />
               Back to Events
@@ -266,130 +259,133 @@ export default function EventDetail() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 pt-20">
       {/* Hero Section */}
-      <section className="relative h-[500px] overflow-hidden -mt-16">
+      <section className="relative h-[500px] overflow-hidden -mt-20">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: `url("${item.image}")`,
           }}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-end">
           <div className="text-white pb-16 max-w-4xl">
-            <div className="flex items-center mb-4">
-              <Link 
+            <div className="flex items-center mb-6">
+              <Link
                 to="/events"
-                className="inline-flex items-center text-white hover:text-indigo-200 transition-colors duration-200 mr-4"
+                className="inline-flex items-center text-slate-200 hover:text-white transition-colors duration-200 mr-4"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Back to Events
               </Link>
-              <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
-                item.type === 'event' 
-                  ? 'bg-green-100 text-green-800' 
-                  : item.type === 'news'
-                    ? 'bg-indigo-100 text-indigo-800'
-                    : 'bg-amber-100 text-amber-800'
-              }`}>
+              <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full backdrop-blur-md border border-white/20 shadow-sm ${item.type === 'event'
+                ? 'bg-blue-500/90 text-white'
+                : item.type === 'news'
+                  ? 'bg-purple-500/90 text-white'
+                  : 'bg-pink-500/90 text-white'
+                }`}>
                 {item.category}
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase'}}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 leading-tight">
               {item.title}
             </h1>
-            <p className="text-xl text-gray-200">{item.excerpt}</p>
+            <p className="text-xl text-slate-200 max-w-3xl leading-relaxed">{item.excerpt}</p>
           </div>
         </div>
       </section>
 
       {/* Content Section */}
-      <section className="py-12 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-6 mb-8 pb-8 border-b border-gray-200">
-            <div className="flex items-center text-gray-600">
-              <Calendar className="h-5 w-5 mr-2" />
-              {item.date}
-            </div>
-            
-            {item.location && (
-              <div className="flex items-center text-gray-600">
-                <MapPin className="h-5 w-5 mr-2" />
-                {item.location}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <GlassCard className="p-8 md:p-12 bg-white shadow-xl border-slate-100">
+            {/* Meta Information */}
+            <div className="flex flex-wrap items-center gap-6 mb-8 pb-8 border-b border-slate-100">
+              <div className="flex items-center text-slate-600">
+                <Calendar className="h-5 w-5 mr-2 text-blue-500" />
+                {item.date}
               </div>
-            )}
-            
-            {item.time && (
-              <div className="flex items-center text-gray-600">
-                <Clock className="h-5 w-5 mr-2" />
-                {item.time}
-              </div>
-            )}
 
-            <button
-              onClick={handleShare}
-              className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
-            >
-              <Share2 className="h-5 w-5 mr-2" />
-              Share
-            </button>
-          </div>
+              {item.location && (
+                <div className="flex items-center text-slate-600">
+                  <MapPin className="h-5 w-5 mr-2 text-purple-500" />
+                  {item.location}
+                </div>
+              )}
 
-          {/* Tags */}
-          {item.tags && Array.isArray(item.tags) && item.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-8">
-              {item.tags.map((tag, index) => (
-                <span key={index} className="inline-flex items-center text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
-                  <Tag className="h-3 w-3 mr-1" />
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+              {item.time && (
+                <div className="flex items-center text-slate-600">
+                  <Clock className="h-5 w-5 mr-2 text-pink-500" />
+                  {item.time}
+                </div>
+              )}
 
-          {/* Content */}
-         <div className="prose prose-lg prose-indigo max-w-none">
-            {item.content ? (
-              <div dangerouslySetInnerHTML={{ __html: item.content }} 
-              className="
-    [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:text-gray-900 [&_h1]:mb-4
-    [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-gray-900 [&_h2]:mt-8 [&_h2]:mb-4
-    [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-gray-800 [&_h3]:mt-6 [&_h3]:mb-3
-    [&_p]:text-gray-700 [&_p]:leading-relaxed [&_p]:mb-4
-    [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ul]:text-gray-700 [&_ul]:my-4
-    [&_strong]:font-semibold
-  "
-              />
-             
-            ) : (
-              <p className="text-gray-600">{item.excerpt}</p>
-            )}
-          </div>
-
-
-          {/* External Link */}
-          {item.link && (
-            <div className="mt-8 p-6 bg-indigo-50 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">Related Link</h3>
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
+              <button
+                onClick={handleShare}
+                className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200 ml-auto"
               >
-                Visit External Resource
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
+                <Share2 className="h-5 w-5 mr-2" />
+                Share
+              </button>
             </div>
-          )}
+
+            {/* Tags */}
+            {item.tags && Array.isArray(item.tags) && item.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-8">
+                {item.tags.map((tag, index) => (
+                  <span key={index} className="inline-flex items-center text-sm bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded-full">
+                    <Tag className="h-3 w-3 mr-1 text-slate-400" />
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Content */}
+            <div className="prose prose-lg prose-slate max-w-none">
+              {item.content ? (
+                <div dangerouslySetInnerHTML={{ __html: item.content }}
+                  className="
+      [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:text-slate-900 [&_h1]:mb-6 [&_h1]:font-heading
+      [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-slate-900 [&_h2]:mt-10 [&_h2]:mb-6 [&_h2]:font-heading
+      [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-slate-800 [&_h3]:mt-8 [&_h3]:mb-4
+      [&_p]:text-slate-600 [&_p]:leading-relaxed [&_p]:mb-6
+      [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-3 [&_ul]:text-slate-600 [&_ul]:my-6
+      [&_li]:marker:text-blue-500
+      [&_strong]:font-bold [&_strong]:text-slate-900
+      [&_a]:text-blue-600 [&_a]:underline [&_a]:decoration-blue-200 [&_a]:underline-offset-4 hover:[&_a]:decoration-blue-500 hover:[&_a]:text-blue-700 [&_a]:transition-all
+    "
+                />
+
+              ) : (
+                <p className="text-slate-600">{item.excerpt}</p>
+              )}
+            </div>
+
+
+            {/* External Link */}
+            {item.link && (
+              <div className="mt-10 p-6 bg-slate-50 border border-slate-200 rounded-xl">
+                <h3 className="text-lg font-semibold mb-2 text-slate-900">Related Link</h3>
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                >
+                  Visit External Resource
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </div>
+            )}
+          </GlassCard>
 
           {/* Navigation */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <Link 
+          <div className="mt-12 text-center">
+            <Link
               to="/events"
-              className="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
+              className="inline-flex items-center bg-white border border-slate-200 text-slate-700 px-8 py-4 rounded-full font-bold hover:bg-slate-50 hover:scale-105 transition-all duration-300 shadow-sm"
             >
               <ArrowLeft className="mr-2 h-5 w-5" />
               Back to All Events
@@ -397,9 +393,6 @@ export default function EventDetail() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <PreRegisterCTA />
     </div>
   );
 }

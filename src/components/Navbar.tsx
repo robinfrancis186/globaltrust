@@ -1,15 +1,16 @@
-import React from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Navbar as ResizableNavbar, NavBody, MobileNav, MobileNavToggle, MobileNavMenu } from '@/components/ui/resizable-navbar';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isSubmenuOpen, setIsSubmenuOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const submenuRef = React.useRef<HTMLDivElement>(null);
+  const submenuRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (submenuRef.current && !submenuRef.current.contains(event.target as Node)) {
         setIsSubmenuOpen(false);
@@ -34,9 +35,9 @@ export default function Navbar() {
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
       const ease = easeInOutCubic(progress);
-      
+
       window.scrollTo(0, startPosition + distance * ease);
-      
+
       if (timeElapsed < duration) {
         requestAnimationFrame(animation);
       }
@@ -63,71 +64,67 @@ export default function Navbar() {
       name: 'About the Challenge',
       href: '#',
       submenu: [
-        // { name: 'Challenge Details', href: '/guidelines' },
         { name: 'People', href: '/people' },
         { name: 'Partners & Sponsors', href: '/partners' },
         { name: 'FAQ', href: '/faq' }
       ],
     },
     { name: 'Events', href: '/events' },
-    //{ name: 'Resources', href: '/downloads' },
     { name: 'Contact', href: '/contact' }
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow-lg z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+    <div className="relative w-full">
+      <ResizableNavbar className="top-4">
+        <NavBody className="justify-between">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center">
-              <img 
-                src="https://maximages.s3.us-west-1.amazonaws.com/challengelogo.png"
-                alt="Global Trust Challenge"
-                className="h-8 w-auto"
-                style={{ 
-                  objectFit: 'contain',
-                  height: '3.6rem'
-                }}
-              />
+            <Link to="/" className="flex-shrink-0 flex items-center gap-2 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-400 blur-lg opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                <img
+                  src="https://maximages.s3.us-west-1.amazonaws.com/challengelogo.png"
+                  alt="Global Trust Challenge"
+                  className="h-8 w-auto relative z-10"
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
             </Link>
           </div>
-          
-          <div className="hidden md:flex items-center space-x-8">
+
+          <div className="hidden md:flex items-center space-x-1">
             {navigation.map((item) => (
               <div key={item.name} className="relative" ref={item.submenu ? submenuRef : null}>
                 {item.submenu ? (
                   <button
                     onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
-                    className={`flex items-center px-3 py-2 text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors duration-200`}
+                    className={`flex items-center px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors duration-200`}
                   >
                     {item.name}
-                    <ChevronDown className="ml-1 h-4 w-4" />
+                    <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isSubmenuOpen ? 'rotate-180' : ''}`} />
                   </button>
                 ) : (
                   <Link
                     to={item.href}
-                    className={`${
-                      location.pathname === item.href
-                        ? 'text-indigo-600 border-b-2 border-indigo-600'
-                        : 'text-gray-500 hover:text-indigo-600'
-                    } px-3 py-2 text-sm font-medium transition-colors duration-200`}
+                    className={`${location.pathname === item.href
+                      ? 'text-blue-600'
+                      : 'text-slate-600 hover:text-blue-600'
+                      } px-4 py-2 text-sm font-medium transition-colors duration-200 relative group`}
                   >
                     {item.name}
                   </Link>
                 )}
                 {item.submenu && isSubmenuOpen && (
-                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                  <div className="absolute left-0 mt-2 w-56 rounded-xl bg-white border border-slate-100 shadow-lg overflow-hidden animate-in fade-in slide-in-from-top-2">
                     <div className="py-1" role="menu" aria-orientation="vertical">
                       {item.submenu.map((subItem) => (
                         <Link
-                          onClick={() => setIsSubmenuOpen(!isSubmenuOpen)}
+                          onClick={() => setIsSubmenuOpen(false)}
                           key={subItem.name}
                           to={subItem.href}
-                          className={`${
-                            location.pathname === subItem.href
-                              ? 'bg-gray-100 text-indigo-600'
-                              : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600'
-                          } block px-4 py-2 text-sm transition-colors duration-200`}
+                          className={`${location.pathname === subItem.href
+                            ? 'bg-blue-50 text-blue-600'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-blue-600'
+                            } block px-4 py-3 text-sm transition-colors duration-200`}
                           role="menuitem"
                         >
                           {subItem.name}
@@ -138,51 +135,43 @@ export default function Navbar() {
                 )}
               </div>
             ))}
+          </div>
+
+          <div className="hidden md:flex items-center">
             <button
               onClick={handleApplyClick}
-              className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200"
+              className="relative px-5 py-2 rounded-full font-semibold text-white text-sm overflow-hidden group shadow-md hover:shadow-lg transition-all"
             >
-              Register Now
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:scale-105"></div>
+              <span className="relative z-10">Register Now</span>
             </button>
           </div>
 
-          <div className="md:hidden flex items-center space-x-4">
-            <button
-              onClick={handleApplyClick}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 text-sm"
-            >
-              Apply
-            </button>
-            <button
+          <div className="md:hidden flex items-center">
+            <MobileNavToggle
+              isOpen={isOpen}
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-500 hover:text-gray-600"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            />
           </div>
-        </div>
-      </div>
+        </NavBody>
 
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <MobileNav>
+          <MobileNavMenu
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+          >
             {navigation.map((item) => (
               <React.Fragment key={item.name}>
                 {item.submenu ? (
                   <>
-                    <div className="px-3 py-2 text-base font-medium text-gray-700">
+                    <div className="px-3 py-2 text-base font-medium text-blue-600 border-b border-slate-100 mb-2 mt-2">
                       {item.name}
                     </div>
                     {item.submenu.map((subItem) => (
                       <Link
                         key={subItem.name}
                         to={subItem.href}
-                        className={`${
-                          location.pathname === subItem.href
-                            ? 'bg-indigo-50 text-indigo-600'
-                            : 'text-gray-500 hover:bg-gray-50 hover:text-indigo-600'
-                        } block px-3 py-2 rounded-md text-base font-medium pl-6`}
+                        className="block px-3 py-2 rounded-lg text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-blue-600 pl-6"
                         onClick={() => setIsOpen(false)}
                       >
                         {subItem.name}
@@ -192,11 +181,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`${
-                      location.pathname === item.href
-                        ? 'bg-indigo-50 text-indigo-600'
-                        : 'text-gray-500 hover:bg-gray-50 hover:text-indigo-600'
-                    } block px-3 py-2 rounded-md text-base font-medium`}
+                    className="block px-3 py-2 rounded-lg text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-blue-600"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -204,9 +189,15 @@ export default function Navbar() {
                 )}
               </React.Fragment>
             ))}
-          </div>
-        </div>
-      )}
-    </nav>
+            <button
+              onClick={handleApplyClick}
+              className="w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-md"
+            >
+              Register Now
+            </button>
+          </MobileNavMenu>
+        </MobileNav>
+      </ResizableNavbar>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -20,14 +20,29 @@ const People = lazy(() => import('./pages/People'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Events = lazy(() => import('./pages/Events'));
-const EventDetail = lazy(() => import('./pages/EventDetail')); 
+const EventDetail = lazy(() => import('./pages/EventDetail'));
+const ComponentsDemo = lazy(() => import('./pages/ComponentsDemo'));
+
+import Loader from './components/ui/loader';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Router basename={import.meta.env.BASE_URL}>
+      {isLoading && <Loader />}
       <Layout>
         <ErrorBoundary>
-          <ScrollToTop /> 
+          <ScrollToTop />
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -43,6 +58,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/events" element={<Events />} />
               <Route path="/events/:id" element={<EventDetail />} />
+              <Route path="/demo" element={<ComponentsDemo />} />
             </Routes>
           </Suspense>
         </ErrorBoundary>

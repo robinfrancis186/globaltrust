@@ -21,9 +21,9 @@ export default function PreRegisterCTA() {
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
       const ease = easeInOutCubic(progress);
-      
+
       window.scrollTo(0, startPosition + distance * ease);
-      
+
       if (timeElapsed < duration) {
         requestAnimationFrame(animation);
       }
@@ -62,23 +62,23 @@ export default function PreRegisterCTA() {
     const resize = () => {
       const container = canvas.parentElement;
       if (!container) return;
-      
+
       const rect = container.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
-      
+
       if (width === 0 || height === 0) {
         width = container.clientWidth || window.innerWidth;
         height = container.clientHeight || window.innerHeight;
       }
-      
+
       dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), 2);
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      
+
       const base = Math.floor((width * height) / 1200);
       stars = new Array(base).fill(0).map(() => ({
         x: Math.random() * width,
@@ -92,21 +92,21 @@ export default function PreRegisterCTA() {
 
     const drawBackground = () => {
       const gradient = ctx.createLinearGradient(0, 0, 0, height);
-      gradient.addColorStop(0, '#0a1a2e');
-      gradient.addColorStop(1, '#040815');
+      gradient.addColorStop(0, '#f8fafc'); // Slate 50
+      gradient.addColorStop(1, '#eff6ff'); // Blue 50
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
     };
 
     const drawNebula = () => {
       const t = time * 0.00004;
-      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalCompositeOperation = 'multiply'; // Changed for light theme
 
       const cx1 = width * (0.25 + 0.05 * Math.sin(t * 6));
       const cy1 = height * (0.35 + 0.04 * Math.cos(t * 5));
       const r1 = Math.max(width, height) * 0.75;
       const g1 = ctx.createRadialGradient(cx1, cy1, 0, cx1, cy1, r1);
-      g1.addColorStop(0, 'rgba(99, 102, 241, 0.22)');
+      g1.addColorStop(0, 'rgba(99, 102, 241, 0.05)'); // Indigo with low opacity
       g1.addColorStop(1, 'transparent');
       ctx.fillStyle = g1;
       ctx.fillRect(0, 0, width, height);
@@ -115,7 +115,7 @@ export default function PreRegisterCTA() {
       const cy2 = height * (0.6 + 0.05 * Math.sin(t * 3));
       const r2 = Math.max(width, height) * 0.85;
       const g2 = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, r2);
-      g2.addColorStop(0, 'rgba(59, 197, 255, 0.18)');
+      g2.addColorStop(0, 'rgba(59, 197, 255, 0.05)'); // Light blue with low opacity
       g2.addColorStop(1, 'transparent');
       ctx.fillStyle = g2;
       ctx.fillRect(0, 0, width, height);
@@ -128,7 +128,8 @@ export default function PreRegisterCTA() {
         star.twinkle += star.twinkleSpeed * dt;
         const twinkle = 0.75 + 0.25 * Math.sin(star.twinkle);
         const radius = star.radius * (1 + (1 - star.depth) * 0.5) * twinkle;
-        ctx.fillStyle = `hsla(210, 90%, ${65 + 15 * twinkle}%, ${0.55 + 0.25 * twinkle})`;
+        // Darker stars for light background
+        ctx.fillStyle = `hsla(220, 70%, ${40 + 10 * twinkle}%, ${0.3 + 0.2 * twinkle})`;
         ctx.beginPath();
         ctx.arc(star.x, star.y, radius, 0, Math.PI * 2);
         ctx.fill();
@@ -136,7 +137,7 @@ export default function PreRegisterCTA() {
     };
 
     let lastFrame = performance.now();
-    
+
     const render = (now: number) => {
       const dt = now - lastFrame;
       lastFrame = now;
@@ -153,7 +154,7 @@ export default function PreRegisterCTA() {
     if (canvas.parentElement) {
       observer.observe(canvas.parentElement);
     }
-    
+
     // Initial resize with a small delay to ensure container is ready
     setTimeout(() => {
       resize();
@@ -197,9 +198,9 @@ export default function PreRegisterCTA() {
           .idea-cta {
             position: relative;
             padding: clamp(3rem, 6vw, 5.5rem) 0;
-            color: #fff;
+            color: #0f172a;
             overflow: hidden;
-            background: #040815;
+            background: #f8fafc;
           }
           .idea-cta-canvas {
             position: absolute;
@@ -217,8 +218,8 @@ export default function PreRegisterCTA() {
             pointer-events: none;
             z-index: 1;
             background:
-              linear-gradient(180deg, rgba(0,0,0,0.35), transparent 40%),
-              radial-gradient(80% 70% at 50% 10%, rgba(0,0,0,0.0), rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.4) 100%);
+              linear-gradient(180deg, rgba(255,255,255,0.5), transparent 40%),
+              radial-gradient(80% 70% at 50% 10%, rgba(255,255,255,0.0), rgba(255,255,255,0.2) 60%, rgba(255,255,255,0.4) 100%);
           }
           .idea-cta__content {
             min-height: clamp(18rem, 36vw, 24rem);
@@ -243,8 +244,8 @@ export default function PreRegisterCTA() {
             inset: -40%;
             border-radius: 50%;
             background:
-              radial-gradient(circle at 40% 35%, rgba(136, 197, 255, 0.45) 0%, transparent 72%),
-              radial-gradient(circle at 70% 70%, rgba(72, 233, 192, 0.28) 0%, transparent 80%);
+              radial-gradient(circle at 40% 35%, rgba(59, 130, 246, 0.25) 0%, transparent 72%),
+              radial-gradient(circle at 70% 70%, rgba(147, 51, 234, 0.15) 0%, transparent 80%);
             filter: blur(16px);
             animation: ideaIconBloom 5.5s ease-in-out infinite alternate;
             opacity: 0.75;
@@ -253,10 +254,10 @@ export default function PreRegisterCTA() {
             position: relative;
             width: 2.5rem;
             height: 2.5rem;
-            color: #f6fcff;
+            color: #2563eb;
             filter:
-              drop-shadow(0 10px 20px rgba(17, 24, 39, 0.4))
-              drop-shadow(0 0 18px rgba(82, 236, 255, 0.65));
+              drop-shadow(0 10px 20px rgba(59, 130, 246, 0.2))
+              drop-shadow(0 0 18px rgba(147, 51, 234, 0.3));
             animation: ideaIconPulse 3s ease-in-out infinite;
           }
           .idea-cta__title {
@@ -266,24 +267,21 @@ export default function PreRegisterCTA() {
             text-transform: uppercase;
             letter-spacing: 0.2em;
             font-size: clamp(2.45rem, 6.5vw, 3.75rem);
-            background: linear-gradient(92deg, #bb6bff 0%, #6f8cff 38%, #3fd7ff 72%, #6affd2 100%);
+            background: linear-gradient(92deg, #1e3a8a 0%, #2563eb 38%, #3b82f6 72%, #60a5fa 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow:
-              0 -2px 8px rgba(255, 255, 255, 0.25),
-              0 10px 18px rgba(13, 20, 35, 0.55),
-              0 0 35px rgba(90, 239, 255, 0.3);
+            text-shadow: none;
           }
           .idea-cta__subtitle {
             margin: 0 auto clamp(1.1rem, 2.4vw, 1.8rem);
             max-width: 46rem;
-            color: rgba(255,255,255,0.85);
+            color: #475569;
             font-family: "Inter", "Barlow", sans-serif;
             font-size: clamp(1.1rem, 2.2vw, 1.25rem);
             line-height: 1.7;
             letter-spacing: 0.02em;
-            text-shadow: 0 6px 18px rgba(10, 20, 35, 0.45);
+            text-shadow: none;
           }
           .idea-cta__chip {
             position: relative;
@@ -296,9 +294,9 @@ export default function PreRegisterCTA() {
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.16em;
-            color: #0b1727;
-            background: linear-gradient(120deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.76));
-            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.28);
+            color: #ffffff;
+            background: linear-gradient(120deg, #2563eb, #1d4ed8);
+            box-shadow: 0 18px 44px rgba(37, 99, 235, 0.2);
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, color 0.35s ease;
             isolation: isolate;
           }
@@ -308,7 +306,7 @@ export default function PreRegisterCTA() {
             inset: -1px;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(120deg, #8bffe2, #7ed0ff, #b598ff);
+            background: linear-gradient(120deg, #60a5fa, #3b82f6, #2563eb);
             -webkit-mask:
               linear-gradient(#fff 0 0) content-box,
               linear-gradient(#fff 0 0);
@@ -338,8 +336,8 @@ export default function PreRegisterCTA() {
             inset: -25%;
             border-radius: inherit;
             background:
-              radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, transparent 45%),
-              radial-gradient(circle, rgba(124, 236, 255, 0.45) 0%, transparent 70%);
+              radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 45%),
+              radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
             filter: blur(12px);
             opacity: 0.55;
             transition: opacity 0.35s ease, transform 0.35s ease;
@@ -348,8 +346,8 @@ export default function PreRegisterCTA() {
           .idea-cta__chip:hover,
           .idea-cta__chip:focus-visible {
             transform: translateY(-4px);
-            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.32);
-            color: #091323;
+            box-shadow: 0 28px 60px rgba(37, 99, 235, 0.3);
+            color: #ffffff;
           }
           .idea-cta__chip:hover::after,
           .idea-cta__chip:focus-visible::after {

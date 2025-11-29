@@ -44,7 +44,7 @@ const partners: Partner[] = [
     image: "https://maximages.s3.us-west-1.amazonaws.com/Sophie-Fallaha.jpg",
     url: "https://italchamber.qc.ca/speakers/sophie-fallaha-ceimia/"
   }
-  
+
   // Add more partners as needed
 ];
 
@@ -53,22 +53,23 @@ export default function AmbassadorsScroll() {
     <div className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {partners.map((partner, index) => (
-          <a href={partner.url} key={"A" + index} target="new"><div
-            key={index}
-            className="bg-white rounded-lg shadow-lg p-4 transition-transform hover:scale-105"
-          >
-            <div className="aspect-w-1 aspect-h-1 w-full mb-4">
-              <img
-                src={partner.image}
-                alt={partner.name}
-                className="w-full h-48 object-cover rounded-lg"
-                style={{objectFit: 'scale-down'}}
-              />
+          <a href={partner.url} key={"A" + index} target="new" className="block group">
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow-md border border-slate-100 p-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+            >
+              <div className="aspect-w-1 aspect-h-1 w-full mb-4 overflow-hidden rounded-lg">
+                <img
+                  src={partner.image}
+                  alt={partner.name}
+                  className="w-full h-48 object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                  style={{ objectFit: 'scale-down' }}
+                />
+              </div>
+              <h3 className="text-lg font-semibold text-center text-slate-900 group-hover:text-blue-600 transition-colors">{partner.name}</h3>
+              <p className="text-slate-600 text-center text-sm mt-1">{partner.role}</p>
             </div>
-            <h3 className="text-lg font-semibold text-center">{partner.name}</h3>
-            <p className="text-gray-600 text-center">{partner.role}</p>
-          </div>
-            </a>
+          </a>
         ))}
       </div>
     </div>

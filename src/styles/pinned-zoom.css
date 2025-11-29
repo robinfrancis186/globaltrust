@@ -1,4 +1,4 @@
-/* Pinned Zoom Scroll Styles */
+/* Pinned Zoom Scroll Styles - Light Theme */
 
 body {
   perspective: 1200px;
@@ -9,6 +9,8 @@ body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+  background-color: #f8fafc;
+  /* Slate 50 */
 }
 
 .pinned-zoom-video {
@@ -19,7 +21,8 @@ body {
   height: 100vh;
   object-fit: cover;
   z-index: -1;
-  filter: brightness(1) contrast(1);
+  /* Light theme adjustments */
+  filter: brightness(1.2) contrast(0.9) opacity(0.3);
   transform-origin: center center;
   will-change: transform, filter;
 }
@@ -39,7 +42,8 @@ body {
 .pz-content {
   max-width: 1100px;
   text-align: center;
-  color: white;
+  color: #0f172a;
+  /* Slate 900 */
 }
 
 .pz-title {
@@ -47,12 +51,18 @@ body {
   font-weight: 800;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
-  text-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  text-shadow: none;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .pz-sub {
   font-size: clamp(1.125rem, 2.5vw, 1.75rem);
   opacity: 0.95;
+  color: #334155;
+  /* Slate 700 */
 }
 
 .pz-desc {
@@ -60,22 +70,12 @@ body {
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;
+  color: #475569;
+  /* Slate 600 */
 }
 
 @media (max-width: 768px) {
-  .section { padding: 5rem 1.25rem; }
+  .section {
+    padding: 5rem 1.25rem;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

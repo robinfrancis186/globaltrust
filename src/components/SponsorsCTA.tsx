@@ -28,18 +28,18 @@ export default function SponsorsCTA() {
             position: relative;
             padding: clamp(3.2rem, 6vw, 4.6rem) clamp(2.4rem, 5vw, 3.6rem);
             border-radius: 0 !important;
-            color: #f3f8ff;
+            color: #0f172a;
             overflow: hidden;
             display: flex;
             justify-content: center;
-            background: linear-gradient(130deg, #031129 0%, #0c2a4f 38%, #1d2f77 64%, #3b1d63 100%);
+            background: linear-gradient(130deg, #eff6ff 0%, #dbeafe 38%, #e0e7ff 64%, #f3e8ff 100%);
           }
           .sponsors-flat__bg {
             position: absolute;
             inset: 0;
             border-radius: 0 !important;
-            background: linear-gradient(130deg, #031129 0%, #0c2a4f 38%, #1d2f77 64%, #3b1d63 100%);
-            box-shadow: 0 28px 60px rgba(5, 9, 27, 0.45);
+            background: linear-gradient(130deg, #eff6ff 0%, #dbeafe 38%, #e0e7ff 64%, #f3e8ff 100%);
+            box-shadow: 0 28px 60px rgba(5, 9, 27, 0.05);
             pointer-events: none;
             z-index: -1;
           }
@@ -66,19 +66,17 @@ export default function SponsorsCTA() {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(59, 130, 246, 0.1);
             box-shadow: 
-              inset 0 0 18px rgba(255, 255, 255, 0.2),
-              0 0 20px rgba(59, 130, 246, 0.4),
-              0 0 40px rgba(139, 92, 246, 0.3),
-              0 0 60px rgba(99, 102, 241, 0.2);
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+              inset 0 0 18px rgba(255, 255, 255, 0.5),
+              0 0 20px rgba(59, 130, 246, 0.2),
+              0 0 40px rgba(139, 92, 246, 0.1);
           }
           .sponsors-flat__iconSvg {
             width: clamp(1.8rem, 3vw, 2.1rem);
             height: clamp(1.8rem, 3vw, 2.1rem);
-            color: #ffffff;
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 16px rgba(139, 92, 246, 0.4));
+            color: #2563eb;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
           }
           .sponsors-flat__title {
             position: relative;
@@ -91,14 +89,8 @@ export default function SponsorsCTA() {
             display: flex;
             flex-direction: column;
             gap: clamp(0.4rem, 1.4vw, 0.6rem);
-            color: #ffffff;
-            text-shadow: 
-              0 0 10px rgba(59, 130, 246, 0.5),
-              0 0 20px rgba(139, 92, 246, 0.4),
-              0 0 30px rgba(99, 102, 241, 0.3),
-              0 2px 8px rgba(0, 0, 0, 0.5),
-              0 4px 16px rgba(0, 0, 0, 0.3);
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+            color: #0f172a;
+            text-shadow: none;
           }
           .sponsors-flat__title::before {
             content: "";
@@ -109,19 +101,14 @@ export default function SponsorsCTA() {
               radial-gradient(55% 60% at 50% 32%, rgba(125, 211, 252, 0.3), transparent 72%),
               radial-gradient(80% 82% at 50% 72%, rgba(192, 132, 252, 0.24), transparent 88%);
             filter: blur(12px);
-            opacity: 0.9;
+            opacity: 0.5;
             z-index: -1;
             pointer-events: none;
           }
           .sponsors-flat__title span {
             font-size: clamp(2.4rem, 7vw, 3.2rem);
-            text-shadow: 
-              0 0 12px rgba(59, 130, 246, 0.6),
-              0 0 24px rgba(139, 92, 246, 0.5),
-              0 0 36px rgba(99, 102, 241, 0.4),
-              0 2px 8px rgba(0, 0, 0, 0.5),
-              0 4px 16px rgba(0, 0, 0, 0.3);
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+            color: #1e3a8a;
+            text-shadow: none;
           }
           .sponsors-flat__separator {
             width: 100%;
@@ -132,7 +119,7 @@ export default function SponsorsCTA() {
             position: relative;
             overflow: hidden;
             border-radius: 999px;
-            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
           }
           .sponsors-flat__separator::after {
             content: '';
@@ -156,15 +143,15 @@ export default function SponsorsCTA() {
             font-family: "Inter", system-ui, sans-serif;
             font-size: clamp(1rem, 2.2vw, 1.18rem);
             line-height: 1.7;
-            color: #ffffff;
+            color: #475569;
             max-width: 600px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4);
+            text-shadow: none;
           }
           .sponsors-flat__subtitle a {
-            color: #ffffff;
+            color: #2563eb;
             font-weight: 700;
             text-decoration: none;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7), 0 4px 16px rgba(0, 0, 0, 0.5);
+            text-shadow: none;
           }
           .sponsors-flat__button {
             position: relative;
@@ -178,10 +165,10 @@ export default function SponsorsCTA() {
             font-weight: 600;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: #0a1430;
-            background: #ffffff;
-            border: 1px solid #0c2a4f;
-            box-shadow: 0 16px 32px rgba(9, 16, 35, 0.35);
+            color: #ffffff;
+            background: #2563eb;
+            border: 1px solid #1d4ed8;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
             text-decoration: none;
             z-index: 1;
@@ -208,11 +195,9 @@ export default function SponsorsCTA() {
           .sponsors-flat__button:focus-visible {
             transform: translateY(-4px);
             box-shadow: 
-              0 22px 40px rgba(9, 16, 35, 0.42),
-              0 0 30px rgba(59, 130, 246, 0.6),
-              0 0 50px rgba(139, 92, 246, 0.4),
-              0 0 70px rgba(99, 102, 241, 0.3);
-            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+              0 12px 24px rgba(37, 99, 235, 0.4),
+              0 0 30px rgba(59, 130, 246, 0.4);
+            background: #1d4ed8;
           }
           .sponsors-flat__button:hover::before,
           .sponsors-flat__button:focus-visible::before {
@@ -230,7 +215,7 @@ export default function SponsorsCTA() {
               padding: clamp(2.6rem, 8vw, 3.4rem) clamp(1.6rem, 6vw, 2.6rem);
             }
             .sponsors-flat__bg {
-              box-shadow: 0 18px 38px rgba(5, 9, 27, 0.4);
+              box-shadow: 0 18px 38px rgba(5, 9, 27, 0.1);
             }
             .sponsors-flat__button {
               width: 100%;
