@@ -1,5 +1,6 @@
 import React from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
@@ -81,34 +82,55 @@ export default function FAQ() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[600px] overflow-hidden -mt-16">
-        <div
-          className="absolute inset-0 bg-cover bg-center heroStyle"
-          style={{
-            backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/FAQ+Background.jpg")',
-          }}
-        />
-        <div className="absolute inset-0 bg-slate-900/40" />
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-          <div className="text-white max-w-3xl pt-16">
-            <h1 className="text-5xl font-bold mb-6" style={{ fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase', fontSize: '5.5rem' }}>
-              Frequently Asked Questions
-            </h1>
-            <p className="text-xl mb-8 text-slate-100">
-              Find answers to common questions about the Global Trust Challenge
-            </p>
-          </div>
+    <div className="flex flex-col min-h-screen bg-slate-50">
+      {/* Cinematic Hero Section */}
+      <section className="relative h-[60vh] min-h-[500px] overflow-hidden flex items-center justify-center">
+        {/* Background with Gradient Overlay */}
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/FAQ+Background.jpg")',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/80 to-slate-50" />
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tight uppercase"
+            style={{ fontFamily: '"Barlow Condensed", serif' }}
+          >
+            Frequently Asked <span className="text-[#00AEEF]">Questions</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto font-light leading-relaxed"
+          >
+            Find answers to common questions about the Global Trust Challenge
+          </motion.p>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative z-10 -mt-20">
+        <div className="max-w-4xl mx-auto">
           {faqs.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="mb-12">
-              <h2 className="text-2xl font-bold mb-8 text-slate-900" style={{ fontFamily: '"Barlow Condensed", serif', fontWeight: '800', textTransform: 'uppercase' }}>
+            <motion.div
+              key={categoryIndex}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold mb-8 text-slate-900 uppercase tracking-tight pl-4 border-l-4 border-blue-500" style={{ fontFamily: '"Barlow Condensed", serif' }}>
                 {category.category}
               </h2>
               <div className="space-y-4">
@@ -117,28 +139,43 @@ export default function FAQ() {
                   const isOpen = openIndex === absoluteIndex;
 
                   return (
-                    <div key={index} className="border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+                    <div key={index} className="border border-slate-200 rounded-2xl bg-white shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-blue-200">
                       <button
-                        className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none"
+                        className="w-full px-8 py-6 flex items-center justify-between text-left focus:outline-none group"
                         onClick={() => setOpenIndex(isOpen ? null : absoluteIndex)}
                       >
-                        <span className="font-semibold text-lg text-slate-900">{faq.q}</span>
-                        {isOpen ? (
-                          <Minus className="h-5 w-5 text-blue-600" />
-                        ) : (
-                          <Plus className="h-5 w-5 text-blue-600" />
-                        )}
+                        <span className={`font-bold text-lg transition-colors duration-300 ${isOpen ? 'text-blue-600' : 'text-slate-900 group-hover:text-blue-600'}`}>
+                          {faq.q}
+                        </span>
+                        <div className={`p-2 rounded-full transition-all duration-300 ${isOpen ? 'bg-blue-100 rotate-180' : 'bg-slate-100 group-hover:bg-blue-50'}`}>
+                          {isOpen ? (
+                            <Minus className="h-5 w-5 text-blue-600" />
+                          ) : (
+                            <Plus className="h-5 w-5 text-slate-600 group-hover:text-blue-600" />
+                          )}
+                        </div>
                       </button>
-                      <div
-                        className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-4 opacity-100' : 'max-h-0 opacity-0'}`}
-                      >
-                        <p className="text-slate-600 leading-relaxed">{faq.a}</p>
-                      </div>
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                          >
+                            <div className="px-8 pb-8 pt-0">
+                              <p className="text-slate-600 leading-relaxed text-lg border-t border-slate-100 pt-4">
+                                {faq.a}
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>

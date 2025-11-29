@@ -3,6 +3,7 @@ import { Calendar, MapPin, Search, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import ChromaGrid from '@/components/ui/chroma-grid';
+import { motion } from 'framer-motion';
 
 interface NewsItem {
   id: string;
@@ -160,111 +161,132 @@ export default function Events() {
   const pastEvents = filteredItems.filter(event => isPastEvent(event.date));
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 pt-20">
-      {/* Header Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-purple-500/5 blur-[100px] rounded-full pointer-events-none"></div>
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900">
+      {/* Cinematic Hero Section */}
+      <section className="relative h-[60vh] min-h-[500px] overflow-hidden flex items-center justify-center">
+        {/* Background with Gradient Overlay */}
+        <div className="absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url("https://maximages.s3.us-west-1.amazonaws.com/Digital+Trust+Convention+Photo.jpeg")',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/80 to-slate-50" />
+        </div>
 
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold font-heading mb-6 text-slate-900">
-            Events & <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">News</span>
-          </h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tight uppercase"
+            style={{ fontFamily: '"Barlow Condensed", serif' }}
+          >
+            Events & <span className="text-[#00AEEF]">News</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto font-light leading-relaxed"
+          >
             Stay updated with the latest announcements, events, and news about the Global Trust Challenge.
-          </p>
+          </motion.p>
         </div>
       </section>
 
       {/* Content Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative z-10 -mt-20">
         <div className="max-w-7xl mx-auto">
 
           {/* Filters */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-            <div className="flex gap-2 p-1 bg-white rounded-lg border border-slate-200 shadow-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-16 bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/50">
+            <div className="flex gap-2 p-1 bg-slate-100 rounded-xl">
               {(['all', 'event', 'news', 'update'] as const).map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${activeFilter === filter
-                    ? 'bg-blue-50 text-blue-600 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  className={`px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wide transition-all duration-300 ${activeFilter === filter
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200/50'
                     }`}
                 >
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  {filter}
                 </button>
               ))}
             </div>
 
             <div className="relative w-full md:w-auto md:min-w-[300px]">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="text"
                 placeholder="Search events..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
+                className="w-full pl-12 pr-6 py-4 bg-slate-50 border-none rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
               />
             </div>
           </div>
 
           {/* Upcoming Events Section */}
-          <h2 className="text-3xl font-bold font-heading mb-8 text-slate-900 flex items-center gap-3">
-            <span className="w-2 h-8 bg-blue-500 rounded-full"></span>
+          <h2 className="text-4xl font-black mb-12 text-slate-900 uppercase tracking-tight flex items-center gap-4" style={{ fontFamily: '"Barlow Condensed", serif' }}>
+            <span className="w-3 h-12 bg-blue-500 rounded-full"></span>
             Upcoming Events
           </h2>
           {upcomingEvents.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
               {upcomingEvents.map((item) => (
-                <GlassCard key={item.id} className="h-full flex flex-col group hover:border-blue-500/30 transition-all duration-300 bg-white shadow-lg border-slate-100">
-                  <div className="h-48 -mx-6 -mt-6 mb-6 overflow-hidden rounded-t-xl relative">
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-60 z-10"></div>
+                <GlassCard key={item.id} className="h-full flex flex-col group hover:border-blue-500/30 transition-all duration-300 bg-white shadow-xl border-slate-100 rounded-3xl overflow-hidden hover:-translate-y-2">
+                  <div className="h-64 -mx-6 -mt-6 mb-6 overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10"></div>
                     <img
                       src={item.image}
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute top-4 left-4 z-20">
-                      <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full backdrop-blur-md border border-white/20 shadow-sm ${item.type === 'event'
-                        ? 'bg-blue-500/90 text-white'
+                      <span className={`inline-block px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full backdrop-blur-md border border-white/20 shadow-lg ${item.type === 'event'
+                        ? 'bg-blue-600 text-white'
                         : item.type === 'news'
-                          ? 'bg-purple-500/90 text-white'
-                          : 'bg-pink-500/90 text-white'
+                          ? 'bg-purple-600 text-white'
+                          : 'bg-pink-600 text-white'
                         }`}>
                         {item.category}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center text-slate-500 text-sm mb-3">
-                    <Calendar className="h-4 w-4 mr-2 text-blue-500" />
+                  <div className="flex items-center text-blue-600 font-bold text-sm mb-3 uppercase tracking-wide">
+                    <Calendar className="h-4 w-4 mr-2" />
                     {item.date}
                   </div>
 
-                  <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-2xl font-bold mb-4 text-slate-900 group-hover:text-blue-600 transition-colors leading-tight" style={{ fontFamily: '"Barlow Condensed", serif' }}>
                     <Link to={`/events/${item.id}`}>{item.title}</Link>
                   </h3>
 
                   {item.type === 'event' && item.location && (
-                    <div className="flex items-center text-slate-500 text-sm mb-2">
-                      <MapPin className="h-4 w-4 mr-2 text-purple-500" />
+                    <div className="flex items-center text-slate-500 text-sm mb-4 font-medium">
+                      <MapPin className="h-4 w-4 mr-2 text-slate-400" />
                       {item.location}
                     </div>
                   )}
 
-                  <p className="text-slate-600 mb-6 line-clamp-3 flex-grow">{item.excerpt}</p>
+                  <p className="text-slate-600 mb-8 line-clamp-3 flex-grow leading-relaxed">{item.excerpt}</p>
 
                   <div className="mt-auto pt-6 border-t border-slate-100 flex justify-between items-center">
                     <div className="flex gap-2">
                       {item.tags?.slice(0, 2).map((tag, index) => (
-                        <span key={index} className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                        <span key={index} className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full uppercase tracking-wide">
                           #{tag}
                         </span>
                       ))}
                     </div>
                     <Link
                       to={`/events/${item.id}`}
-                      className="text-blue-600 font-medium hover:text-blue-800 transition-colors flex items-center gap-1 group/link"
+                      className="text-blue-600 font-bold hover:text-blue-800 transition-colors flex items-center gap-2 group/link uppercase text-sm tracking-wide"
                     >
                       Read more
                       <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
@@ -274,8 +296,8 @@ export default function Events() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 bg-white rounded-lg border border-slate-200 mb-16 shadow-sm">
-              <p className="text-xl text-slate-500">
+            <div className="text-center py-20 bg-white rounded-3xl border border-slate-200 mb-24 shadow-sm">
+              <p className="text-xl text-slate-500 font-light">
                 No upcoming events at this time. Check back soon!
               </p>
             </div>
@@ -284,11 +306,12 @@ export default function Events() {
           {/* Past Events Section */}
           {pastEvents.length > 0 && (
             <>
-              <h2 className="text-3xl font-bold font-heading mb-8 text-slate-900 flex items-center gap-3">
-                <span className="w-2 h-8 bg-purple-500 rounded-full"></span>
+              <h2 className="text-4xl font-black mb-12 text-slate-900 uppercase tracking-tight flex items-center gap-4" style={{ fontFamily: '"Barlow Condensed", serif' }}>
+                <span className="w-3 h-12 bg-purple-500 rounded-full"></span>
                 Past Events
               </h2>
-              <div className="w-full rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-4 md:p-8">
+              <div className="w-full rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl p-4 md:p-8 overflow-hidden relative">
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
                 <ChromaGrid
                   items={pastEvents.map((event, index) => {
                     // Generate consistent colors based on index
@@ -322,9 +345,9 @@ export default function Events() {
 
           {/* Show message if no events at all */}
           {upcomingEvents.length === 0 && pastEvents.length === 0 && (
-            <div className="text-center py-20">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">No results found</h3>
-              <p className="text-slate-500">Try adjusting your search or filter criteria</p>
+            <div className="text-center py-24">
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">No results found</h3>
+              <p className="text-xl text-slate-500 font-light">Try adjusting your search or filter criteria</p>
             </div>
           )}
         </div>

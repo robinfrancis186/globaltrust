@@ -6,6 +6,7 @@ import './styles/fade.css';
 import './styles/scroll-arrow.css';
 import './utils/fade.js';
 
+console.log('App mounting...', import.meta.env.BASE_URL);
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
